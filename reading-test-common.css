@@ -1,0 +1,122 @@
+/* ===== Start screen ===== */
+#startOverlay{
+  position:fixed; inset:0; z-index:500; background:rgba(10,10,12,0.92);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.start-card{
+  background:var(--bg-panel,#fff); color:var(--text,#111); border-radius:10px;
+  max-width:460px; width:100%; padding:32px 30px; text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.start-logo{ font-weight:800; letter-spacing:1px; color:var(--accent,#e51e2a); font-size:14px; margin-bottom:8px; }
+.start-card h2{ margin:0 0 10px; font-size:19px; }
+.start-card > p{ font-size:13.5px; color:var(--text-muted,#555); margin-bottom:16px; }
+.start-rules{ text-align:left; font-size:13px; line-height:1.7; margin:0 0 22px; padding-left:20px; color:var(--text,#111); }
+.start-btn{
+  background:var(--accent,#e51e2a); color:#fff; border:none; border-radius:5px;
+  padding:12px 26px; font-size:14.5px; font-weight:700; cursor:pointer; width:100%;
+}
+.start-btn:hover{ opacity:0.92; }
+
+/* ===== Timer ===== */
+.test-timer{
+  font-family: 'Courier New', monospace; font-weight:800; font-size:15px;
+  padding:5px 12px; border:1px solid var(--border,#d4d4d4); border-radius:4px;
+  margin-left:14px; color:var(--text,#111);
+}
+.test-timer.low{ color:#fff; background:#cc2222; border-color:#cc2222; }
+
+/* ===== Flagged question buttons ===== */
+.qbtn.flagged{ position:relative; border-color:#e0a300 !important; }
+.qbtn.flagged::after{
+  content:''; position:absolute; top:-4px; right:-4px; width:8px; height:8px;
+  background:#e0a300; border-radius:50%;
+}
+
+/* ===== Notes panel ===== */
+#notesPanel{
+  position:fixed; top:0; right:-320px; width:300px; height:100%; z-index:400;
+  background:var(--bg-panel,#fff); border-left:1px solid var(--border,#d4d4d4);
+  box-shadow:-6px 0 20px rgba(0,0,0,0.15); transition:right .25s ease;
+  display:flex; flex-direction:column;
+}
+#notesPanel.open{ right:0; }
+.notes-panel-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px; border-bottom:1px solid var(--border,#d4d4d4); font-weight:700; font-size:14px;
+  color:var(--text,#111);
+}
+.notes-panel-head button{ background:none; border:none; font-size:20px; cursor:pointer; color:var(--text-muted,#555); }
+#notesArea{
+  flex:1; border:none; outline:none; resize:none; padding:16px; font-size:13.5px;
+  font-family: Arial, Helvetica, sans-serif; background:var(--bg-panel,#fff); color:var(--text,#111);
+}
+
+/* ===== Review mode markers ===== */
+.question.q-correct{ outline:2px solid var(--correct,#1a8a3c) !important; background:rgba(26,138,60,0.06); }
+.question.q-incorrect{ outline:2px solid var(--wrong,#cc2222) !important; background:rgba(204,34,34,0.06); }
+.q-correct-badge{
+  display:inline-block; margin-left:8px; font-size:11.5px; font-weight:700;
+  color:var(--correct,#1a8a3c); background:rgba(26,138,60,0.1); padding:2px 6px; border-radius:3px;
+}
+
+#modal .actions #goVocabBtn{ background:#7c5cfc; }
+
+/* ===== Vocabulary test overlay ===== */
+#vocabOverlay{
+  position:fixed; inset:0; z-index:600; background:rgba(10,10,12,0.92);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.vocab-card{
+  background:var(--bg-panel,#fff); color:var(--text,#111); border-radius:10px;
+  max-width:460px; width:100%; padding:32px 30px; text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.vocab-progress{ font-size:12px; color:var(--text-muted,#555); font-weight:700; margin-bottom:6px; }
+.vocab-card h2{ font-size:26px; margin:6px 0 4px; color:var(--accent,#e51e2a); }
+.vocab-sub{ font-size:13px; color:var(--text-muted,#555); margin-bottom:18px; }
+.vocab-options{ display:flex; flex-direction:column; gap:10px; }
+.vocab-option{
+  border:1px solid var(--border,#d4d4d4); border-radius:6px; background:var(--bg,#fff);
+  color:var(--text,#111); padding:11px; font-size:13.5px; cursor:pointer; font-family:inherit;
+}
+.vocab-option:hover:not(:disabled){ border-color:var(--accent,#e51e2a); }
+.vocab-option.correct{ border-color:var(--correct,#1a8a3c); background:rgba(26,138,60,0.12); font-weight:700; }
+.vocab-option.incorrect{ border-color:var(--wrong,#cc2222); background:rgba(204,34,34,0.1); }
+
+/* ===== Certificate ===== */
+#certOverlay{
+  position:fixed; inset:0; z-index:700; background:rgba(10,10,12,0.92);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.cert-card{ max-width:600px; width:100%; }
+.cert-border{
+  background:#fffdf6; color:#1a1a1a; border:6px double #c9a227; border-radius:6px;
+  padding:44px 36px; text-align:center;
+}
+.cert-brand{ letter-spacing:3px; font-weight:800; font-size:12px; color:#c9a227; margin-bottom:10px; }
+.cert-title{ font-size:26px; margin:0 0 18px; font-family: Georgia, serif; }
+.cert-sub{ font-size:13px; color:#555; margin:4px 0; }
+.cert-name{ font-size:24px; margin:6px 0 10px; font-family: Georgia, serif; color:#1a1a1a; }
+.cert-test{ font-size:15px; font-weight:700; margin:0 0 20px; }
+.cert-stats{ display:flex; justify-content:center; gap:30px; margin:18px 0; }
+.cert-stats div{ display:flex; flex-direction:column; }
+.cert-stats span{ font-size:20px; font-weight:800; color:#c9a227; }
+.cert-stats label{ font-size:11px; color:#666; }
+.cert-date{ font-size:12px; color:#777; margin-top:20px; }
+.cert-actions{ display:flex; gap:10px; justify-content:center; margin-top:18px; }
+.cert-actions button{
+  background:#c9a227; color:#fff; border:none; padding:10px 20px; border-radius:5px;
+  font-size:13.5px; font-weight:700; cursor:pointer;
+}
+.cert-actions button.secondary{ background:#eee; color:#333; }
+
+@media print{
+  body *{ visibility:hidden; }
+  #certCard, #certCard *{ visibility:visible; }
+  #certCard{ position:fixed; inset:0; margin:auto; }
+  .cert-actions{ display:none; }
+}

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IELTS Reading – Traditional Maori Medicine</title>
+<link href="reading-test-common.css" rel="stylesheet"/>
+<style>
+  :root { --bg: #ffffff; --bg-alt: #f4f5f7; --bg-panel: #ffffff; --text: #111111; --text-muted: #555; --border: #d4d4d4; --border-strong: #333; --accent: #e51e2a; --select-bg: #cfe3ff; --select-active: #1e6cd8; --footer-bg: #f4f5f7; --btn-bg: #ededed; --arrow-bg: #1f1f1f; --arrow-fg: #ffffff; --correct: #1a8a3c; --wrong: #cc2222; }
+  body.dark { --bg: #1a1a1d; --bg-alt: #232327; --bg-panel: #1f1f22; --text: #ececec; --text-muted: #b5b5b5; --border: #3a3a3f; --border-strong: #cfcfcf; --accent: #ff5c66; --select-bg: #2c4d7a; --select-active: #4a8be0; --footer-bg: #232327; --btn-bg: #2e2e33; --arrow-bg: #ececec; --arrow-fg: #1a1a1d; --correct: #4ed684; --wrong: #ff6b6b; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+  .topbar { height: 50px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; background: var(--bg); position: relative; z-index: 5; }
+  .logo { font-weight: 800; font-size: 22px; color: var(--accent); margin-right: 20px; }
+  .test-taker { font-size: 14px; font-weight: 700; }
+  .top-controls { margin-left: auto; display: flex; gap: 2px; align-items: center; }
+  .top-controls .icon-btn, .top-controls .text-btn { background: transparent; border: none; color: var(--text); padding: 6px 10px; cursor: pointer; border-radius: 4px; }
+  .part-header { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 10px 20px; }
+  .part-header h2 { margin: 0 0 3px 0; font-size: 14px; font-weight: 700; }
+  .main { position: absolute; top: 50px; left: 0; right: 0; bottom: 50px; display: flex; flex-direction: column; }
+  .panes { flex: 1; display: flex; overflow: hidden; position: relative; }
+  .pane { overflow-y: auto; padding: 18px 28px; background: var(--bg-panel); line-height: 1.55; font-size: calc(14.5px * var(--font-scale, 1)); }
+  .pane.left { width: 50%; }
+  .pane.right { flex: 1; }
+  .splitter { width: 10px; background: var(--bg-alt); border-left: 1px solid var(--border); border-right: 1px solid var(--border); cursor: col-resize; flex-shrink: 0; }
+  .passage h1 { font-size: 16px; font-weight: 700; margin: 0 0 14px 0; text-align: center; }
+  .qblock { margin-bottom: 28px; }
+  .qblock h3 { margin: 0 0 6px 0; font-size: 14.5px; font-weight: 700; }
+  .instructions { font-size: 13px; margin-bottom: 12px; line-height: 1.6; }
+  .yn-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; padding: 6px 8px; border-radius: 4px; }
+  .qnum-yn { min-width: 22px; font-weight: 700; border: 1px solid var(--border-strong); padding: 0 4px; text-align: center; font-size: 12px; }
+  .yn-stem { flex: 1; font-size: 14px; }
+  .yn-select { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 4px 6px; font-size: 13px; border-radius: 3px; min-width: 110px; }
+  .text-gap { background: var(--bg); color: var(--text); border: none; border-bottom: 2px solid var(--border-strong); padding: 2px 6px; font-size: 13px; width: 140px; text-align: center; outline: none; }
+  .footer { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: var(--footer-bg); border-top: 1px solid var(--border); display: flex; align-items: center; padding: 0 12px; gap: 8px; z-index: 4; }
+  .part-tab { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 3px; border: 1px solid var(--border); background: var(--bg); }
+  .qnav { display: flex; gap: 3px; margin-left: 2px; flex-wrap: wrap; }
+  .qbtn { width: 22px; height: 22px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 2px; }
+  .qbtn.current { border: 2px solid var(--text); font-weight: 700; }
+  .qbtn.answered { background: var(--bg-alt); }
+  .nav-arrows { display: flex; gap: 4px; margin-left: auto; }
+  .arrow-btn { width: 32px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .check-btn { width: 36px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-left: 4px; }
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-start; justify-content: center; z-index: 100; padding: 20px; overflow-y: auto; }
+  .overlay.visible { display: flex; }
+  .modal { background: var(--bg-panel); color: var(--text); border: 1px solid var(--border); border-radius: 8px; max-width: 600px; width: 100%; padding: 28px 32px; margin: auto; }
+  .results-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 18px; }
+  .results-table th, .results-table td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+</style>
+<link href="max-bridge.css?v=1" rel="stylesheet"/><script defer="" src="max-bridge.js?v=1"></script>
+<link href="reading-v12.css" rel="stylesheet"/><script defer="True" src="reading-v12.js"></script></head>
+<body>
+<div class="topbar">
+<div class="logo">IELTS</div>
+<div class="test-taker">VIVID IELTS</div>
+<div class="top-controls">
+<button class="icon-btn" id="btn-light" title="Light mode">☀️</button>
+<button class="icon-btn" id="btn-dark" title="Dark mode">🌙</button>
+<div class="divider"></div>
+<button class="text-btn" id="btn-font-down">A-</button>
+<button class="text-btn" id="btn-font-up">A+</button>
+</div>
+</div>
+<div class="main">
+<div class="part-header">
+<h2>Reading Passage 1</h2>
+<p>Read the text and answer questions 1–13.</p>
+</div>
+<div class="panes">
+<!-- PASSAGE -->
+<div class="pane left" id="passagePane">
+<div class="passage">
+<h1>Traditional Maori Medicine</h1>
+<p>The Maori are the indigenous people of the islands of New Zealand. Their traditional medicine, which is believed to date back as far as the 13th century, was a system of healing that was passed down through the generations orally. It comprised diverse practices and placed an emphasis on the spiritual dimension of health. Its practice included remedies made from herbs, and physical therapies such as massage to relieve discomfort in the muscles and bones.</p>
+<p>Maori systems for treating illness were well developed before Europeans arrived in New Zealand in the late 1700s: they had quite detailed knowledge of anatomy and recognition of the healing properties of various plants. When Europeans first visited New Zealand, the average age of death for Maori adults was around 30. However, apart from this, the people were fit and healthy, and troubled by few diseases.</p>
+<p>Illness was often seen as spiritually based. Maori saw themselves as guardians of the earth, and the focus of their existence was to remain at one with the natural and supernatural world. Rather than a medical problem, sickness was often viewed as a symptom of disharmony with nature.</p>
+<p>In Maori culture, illnesses were divided into diseases of the gods (mate atua) and physical diseases (mate tangata). Diseases sent by the gods were often attributed to attacks by evil spirits, because the person had broken a religious rule. For instance, for Maori, places where people had died, or places where their ancestors were buried were sacred, so if someone took food from a river where someone had died, or took a stick from a tree that had held their ancestor’s bones and placed it on a cooking fire, it was believed that the gods could punish them for their disrespectful acts by making them sick.</p>
+<p>More than 200 plants were used medicinally by Maori. The leaves of the flax plant were used to treat skin infections and food poisoning, and the hard part of the leaf was also used as a splint or brace for broken bones and injured backs. Flax fibres were used along with a sharpened stick to sew up bad cuts. The bark and leaves of the pepper tree were used to heal cuts, wounds and stomach pain. People who had toothache were instructed to chew the leaves of this same tree, and this was found to be of considerable benefit. The pepper tree was also used in vapour baths to treat people with painful joints.</p>
+<p>Colonization by Europeans in the 1800s had a significant effect on traditional Maori healing. Europeans brought many new diseases with them which Maori healers had limited ability to combat. Though Western medicine was also relatively ineffectual at the time, this failure still strongly affected Maori confidence in their healers. Some Western missionaries attributed the spread of disease to the fact the Maori did not believe in Christianity, and as Maori healers appeared powerless, many Maori accepted this explanation and turned to Christianity. Over time the schools of higher learning which had trained healers started to close and the tradition of the Maori healer declined.</p>
+<p>From the late 20th century, there was renewed Maori interest in their traditional medicine. This was due to several factors. There was a resurgence of all aspects of Maori culture in New Zealand. Furthermore, people started to be less trusting of Western medicine—statistics from the 1970s came out revealing that Maori health continued to be poorer than that of other New Zealanders. There were also problems with access to health care for Maori. Additionally, there was and still is today a perceived lack of a spiritual dimension in Western health services.</p>
+<p>Although Maori today largely accept Western concepts of health and illness, and use the mainstream health system, there is significant demand for traditional medicine. This is true for unusual illnesses, or those that fail to respond to standard medical treatment, but also for common ailments such as the cold and influenza.</p>
+<p>Today’s healers differ significantly from those of old times. Training is highly variable, usually informal, and often less tribally bound than the rigorous education of the traditional houses of higher learning. Many modern healers work in urban clinics, some alongside mainstream health professionals. They experiment, incorporating knowledge from Western and other medical systems. As a result, their modern day work has no standard system of diagnosis or widespread agreement about treatments. Despite this, many healers are recognized as having knowledge and ability that has been passed down from their ancestors. The Maori language is also seen as important by many of those receiving treatment.</p>
+</div>
+</div>
+<div class="splitter" id="splitter"></div>
+<!-- QUESTIONS -->
+<div class="pane right" id="questionsPane">
+<div class="qblock">
+<h3>Questions 1–6</h3>
+<div class="instructions">Do the following statements agree with the information given in Reading Passage 1?<br/>Write TRUE, FALSE or NOT GIVEN.</div>
+<div class="yn-row">
+<span class="qnum-yn">1</span>
+<span class="yn-stem">Early Maori healers learned their skills through studying written texts.</span>
+<select class="yn-select question" data-q="1">
+<option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">2</span>
+<span class="yn-stem">The first Europeans in New Zealand were surprised by how long the Maori lived.</span>
+<select class="yn-select question" data-q="2">
+<option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">3</span>
+<span class="yn-stem">Diseases of the gods were believed to be more serious than physical diseases.</span>
+<select class="yn-select question" data-q="3">
+<option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">4</span>
+<span class="yn-stem">The leaves of the pepper tree were used to treat toothache.</span>
+<select class="yn-select question" data-q="4">
+<option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">5</span>
+<span class="yn-stem">Western religion was one reason why traditional Maori medicine became less popular.</span>
+<select class="yn-select question" data-q="5">
+<option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">6</span>
+<span class="yn-stem">Modern day Maori healers often reach the same conclusion about the type of treatment which is best.</span>
+<select class="yn-select question" data-q="6">
+<option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+</div>
+<div class="qblock">
+<h3>Questions 7–13</h3>
+<div class="instructions">Complete the notes below. Choose <strong>ONE WORD ONLY</strong> from the passage for each answer.</div>
+<p style="font-weight:700; text-align:center;">A short history of Maori healing</p>
+<p><strong>Pre-European arrival</strong><br/>
+        • Maori were using plant-based remedies, as well as treatment including massage<br/>
+        • Diseases sent from the gods were thought to be caused by disobeying a spiritual <strong>7</strong> <input class="text-gap question" data-q="7" type="text"/><br/>
+        • Sickness could be attributed to eating food from a sacred <strong>8</strong> <input class="text-gap question" data-q="8" type="text"/> or burning sacred wood</p>
+<p><strong>After European arrival (1800s)</strong><br/>
+        • The inability of Maori healers to cure new diseases meant the Maori people lost <strong>9</strong> <input class="text-gap question" data-q="9" type="text"/> in them.<br/>
+        • Eventually the <strong>10</strong> <input class="text-gap question" data-q="10" type="text"/> for Maori healing began shutting down</p>
+<p><strong>1970s</strong><br/>
+        • Published <strong>11</strong> <input class="text-gap question" data-q="11" type="text"/> showed that Maori were not as healthy as Europeans</p>
+<p><strong>2000s</strong><br/>
+        • Maori healers can be seen working with Western doctors in <strong>12</strong> <input class="text-gap question" data-q="12" type="text"/> in cities<br/>
+        • Many patients appreciate the fact that the Maori <strong>13</strong> <input class="text-gap question" data-q="13" type="text"/> is used by healers</p>
+</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<div class="part-tab">
+<span class="label">Part 1</span>
+<span class="progress" id="progress-1">0 of 13</span>
+<div class="qnav" id="qnav-1"></div>
+</div>
+<div class="nav-arrows">
+<button class="arrow-btn" id="prevBtn">←</button>
+<button class="arrow-btn dark" id="nextBtn">→</button>
+</div>
+<button class="check-btn" id="finishBtn" title="Submit">✓</button>
+</div>
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+<script>
+const TOTAL = 13;
+const Q_START = 1;
+const Q_END = 13;
+
+const KEY = {
+  1: ['FALSE'],
+  2: ['NOT GIVEN'],
+  3: ['NOT GIVEN'],
+  4: ['TRUE'],
+  5: ['TRUE'],
+  6: ['FALSE'],
+  7: ['rule'],
+  8: ['river'],
+  9: ['confidence'],
+  10: ['schools'],
+  11: ['statistics'],
+  12: ['clinics'],
+  13: ['language']
+};
+
+const answers = {};
+
+function normalize(v) { return (v || '').toString().trim().toUpperCase().replace(/\s+/g, ' '); }
+function isCorrect(n, val) {
+  const given = normalize(val);
+  return KEY[n].some(a => normalize(a) === given);
+}
+
+document.querySelectorAll('select.question').forEach(el => {
+  const q = +el.dataset.q;
+  el.addEventListener('change', () => { answers[q] = el.value; updateNav(); });
+});
+document.querySelectorAll('input.question').forEach(el => {
+  const q = +el.dataset.q;
+  el.addEventListener('input', () => { answers[q] = el.value; updateNav(); });
+});
+
+const qnavEl = document.getElementById('qnav-1');
+const progressEl = document.getElementById('progress-1');
+let activeQ = Q_START;
+
+function buildNav() {
+  qnavEl.innerHTML = '';
+  for (let n = Q_START; n <= Q_END; n++) {
+    const btn = document.createElement('button');
+    btn.className = 'qbtn';
+    btn.textContent = n;
+    btn.dataset.n = n;
+    btn.addEventListener('click', () => scrollToQ(n));
+    qnavEl.appendChild(btn);
+  }
+}
+function updateNav() {
+  const answered = Object.keys(answers).filter(k => answers[k] !== undefined && answers[k] !== '').length;
+  progressEl.textContent = `${answered} of ${TOTAL}`;
+  qnavEl.querySelectorAll('.qbtn').forEach(btn => {
+    const n = +btn.dataset.n;
+    btn.classList.toggle('answered', !!answers[n] && answers[n] !== '');
+    btn.classList.toggle('current', n === activeQ);
+  });
+}
+function scrollToQ(n) {
+  activeQ = n;
+  const el = document.querySelector(`.question[data-q="${n}"]`);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.focus({ preventScroll: true }); }
+  updateNav();
+}
+
+function getBand(score) {
+  if (score >= 12) return '8.5';
+  if (score >= 11) return '8.0';
+  if (score >= 10) return '7.5';
+  if (score >= 9) return '7.0';
+  if (score >= 8) return '6.5';
+  if (score >= 7) return '6.0';
+  if (score >= 6) return '5.5';
+  return '5.0';
+}
+
+function showResults() {
+  let score = 0;
+  const rows = [];
+  for (let n = Q_START; n <= Q_END; n++) {
+    const ok = isCorrect(n, answers[n]);
+    if (ok) score++;
+    rows.push({ n, given: answers[n] || '—', correct: KEY[n][0], ok });
+  }
+  const pct = Math.round(score / TOTAL * 100);
+  const band = getBand(score);
+
+  let html = `<h2>Your Results</h2>
+    <div class="score-row" style="text-align:center;">${score} / ${TOTAL} (${pct}%)</div>
+    <div style="text-align:center;font-weight:700;margin-bottom:14px;">Estimated Band: ${band}</div>
+    <table class="results-table">
+      <thead><tr><th>Q</th><th>Your Answer</th><th>Correct</th><th></th></tr></thead><tbody>`;
+  rows.forEach(r => {
+    html += `<tr><td><strong>${r.n}</strong></td><td>${r.given}</td><td>${r.correct}</td><td>${r.ok ? '✓' : '✗'}</td></tr>`;
+  });
+  html += `</tbody></table>
+    <div style="text-align:center;"><button onclick="document.getElementById('overlay').classList.remove('visible')">Review</button></div>`;
+
+  document.getElementById('modal').innerHTML = html;
+  document.getElementById('overlay').classList.add('visible');
+}
+
+document.getElementById('finishBtn').addEventListener('click', () => {
+  if (confirm('Submit test?')) showResults();
+});
+
+buildNav();
+updateNav();
+</script>
+<script>
+const TEST_ID = 'maori-medicine-p1';
+const TEST_DURATION_MIN = 20;
+const C1_WORDS = [
+  { word: 'indigenous', def: 'Originating or occurring naturally in a particular place' },
+  { word: 'dimension', def: 'An aspect or feature of a situation or problem' },
+  { word: 'anatomy', def: 'The branch of science concerned with bodily structure' },
+  { word: 'attribute', def: 'Regard something as being caused by someone or something' },
+  { word: 'ineffectual', def: 'Not producing any or the desired effect' },
+  { word: 'resurgence', def: 'An increase or revival after a period of little activity' },
+  { word: 'perceived', def: 'Become aware or conscious of something' },
+  { word: 'ailment', def: 'An illness, typically a minor one' },
+  { word: 'rigorous', def: 'Extremely thorough and careful' },
+  { word: 'widespread', def: 'Found or distributed over a large area' }
+];
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="db.js"></script>
+
+
+<script src="reading-test-common.js"></script>
+<script src="activity-bridge-v15.js"></script>
+</body>
+</html>

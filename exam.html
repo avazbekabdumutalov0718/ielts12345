@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Listening Test — VIVID IELTS</title>
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;height:100%;font:14px Arial,sans-serif;color:#17202a;background:#fff}
+    header{height:54px;display:flex;align-items:center;gap:16px;padding:0 16px;border-bottom:1px solid #d8dce1;background:#fff}
+    a{text-decoration:none;font-weight:800;color:#d91e2d;white-space:nowrap}a span{color:#17202a}h1{font-size:14px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+    small{color:#66717c;margin-left:auto;white-space:nowrap}iframe{display:block;width:100%;height:calc(100% - 54px);border:0;background:#fff}
+    @media(max-width:620px){header{height:48px;gap:8px;padding:0 8px}h1{font-size:12px}small{display:none}iframe{height:calc(100% - 48px)}}
+  </style>
+<link rel="stylesheet" href="../max-bridge.css?v=1"><script src="../max-bridge.js?v=1" defer></script>
+</head>
+<body>
+  <header><a href="../../index.html#listeningtests">← VIVID <span>IELTS</span></a><h1 id="title">Full Listening Practice</h1><small>Parts 1–4 · 40 questions</small></header>
+  <iframe id="testFrame" title="Listening practice test" allow="fullscreen; autoplay"></iframe>
+  <script>
+    const test = new URLSearchParams(location.search).get('test') || '';
+    if (/^new-listening-\d{2}$/.test(test)) {
+      document.getElementById('testFrame').src = test + '.html';
+      document.getElementById('title').textContent = 'Full Listening Test ' + Number(test.slice(-2));
+    } else {
+      document.getElementById('title').textContent = 'Test not found';
+    }
+  </script>
+<script src="../activity-bridge-v15.js"></script>
+</body>
+</html>

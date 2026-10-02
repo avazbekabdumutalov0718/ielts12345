@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IELTS Reading – The lost animals of Australia</title>
+<link href="reading-test-common.css" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #ffffff; --bg-alt: #f4f5f7; --bg-panel: #ffffff;
+    --text: #111111; --text-muted: #555; --border: #d4d4d4;
+    --border-strong: #333; --accent: #e51e2a;
+    --select-bg: #cfe3ff; --select-active: #1e6cd8;
+    --footer-bg: #f4f5f7; --btn-bg: #ededed;
+    --arrow-bg: #1f1f1f; --arrow-fg: #ffffff;
+    --correct: #1a8a3c; --wrong: #cc2222;
+  }
+  body.dark {
+    --bg: #1a1a1d; --bg-alt: #232327; --bg-panel: #1f1f22;
+    --text: #ececec; --text-muted: #b5b5b5; --border: #3a3a3f;
+    --border-strong: #cfcfcf; --accent: #ff5c66;
+    --select-bg: #2c4d7a; --select-active: #4a8be0;
+    --footer-bg: #232327; --btn-bg: #2e2e33;
+    --arrow-bg: #ececec; --arrow-fg: #1a1a1d;
+    --correct: #4ed684; --wrong: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+
+  .topbar { height: 50px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; background: var(--bg); position: relative; z-index: 5; }
+  .logo { font-weight: 800; font-size: 22px; letter-spacing: 1px; color: var(--accent); margin-right: 20px; user-select: none; }
+  .test-taker { font-size: 14px; font-weight: 700; }
+  .top-controls { margin-left: auto; display: flex; gap: 2px; align-items: center; }
+  .top-controls .icon-btn, .top-controls .text-btn { background: transparent; border: none; color: var(--text); padding: 6px 10px; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s; }
+  .top-controls .icon-btn:hover, .top-controls .text-btn:hover { background: var(--bg-alt); }
+  .top-controls .icon-btn svg { width: 20px; height: 20px; display: block; }
+  .top-controls .text-btn { font-weight: 700; font-size: 16px; font-family: inherit; }
+  .top-controls .divider { width: 1px; height: 26px; background: var(--border); margin: 0 6px; }
+
+  .part-header { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 10px 20px; }
+  .part-header h2 { margin: 0 0 3px 0; font-size: 14px; font-weight: 700; }
+  .part-header p { margin: 0; font-size: 12px; color: var(--text-muted); }
+
+  .main { position: absolute; top: 50px; left: 0; right: 0; bottom: 50px; display: flex; flex-direction: column; }
+  .panes { flex: 1; display: flex; overflow: hidden; position: relative; }
+  .pane { overflow-y: auto; padding: 18px 28px; background: var(--bg-panel); line-height: 1.55; font-size: calc(14.5px * var(--font-scale, 1)); }
+  .pane.left { width: 50%; }
+  .pane.right { flex: 1; }
+  .splitter { width: 10px; background: var(--bg-alt); border-left: 1px solid var(--border); border-right: 1px solid var(--border); cursor: col-resize; position: relative; user-select: none; flex-shrink: 0; }
+  .splitter::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; background: var(--bg); border: 1px solid var(--border); border-radius: 3px; background-image: linear-gradient(to right, transparent 6px, var(--text) 6px, var(--text) 7px, transparent 7px, transparent 11px, var(--text) 11px, var(--text) 12px, transparent 12px); }
+
+  .passage h1 { font-size: 16px; font-weight: 700; margin: 0 0 14px 0; text-align: center; }
+  .passage p { margin: 0 0 11px 0; text-align: justify; }
+
+  .qblock { margin-bottom: 28px; }
+  .qblock h3 { margin: 0 0 6px 0; font-size: 14.5px; font-weight: 700; }
+  .qblock .instructions { font-size: 13px; margin-bottom: 12px; line-height: 1.6; }
+  .qblock .instructions strong { font-weight: 700; }
+
+  /* Row styles */
+  .yn-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; padding: 6px 8px; border-radius: 4px; border: 1px solid transparent; }
+  .yn-row:focus-within { border-color: var(--select-active); }
+  .qnum-yn { display: inline-block; min-width: 22px; font-weight: 700; border: 1px solid var(--border-strong); padding: 0 4px; text-align: center; font-size: 12px; flex-shrink: 0; margin-top: 3px; }
+  .yn-stem { flex: 1; font-size: 14px; line-height: 1.5; }
+  .yn-select { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 4px 6px; font-size: 13px; font-family: inherit; border-radius: 3px; min-width: 110px; flex-shrink: 0; }
+  .gap-input { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 3px 6px; font-size: 13px; border-radius: 3px; width: 180px; font-family: inherit; }
+  
+  /* Radio Options */
+  .mc-option { display: block; margin: 5px 0; font-size: 13.5px; cursor: pointer; }
+  .mc-option input { margin-right: 8px; }
+
+  /* Footer */
+  .footer { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: var(--footer-bg); border-top: 1px solid var(--border); display: flex; align-items: center; padding: 0 12px; gap: 8px; z-index: 4; }
+  .part-tab { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 3px; border: 1px solid var(--border); background: var(--bg); user-select: none; }
+  .part-tab .label { font-weight: 700; font-size: 13px; }
+  .part-tab .progress { font-size: 11.5px; color: var(--text-muted); }
+  .qnav { display: flex; gap: 3px; margin-left: 2px; flex-wrap: wrap; }
+  .qbtn { width: 22px; height: 22px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 2px; font-family: inherit; }
+  .qbtn:hover { background: var(--bg-alt); }
+  .qbtn.current { border: 2px solid var(--text); font-weight: 700; }
+  .qbtn.answered { background: var(--bg-alt); }
+  .nav-arrows { display: flex; gap: 4px; margin-left: auto; }
+  .arrow-btn { width: 32px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .arrow-btn.dark { background: var(--arrow-bg); color: var(--arrow-fg); border-color: var(--arrow-bg); }
+  .check-btn { width: 36px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-left: 4px; }
+
+  .user-highlight { background: #f4ff55; padding: 1px 0; }
+  body.dark .user-highlight { background: #8a9100; color: #fff; }
+
+  .highlight-popup { position: absolute; display: none; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.18); padding: 4px; z-index: 200; align-items: center; gap: 2px; font-size: 13.5px; user-select: none; }
+  .highlight-popup.visible { display: inline-flex; }
+  .highlight-popup button { background: transparent; border: none; padding: 8px 12px; cursor: pointer; color: var(--text); border-radius: 5px; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 13.5px; font-weight: 500; }
+  .highlight-popup button:hover { background: var(--bg-alt); }
+  .highlight-popup .hp-swatch { display: inline-block; width: 16px; height: 16px; background: #f4ff55; border-radius: 3px; flex-shrink: 0; }
+  .highlight-popup .hp-close { padding: 6px 10px; font-size: 18px; color: var(--text-muted); line-height: 1; }
+
+  .pane::-webkit-scrollbar { width: 10px; }
+  .pane::-webkit-scrollbar-track { background: var(--bg-alt); }
+  .pane::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+
+  /* Results overlay */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-start; justify-content: center; z-index: 100; padding: 20px; overflow-y: auto; }
+  .overlay.visible { display: flex; }
+  .modal { background: var(--bg-panel); color: var(--text); border: 1px solid var(--border); border-radius: 8px; max-width: 600px; width: 100%; padding: 28px 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); margin: auto; }
+  .modal h2 { margin: 0 0 10px 0; color: var(--accent); font-size: 22px; text-align: center; }
+  .score-row { text-align: center; font-size: 28px; font-weight: 800; margin: 6px 0 4px; }
+  .score-row span { font-size: 16px; font-weight: 400; color: var(--text-muted); }
+  .band-row { text-align: center; font-size: 18px; font-weight: 700; margin-bottom: 18px; color: var(--accent); }
+  .results-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 18px; }
+  .results-table th { background: var(--bg-alt); padding: 6px 10px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border); }
+  .results-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .results-table tr:last-child td { border-bottom: none; }
+  .mark-ok  { color: var(--correct); font-weight: 700; font-size: 15px; }
+  .mark-bad { color: var(--wrong);   font-weight: 700; font-size: 15px; }
+  .modal .actions { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+  .modal button { background: var(--accent); color: #fff; border: none; padding: 9px 22px; font-size: 14px; font-weight: 600; border-radius: 4px; cursor: pointer; }
+  .modal button.secondary { background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); }
+  .modal button:hover { opacity: 0.9; }
+</style>
+<link href="max-bridge.css?v=1" rel="stylesheet"/><script defer="" src="max-bridge.js?v=1"></script>
+<link href="reading-v12.css" rel="stylesheet"/><script defer="True" src="reading-v12.js"></script></head>
+<body>
+<div class="topbar">
+<div class="logo">IELTS</div>
+<div class="test-taker">VIVID IELTS</div>
+<div class="top-controls">
+<button class="icon-btn" id="btn-light" title="Light mode">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="4"></circle>
+<line x1="12" x2="12" y1="2" y2="4"></line><line x1="12" x2="12" y1="20" y2="22"></line>
+<line x1="4.93" x2="6.34" y1="4.93" y2="6.34"></line><line x1="17.66" x2="19.07" y1="17.66" y2="19.07"></line>
+<line x1="2" x2="4" y1="12" y2="12"></line><line x1="20" x2="22" y1="12" y2="12"></line>
+<line x1="4.93" x2="6.34" y1="19.07" y2="17.66"></line><line x1="17.66" x2="19.07" y1="6.34" y2="4.93"></line>
+</svg>
+</button>
+<button class="icon-btn" id="btn-dark" title="Dark mode">
+<svg fill="currentColor" viewbox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+</button>
+<div class="divider"></div>
+<button class="text-btn" id="btn-font-down" title="Decrease font size">A-</button>
+<button class="text-btn" id="btn-font-up" title="Increase font size">A+</button>
+</div>
+</div>
+<div class="main">
+<div class="part-header">
+<h2>Reading Passage 3</h2>
+<p>Read the text and answer questions 27–40.</p>
+</div>
+<div class="panes">
+<div class="pane left" id="passagePane">
+<div class="passage">
+<div style="font-weight:700;font-size:14px;margin-bottom:4px;">READING PASSAGE 3</div>
+<div style="font-size:13px;margin-bottom:14px;color:var(--text-muted);">You should spend about 20 minutes on Questions 27–40, which are based on Reading Passage 3 below.</div>
+<h1>The lost animals of Australia</h1>
+<p>The history of Australia's animals over the past 50,000 years has been largely one of extinction. The time has been too short for new species of large animals to evolve and, over this period, nearly one-third of Australia's mammal species have become extinct, along with nearly all the large reptiles and many of the flightless birds. The cause of these extinctions is still hotly debated. One school of thought suggests that humans caused the extinctions, and another that they were due to changes in climate. The greatest problem in evaluating these theories is that we do not know exactly when these animals became extinct. Fossils from a number of well-dated cave and lakeside sites suggest that all the now-extinct species had already vanished 35,000 years ago, but a few other sites suggest that giant marsupials might have survived until 25,000 years ago, or even as late as 6,000 years ago.</p>
+<p>One certainty is that Australia's climate has changed greatly over the past 40,000 years. Between 25,000 and 15,000 years ago, the sea level dropped by more than 100 metres and the continent experienced an extremely arid phase. Clearly, the timing of the extinctions is of critical importance. If they can be shown to coincide with the arrival of humans, about 50,000 years ago, then circumstantial evidence against human impact becomes much stronger. Conversely, if the extinctions can be shown to have occurred about 20,000 years ago, during the height of the last ice age, then climate change becomes the more likely cause.</p>
+<p>A major breakthrough in the debate was the discovery of a deposit of fossilised bones at Cuddie Springs, a dried-up lake in north-western New South Wales. These fossils are particularly important because they are found in association with stone tools, showing that humans and giant animals co-existed at the site. Excavations at Cuddie Springs have yielded a wealth of giant animal fossils, including the diprotodon, a massive herbivore the size of a rhinoceros, and the genyornis, a huge flightless bird. Crucially, radiocarbon and other dating methods suggest that these fossils are about 30,000 years old, placing them well after the arrival of humans but before the height of the last ice age.</p>
+<p>However, the Cuddie Springs findings have not been accepted by all scientists. Some critics argue that the site is not as straightforward as it seems. They suggest that the fossils and stone tools may have been mixed together by water action or geological processes, making the dating unreliable. Others argue that Cuddie Springs is a unique site and does not reflect the broader pattern of extinctions across the continent. They point to other evidence, such as fossilised eggshells of genyornis from dozens of sites across Australia, which consistently date to about 45,000 years ago, suggesting a rapid extinction shortly after human arrival.</p>
+<p>To resolve the debate, scientists have turned to new techniques for dating fossils directly. One such technique is electron spin resonance (ESR), which measures the radiation damage in fossil teeth. By applying ESR and another dating method, uranium-series dating, to fossil teeth from Cuddie Springs and other sites, researchers have been able to obtain more precise ages. These studies suggest that some giant animals did indeed survive until about 30,000 years ago. However, the debate remains unresolved, with proponents of both the human-impact and climate-change theories finding evidence to support their views.</p>
+<p>Even if climate change was the primary trigger for the extinctions, human activity may have played a significant role. For example, humans may have altered the landscape through fire-stick farming - the deliberate burning of vegetation to promote new growth and attract game. This practice could have dramatically changed the vegetation patterns of the continent, leading to the decline of species that depended on specific habitats. Furthermore, even if humans did not hunt giant animals to extinction, their presence could have placed additional stress on populations already struggling to adapt to a changing climate.</p>
+</div>
+</div>
+<div class="splitter" id="splitter"></div>
+<div class="pane right" id="questionsPane">
+<div class="qblock">
+<h3>Questions 27–32</h3>
+<div class="instructions">
+          Choose the correct letter, <strong>A</strong>, <strong>B</strong>, <strong>C</strong> or <strong>D</strong>.<br/>
+          Write the correct letter in boxes 27–32.
+        </div>
+<div class="yn-row" style="flex-direction:column;">
+<div><span class="qnum-yn">27</span> <strong style="font-size:14px;">What does the writer say about the extinction of giant animals in Australia?</strong></div>
+<div style="padding-left:32px; width:100%;">
+<label class="mc-option"><input class="question-radio" data-q="27" name="q27" type="radio" value="A"/> A Their extinction was completed 35,000 years ago.</label>
+<label class="mc-option"><input class="question-radio" data-q="27" name="q27" type="radio" value="B"/> B There is conflict over the date of their disappearance.</label>
+<label class="mc-option"><input class="question-radio" data-q="27" name="q27" type="radio" value="C"/> C Mammals were more vulnerable than reptiles.</label>
+<label class="mc-option"><input class="question-radio" data-q="27" name="q27" type="radio" value="D"/> D Flightless birds were the first to die out.</label>
+</div>
+</div>
+<div class="yn-row" style="flex-direction:column;">
+<div><span class="qnum-yn">28</span> <strong style="font-size:14px;">According to the writer, the timing of the extinctions is important because</strong></div>
+<div style="padding-left:32px; width:100%;">
+<label class="mc-option"><input class="question-radio" data-q="28" name="q28" type="radio" value="A"/> A it reveals details about the climate of 50,000 years ago.</label>
+<label class="mc-option"><input class="question-radio" data-q="28" name="q28" type="radio" value="B"/> B it helps to show whether humans or climate was responsible.</label>
+<label class="mc-option"><input class="question-radio" data-q="28" name="q28" type="radio" value="C"/> C it explains why some species survived longer than others.</label>
+<label class="mc-option"><input class="question-radio" data-q="28" name="q28" type="radio" value="D"/> D it indicates when the first people reached Australia.</label>
+</div>
+</div>
+<div class="yn-row" style="flex-direction:column;">
+<div><span class="qnum-yn">29</span> <strong style="font-size:14px;">The fossils at Cuddie Springs are particularly significant because</strong></div>
+<div style="padding-left:32px; width:100%;">
+<label class="mc-option"><input class="question-radio" data-q="29" name="q29" type="radio" value="A"/> A they include the remains of a rhinoceros-sized herbivore.</label>
+<label class="mc-option"><input class="question-radio" data-q="29" name="q29" type="radio" value="B"/> B they are the oldest giant animal fossils found so far.</label>
+<label class="mc-option"><input class="question-radio" data-q="29" name="q29" type="radio" value="C"/> C they were discovered in a dried-up lake bed.</label>
+<label class="mc-option"><input class="question-radio" data-q="29" name="q29" type="radio" value="D"/> D they suggest that humans and giant animals lived together.</label>
+</div>
+</div>
+<div class="yn-row" style="flex-direction:column;">
+<div><span class="qnum-yn">30</span> <strong style="font-size:14px;">Critics of the Cuddie Springs findings suggest that</strong></div>
+<div style="padding-left:32px; width:100%;">
+<label class="mc-option"><input class="question-radio" data-q="30" name="q30" type="radio" value="A"/> A geological activity may have displaced the fossils.</label>
+<label class="mc-option"><input class="question-radio" data-q="30" name="q30" type="radio" value="B"/> B the dating methods used were inherently flawed.</label>
+<label class="mc-option"><input class="question-radio" data-q="30" name="q30" type="radio" value="C"/> C the stone tools were made much later than the fossils.</label>
+<label class="mc-option"><input class="question-radio" data-q="30" name="q30" type="radio" value="D"/> D other sites across the continent show a different pattern.</label>
+</div>
+</div>
+<div class="yn-row" style="flex-direction:column;">
+<div><span class="qnum-yn">31</span> <strong style="font-size:14px;">The fossilised eggshells from other sites suggest that genyornis</strong></div>
+<div style="padding-left:32px; width:100%;">
+<label class="mc-option"><input class="question-radio" data-q="31" name="q31" type="radio" value="A"/> A survived until the height of the last ice age.</label>
+<label class="mc-option"><input class="question-radio" data-q="31" name="q31" type="radio" value="B"/> B became extinct rapidly after the arrival of humans.</label>
+<label class="mc-option"><input class="question-radio" data-q="31" name="q31" type="radio" value="C"/> C co-existed with humans for thousands of years.</label>
+<label class="mc-option"><input class="question-radio" data-q="31" name="q31" type="radio" value="D"/> D was limited to north-western New South Wales.</label>
+</div>
+</div>
+<div class="yn-row" style="flex-direction:column;">
+<div><span class="qnum-yn">32</span> <strong style="font-size:14px;">What did electron spin resonance (ESR) dating reveal?</strong></div>
+<div style="padding-left:32px; width:100%;">
+<label class="mc-option"><input class="question-radio" data-q="32" name="q32" type="radio" value="A"/> A Climate change was indeed the primary cause of extinction.</label>
+<label class="mc-option"><input class="question-radio" data-q="32" name="q32" type="radio" value="B"/> B Giant animals did not survive beyond 45,000 years ago.</label>
+<label class="mc-option"><input class="question-radio" data-q="32" name="q32" type="radio" value="C"/> C Some giant animals survived until 30,000 years ago.</label>
+<label class="mc-option"><input class="question-radio" data-q="32" name="q32" type="radio" value="D"/> D The Cuddie Springs site is younger than previously estimated.</label>
+</div>
+</div>
+</div>
+<div class="qblock">
+<h3>Questions 33–36</h3>
+<div class="instructions">
+          Complete each sentence with the correct ending, <strong>A–F</strong>, below.<br/>
+          Write the correct letter, <strong>A–F</strong>, in boxes 33–36.
+        </div>
+<div style="background:var(--bg-alt); padding:12px; border-radius:5px; margin-bottom:15px; font-size:13px; border:1px solid var(--border);">
+<strong>A</strong> is due to the fact that not enough time has passed.<br/>
+<strong>B</strong> is evidenced by the remains of their teeth.<br/>
+<strong>C</strong> is responsible for the disappearance of habitat.<br/>
+<strong>D</strong> is often responsible for a significant number of extinctions.<br/>
+<strong>E</strong> is theoretically based on a large herbivore population.<br/>
+<strong>F</strong> is a crucial factor that has yet to be resolved.
+        </div>
+<div class="yn-row">
+<span class="qnum-yn">33</span>
+<span class="yn-stem">The failure of a new species of large mammals to evolve</span>
+<select class="yn-select question" data-q="33">
+<option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">34</span>
+<span class="yn-stem">The extinction date of the large Australian animals</span>
+<select class="yn-select question" data-q="34">
+<option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">35</span>
+<span class="yn-stem">A reduction in the number of forest fires</span>
+<select class="yn-select question" data-q="35">
+<option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">36</span>
+<span class="yn-stem">The arrival of humans in a previously uninhabited area</span>
+<select class="yn-select question" data-q="36">
+<option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option>
+</select>
+</div>
+</div>
+<div class="qblock">
+<h3>Questions 37–40</h3>
+<div class="instructions">
+          Do the following statements agree with the claims of the writer in Reading Passage 3?<br/>
+          In boxes 37–40, write:<br/>
+<strong>YES</strong> if the statement agrees with the claims of the writer<br/>
+<strong>NO</strong> if the statement contradicts the claims of the writer<br/>
+<strong>NOT GIVEN</strong> if it is impossible to say what the writer thinks about this
+        </div>
+<div class="yn-row">
+<span class="qnum-yn">37</span>
+<span class="yn-stem">Mass extinction in Australia was limited to giant mammals.</span>
+<select class="yn-select question" data-q="37">
+<option value=""></option><option value="YES">YES</option><option value="NO">NO</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">38</span>
+<span class="yn-stem">Australia's climate became cooler about 50,000 years ago.</span>
+<select class="yn-select question" data-q="38">
+<option value=""></option><option value="YES">YES</option><option value="NO">NO</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">39</span>
+<span class="yn-stem">The wonambi snake was the biggest Australian carnivore.</span>
+<select class="yn-select question" data-q="39">
+<option value=""></option><option value="YES">YES</option><option value="NO">NO</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">40</span>
+<span class="yn-stem">Europeans caused the extinction of some smaller Australian mammals.</span>
+<select class="yn-select question" data-q="40">
+<option value=""></option><option value="YES">YES</option><option value="NO">NO</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<div class="part-tab">
+<span class="label">Passage 3</span>
+<span class="progress" id="progress-1">0 of 14</span>
+<div class="qnav" id="qnav-1"></div>
+</div>
+<div class="nav-arrows">
+<button class="arrow-btn" id="prevBtn">←</button>
+<button class="arrow-btn dark" id="nextBtn">→</button>
+</div>
+<button class="check-btn" id="finishBtn" title="Submit">✓</button>
+</div>
+<div class="highlight-popup" id="highlightPopup">
+<button id="hpHighlight"><span class="hp-swatch"></span>Highlight</button>
+<button id="hpRemove">Remove highlight</button>
+<button class="hp-close" id="hpClose">×</button>
+</div>
+<div class="overlay" id="overlay">
+<div class="modal" id="modal"></div>
+</div>
+<script>
+const TOTAL = 14;
+const Q_START = 27;
+const Q_END = 40;
+
+const KEY = {
+  27: ['B'],
+  28: ['B'],
+  29: ['D'],
+  30: ['A'],
+  31: ['B'],
+  32: ['C'],
+  33: ['A'],
+  34: ['F'],
+  35: ['C'],
+  36: ['D'],
+  37: ['NO'],
+  38: ['NOT GIVEN'],
+  39: ['NOT GIVEN'],
+  40: ['YES']
+};
+
+const answers = {};
+
+function normalize(v) { return (v || '').toString().trim().toUpperCase().replace(/\s+/g, ' '); }
+
+function isCorrect(n, val) {
+  const normVal = normalize(val);
+  return KEY[n].some(k => normalize(k) === normVal);
+}
+
+// Handle radio choices
+document.querySelectorAll('.question-radio').forEach(el => {
+  el.addEventListener('change', () => {
+    answers[el.dataset.q] = el.value;
+    updateNav();
+  });
+});
+
+document.querySelectorAll('select.question').forEach(el => {
+  const q = +el.dataset.q;
+  el.addEventListener('change', () => { answers[q] = el.value; updateNav(); });
+});
+
+const qnavEl = document.getElementById('qnav-1');
+const progressEl = document.getElementById('progress-1');
+let activeQ = Q_START;
+
+function buildNav() {
+  qnavEl.innerHTML = '';
+  for (let n = Q_START; n <= Q_END; n++) {
+    const btn = document.createElement('button');
+    btn.className = 'qbtn';
+    btn.textContent = n;
+    btn.dataset.n = n;
+    btn.addEventListener('click', () => scrollToQ(n));
+    qnavEl.appendChild(btn);
+  }
+}
+
+function updateNav() {
+  const answered = Object.keys(answers).filter(k => answers[k] !== undefined && answers[k] !== '').length;
+  progressEl.textContent = `${answered} of ${TOTAL}`;
+  qnavEl.querySelectorAll('.qbtn').forEach(btn => {
+    const n = +btn.dataset.n;
+    btn.classList.toggle('answered', !!answers[n] && answers[n] !== '');
+    btn.classList.toggle('current', n === activeQ);
+  });
+}
+
+function scrollToQ(n) {
+  activeQ = n;
+  const el = document.querySelector(`.question-radio[data-q="${n}"], .question[data-q="${n}"]`);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.focus({ preventScroll: true }); }
+  updateNav();
+}
+
+document.querySelectorAll('.question, .question-radio').forEach(el => {
+  el.addEventListener('focus', () => { activeQ = +el.dataset.q; updateNav(); });
+});
+
+document.getElementById('prevBtn').addEventListener('click', () => { if (activeQ > Q_START) scrollToQ(activeQ - 1); });
+document.getElementById('nextBtn').addEventListener('click', () => { if (activeQ < Q_END) scrollToQ(activeQ + 1); });
+
+buildNav();
+updateNav();
+
+function getBand(score) {
+  if (score >= 13) return '9.0';
+  if (score >= 12) return '8.5';
+  if (score >= 11) return '8.0';
+  if (score >= 10) return '7.5';
+  if (score >= 9)  return '7.0';
+  if (score >= 8)  return '6.5';
+  if (score >= 7)  return '6.0';
+  if (score >= 6)  return '5.5';
+  if (score >= 5)  return '5.0';
+  if (score >= 4)  return '4.5';
+  return '4.0';
+}
+
+function showResults() {
+  let score = 0;
+  const rows = [];
+  for (let n = Q_START; n <= Q_END; n++) {
+    const ok = isCorrect(n, answers[n]);
+    if (ok) score++;
+    rows.push({ n, given: answers[n] || '—', correct: KEY[n].join(' / '), ok });
+  }
+  const pct = Math.round(score / TOTAL * 100);
+  const band = getBand(score);
+  const color = pct >= 70 ? 'var(--correct)' : pct >= 50 ? '#d4800a' : 'var(--wrong)';
+
+  let html = `<h2>Your Results</h2>
+    <div class="score-row" style="color:${color}">${score} / ${TOTAL} <span>(${pct}%)</span></div>
+    <div class="band-row">Estimated Band: ${band}</div>
+    <table class="results-table">
+      <thead><tr><th>Q</th><th>Your Answer</th><th>Correct</th><th></th></tr></thead><tbody>`;
+  rows.forEach(r => {
+    html += `<tr>
+      <td><strong>${r.n}</strong></td>
+      <td>${r.given}</td>
+      <td>${r.correct}</td>
+      <td class="${r.ok ? 'mark-ok' : 'mark-bad'}">${r.ok ? '✓' : '✗'}</td>
+    </tr>`;
+  });
+  html += `</tbody></table>
+    <div class="actions">
+      <button class="secondary" onclick="document.getElementById('overlay').classList.remove('visible')">Review</button>
+    </div>`;
+
+  document.getElementById('modal').innerHTML = html;
+  document.getElementById('overlay').classList.add('visible');
+}
+
+document.getElementById('finishBtn').addEventListener('click', () => {
+  if (confirm('Submit and see your results?')) showResults();
+});
+
+document.getElementById('overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('overlay')) document.getElementById('overlay').classList.remove('visible');
+});
+
+document.getElementById('btn-dark').addEventListener('click', () => document.body.classList.add('dark'));
+document.getElementById('btn-light').addEventListener('click', () => document.body.classList.remove('dark'));
+
+let fontScale = 1;
+document.getElementById('btn-font-up').addEventListener('click', () => {
+  fontScale = Math.min(1.4, fontScale + 0.08);
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+});
+document.getElementById('btn-font-down').addEventListener('click', () => {
+  fontScale = Math.max(0.7, fontScale - 0.08);
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+});
+
+const splitter = document.getElementById('splitter');
+const leftPane = document.querySelector('.pane.left');
+let dragging = false, startX = 0, startW = 0;
+splitter.addEventListener('mousedown', e => { dragging = true; startX = e.clientX; startW = leftPane.offsetWidth; e.preventDefault(); });
+document.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  const newW = Math.max(200, Math.min(window.innerWidth - 250, startW + e.clientX - startX));
+  leftPane.style.width = newW + 'px';
+});
+document.addEventListener('mouseup', () => { dragging = false; });
+
+// ---- Selection Highlight ----
+const popup = document.getElementById('highlightPopup');
+let lastRange = null;
+
+function isInsideForm(node) {
+  while (node && node !== document.body) {
+    if (node.nodeType === 1 && /^(INPUT|SELECT|TEXTAREA|OPTION|BUTTON)$/.test(node.tagName)) return true;
+    node = node.parentNode;
+  }
+  return false;
+}
+
+function handleSelection() {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || sel.toString().trim() === '') { popup.classList.remove('visible'); return; }
+  const range = sel.getRangeAt(0);
+  if (isInsideForm(range.commonAncestorContainer)) { popup.classList.remove('visible'); return; }
+  const pane = range.commonAncestorContainer.parentElement?.closest('#passagePane, #questionsPane');
+  if (!pane) { popup.classList.remove('visible'); return; }
+  lastRange = range.cloneRange();
+  const rect = range.getBoundingClientRect();
+  popup.style.left = (rect.left + rect.width / 2 - popup.offsetWidth / 2 + window.scrollX) + 'px';
+  popup.style.top = (rect.top - 48 + window.scrollY) + 'px';
+  popup.classList.add('visible');
+}
+
+document.getElementById('passagePane').addEventListener('mouseup', handleSelection);
+document.getElementById('questionsPane').addEventListener('mouseup', handleSelection);
+
+document.getElementById('hpHighlight').addEventListener('click', () => {
+  if (!lastRange) return;
+  const mark = document.createElement('mark');
+  mark.className = 'user-highlight';
+  try { lastRange.surroundContents(mark); }
+  catch (e) {
+    try { mark.appendChild(lastRange.extractContents()); lastRange.insertNode(mark); } catch (e2) {}
+  }
+  window.getSelection().removeAllRanges();
+  popup.classList.remove('visible');
+});
+
+document.getElementById('hpRemove').addEventListener('click', () => {
+  document.querySelectorAll('.user-highlight').forEach(m => {
+    const parent = m.parentNode;
+    while (m.firstChild) parent.insertBefore(m.firstChild, m);
+    parent.removeChild(m);
+    parent.normalize();
+  });
+  popup.classList.remove('visible');
+});
+document.getElementById('hpClose').addEventListener('click', () => popup.classList.remove('visible'));
+</script>
+<script>
+const TEST_ID = 'lost-animals-australia-t3';
+const TEST_DURATION_MIN = 20;
+
+const C1_WORDS = [
+  { word: 'extinction', def: 'The state or process of a species, family, or larger group being or becoming extinct' },
+  { word: 'arid', def: 'Having little or no rain; too dry or barren to support vegetation' },
+  { word: 'coincide', def: 'Occur at the same time' },
+  { word: 'herbivore', def: 'An animal that feeds on plants' },
+  { word: 'excavation', def: 'The action of excavating something, especially an archaeological site' },
+  { word: 'unreliable', def: 'Not able to be relied upon' },
+  { word: 'proponent', def: 'A person who advocates a theory, proposal, or project' },
+  { word: 'deliberate', def: 'Done consciously and intentionally' },
+  { word: 'vegetation', def: 'Plants considered collectively, especially those found in a particular area' },
+  { word: 'unresolved', def: 'Not cleared up, dealt with, or successfully completed' }
+];
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="db.js"></script>
+
+
+<script src="reading-test-common.js"></script>
+<script src="highlight-auto-dismiss.js"></script>
+<script src="activity-bridge-v15.js"></script>
+</body>
+</html>

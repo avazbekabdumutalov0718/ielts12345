@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IELTS Reading – Listening to the Ocean</title>
+<link href="reading-test-common.css" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #ffffff; --bg-alt: #f4f5f7; --bg-panel: #ffffff;
+    --text: #111111; --text-muted: #555; --border: #d4d4d4;
+    --border-strong: #333; --accent: #e51e2a;
+    --select-bg: #cfe3ff; --select-active: #1e6cd8;
+    --footer-bg: #f4f5f7; --btn-bg: #ededed;
+    --arrow-bg: #1f1f1f; --arrow-fg: #ffffff;
+    --correct: #1a8a3c; --wrong: #cc2222;
+  }
+  body.dark {
+    --bg: #1a1a1d; --bg-alt: #232327; --bg-panel: #1f1f22;
+    --text: #ececec; --text-muted: #b5b5b5; --border: #3a3a3f;
+    --border-strong: #cfcfcf; --accent: #ff5c66;
+    --select-bg: #2c4d7a; --select-active: #4a8be0;
+    --footer-bg: #232327; --btn-bg: #2e2e33;
+    --arrow-bg: #ececec; --arrow-fg: #1a1a1d;
+    --correct: #4ed684; --wrong: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+
+  .topbar { height: 50px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; background: var(--bg); position: relative; z-index: 5; }
+  .logo { font-weight: 800; font-size: 22px; letter-spacing: 1px; color: var(--accent); margin-right: 20px; user-select: none; }
+  .test-taker { font-size: 14px; font-weight: 700; }
+  .top-controls { margin-left: auto; display: flex; gap: 2px; align-items: center; }
+  .top-controls .icon-btn, .top-controls .text-btn { background: transparent; border: none; color: var(--text); padding: 6px 10px; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s; }
+  .top-controls .icon-btn:hover, .top-controls .text-btn:hover { background: var(--bg-alt); }
+  .top-controls .icon-btn svg { width: 20px; height: 20px; display: block; }
+  .top-controls .text-btn { font-weight: 700; font-size: 16px; font-family: inherit; }
+  .top-controls .divider { width: 1px; height: 26px; background: var(--border); margin: 0 6px; }
+
+  .part-header { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 10px 20px; }
+  .part-header h2 { margin: 0 0 3px 0; font-size: 14px; font-weight: 700; }
+  .part-header p { margin: 0; font-size: 12px; color: var(--text-muted); }
+
+  .main { position: absolute; top: 50px; left: 0; right: 0; bottom: 50px; display: flex; flex-direction: column; }
+  .panes { flex: 1; display: flex; overflow: hidden; position: relative; }
+  .pane { overflow-y: auto; padding: 18px 28px; background: var(--bg-panel); line-height: 1.55; font-size: calc(14.5px * var(--font-scale, 1)); }
+  .pane.left { width: 50%; }
+  .pane.right { flex: 1; }
+  .splitter { width: 10px; background: var(--bg-alt); border-left: 1px solid var(--border); border-right: 1px solid var(--border); cursor: col-resize; position: relative; user-select: none; flex-shrink: 0; }
+  .splitter::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; background: var(--bg); border: 1px solid var(--border); border-radius: 3px; background-image: linear-gradient(to right, transparent 6px, var(--text) 6px, var(--text) 7px, transparent 7px, transparent 11px, var(--text) 11px, var(--text) 12px, transparent 12px); }
+
+  .passage h1 { font-size: 16px; font-weight: 700; margin: 0 0 14px 0; text-align: center; }
+  .passage p { margin: 0 0 11px 0; text-align: justify; }
+
+  .qblock { margin-bottom: 28px; }
+  .qblock h3 { margin: 0 0 6px 0; font-size: 14.5px; font-weight: 700; }
+  .qblock .instructions { font-size: 13px; margin-bottom: 12px; line-height: 1.6; }
+  .qblock .instructions strong { font-weight: 700; }
+
+  /* Row styles for different question types */
+  .yn-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; padding: 6px 8px; border-radius: 4px; border: 1px solid transparent; }
+  .yn-row:focus-within { border-color: var(--select-active); }
+  .qnum-yn { display: inline-block; min-width: 22px; font-weight: 700; border: 1px solid var(--border-strong); padding: 0 4px; text-align: center; font-size: 12px; flex-shrink: 0; margin-top: 3px; }
+  .yn-stem { flex: 1; font-size: 14px; line-height: 1.5; }
+  .yn-select { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 4px 6px; font-size: 13px; font-family: inherit; border-radius: 3px; min-width: 110px; flex-shrink: 0; }
+
+  /* Footer */
+  .footer { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: var(--footer-bg); border-top: 1px solid var(--border); display: flex; align-items: center; padding: 0 12px; gap: 8px; z-index: 4; }
+  .part-tab { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 3px; border: 1px solid var(--border); background: var(--bg); user-select: none; }
+  .part-tab .label { font-weight: 700; font-size: 13px; }
+  .part-tab .progress { font-size: 11.5px; color: var(--text-muted); }
+  .qnav { display: flex; gap: 3px; margin-left: 2px; flex-wrap: wrap; }
+  .qbtn { width: 22px; height: 22px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 2px; font-family: inherit; }
+  .qbtn:hover { background: var(--bg-alt); }
+  .qbtn.current { border: 2px solid var(--text); font-weight: 700; }
+  .qbtn.answered { background: var(--bg-alt); }
+  .nav-arrows { display: flex; gap: 4px; margin-left: auto; }
+  .arrow-btn { width: 32px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .arrow-btn.dark { background: var(--arrow-bg); color: var(--arrow-fg); border-color: var(--arrow-bg); }
+  .check-btn { width: 36px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-left: 4px; }
+
+  .user-highlight { background: #f4ff55; padding: 1px 0; }
+  body.dark .user-highlight { background: #8a9100; color: #fff; }
+
+  .highlight-popup { position: absolute; display: none; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.18); padding: 4px; z-index: 200; align-items: center; gap: 2px; font-size: 13.5px; user-select: none; }
+  .highlight-popup.visible { display: inline-flex; }
+  .highlight-popup button { background: transparent; border: none; padding: 8px 12px; cursor: pointer; color: var(--text); border-radius: 5px; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 13.5px; font-weight: 500; }
+  .highlight-popup button:hover { background: var(--bg-alt); }
+  .highlight-popup .hp-swatch { display: inline-block; width: 16px; height: 16px; background: #f4ff55; border-radius: 3px; flex-shrink: 0; }
+  .highlight-popup .hp-close { padding: 6px 10px; font-size: 18px; color: var(--text-muted); line-height: 1; }
+
+  .pane::-webkit-scrollbar { width: 10px; }
+  .pane::-webkit-scrollbar-track { background: var(--bg-alt); }
+  .pane::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+
+  /* Results overlay */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-start; justify-content: center; z-index: 100; padding: 20px; overflow-y: auto; }
+  .overlay.visible { display: flex; }
+  .modal { background: var(--bg-panel); color: var(--text); border: 1px solid var(--border); border-radius: 8px; max-width: 600px; width: 100%; padding: 28px 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); margin: auto; }
+  .modal h2 { margin: 0 0 10px 0; color: var(--accent); font-size: 22px; text-align: center; }
+  .score-row { text-align: center; font-size: 28px; font-weight: 800; margin: 6px 0 4px; }
+  .score-row span { font-size: 16px; font-weight: 400; color: var(--text-muted); }
+  .band-row { text-align: center; font-size: 18px; font-weight: 700; margin-bottom: 18px; color: var(--accent); }
+  .results-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 18px; }
+  .results-table th { background: var(--bg-alt); padding: 6px 10px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border); }
+  .results-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .results-table tr:last-child td { border-bottom: none; }
+  .mark-ok  { color: var(--correct); font-weight: 700; font-size: 15px; }
+  .mark-bad { color: var(--wrong);   font-weight: 700; font-size: 15px; }
+  .modal .actions { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+  .modal button { background: var(--accent); color: #fff; border: none; padding: 9px 22px; font-size: 14px; font-weight: 600; border-radius: 4px; cursor: pointer; }
+  .modal button.secondary { background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); }
+  .modal button:hover { opacity: 0.9; }
+</style>
+<link href="max-bridge.css?v=1" rel="stylesheet"/><script defer="" src="max-bridge.js?v=1"></script>
+<link href="reading-v12.css" rel="stylesheet"/><script defer="True" src="reading-v12.js"></script></head>
+<body>
+<div class="topbar">
+<div class="logo">IELTS</div>
+<div class="test-taker">VIVID IELTS</div>
+<div class="top-controls">
+<button class="icon-btn" id="btn-light" title="Light mode">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="4"></circle>
+<line x1="12" x2="12" y1="2" y2="4"></line><line x1="12" x2="12" y1="20" y2="22"></line>
+<line x1="4.93" x2="6.34" y1="4.93" y2="6.34"></line><line x1="17.66" x2="19.07" y1="17.66" y2="19.07"></line>
+<line x1="2" x2="4" y1="12" y2="12"></line><line x1="20" x2="22" y1="12" y2="12"></line>
+<line x1="4.93" x2="6.34" y1="19.07" y2="17.66"></line><line x1="17.66" x2="19.07" y1="6.34" y2="4.93"></line>
+</svg>
+</button>
+<button class="icon-btn" id="btn-dark" title="Dark mode">
+<svg fill="currentColor" viewbox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+</button>
+<div class="divider"></div>
+<button class="text-btn" id="btn-font-down" title="Decrease font size">A-</button>
+<button class="text-btn" id="btn-font-up" title="Increase font size">A+</button>
+</div>
+</div>
+<div class="main">
+<div class="part-header">
+<h2>Reading Passage 1</h2>
+<p>Read the text and answer questions 1–13.</p>
+</div>
+<div class="panes">
+<div class="pane left" id="passagePane">
+<div class="passage">
+<div style="font-weight:700;font-size:14px;margin-bottom:4px;">READING PASSAGE 1</div>
+<div style="font-size:13px;margin-bottom:14px;color:var(--text-muted);">You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.</div>
+<h1>Listening to the Ocean</h1>
+<div style="font-style: italic; color: var(--text-muted); margin-bottom: 18px; text-align: center;">The results of some recent research answer some long-standing questions.</div>
+<p><strong>A</strong> The oceans cover more than 70 per cent of the planet's surface, yet until quite recently we knew less about their depths than about the surface of the Moon. The Moon has been far more accessible to study because astronomers have long been able to look at its surface, first with the naked eye and then with the telescope, both instruments that focus light. Until the twentieth century, however, no instruments were available for the study of Earth's oceans: light, which can travel trillions of kilometers through the vast vacuum of space, cannot penetrate very far in seawater.</p>
+<p><strong>B</strong> It turns out that for penetrating water the best instrument is sound. Curious investigators have long been fascinated by sound and the way it travels in water. As early as 1490, the artist and scientist Leonardo da Vinci observed: 'If you cause your ship to stop and place the head of a long tube in the water and place the outer extremity to your ear, you will hear ships at a great distance from you.' It was not until 1826 that two scientists, Colladon and Sturm, accurately measured the speed of sound in water. Using a long tube to listen under water (as da Vinci had suggested), they recorded how fast the sound of a submerged bell traveled across Lake Geneva in Switzerland. What these investigators demonstrated was that water is an excellent medium for sound, transmitting it almost five times faster than its speed in air.</p>
+<p><strong>C</strong> A number of factors influence how far sound travels underwater and how long it lasts, including particles, salinity, temperature and pressure. Particles in seawater can reflect, scatter and absorb certain frequencies of sound, just as certain wavelengths of light may be reflected, scattered and absorbed by specific types of particles in the atmosphere. In 1943, Maurice Ewing and J. L. Worzel conducted an experiment to test the theory that low-frequency waves, which are less vulnerable than higher frequencies to scattering and absorption, should be able to travel great distances if the sound source is placed correctly. The researchers set off an underwater explosion and learned that it was detected easily by receivers 3,200 kilometers away. In analyzing the results of this test, they discovered a kind of 'sound pipeline', known as 'the deep sound channel'. Sound introduced into this channel of water could travel thousands of kilometers with minimal loss of signal.</p>
+<p><strong>D</strong> The US Navy was quick to appreciate the usefulness of low-frequency sound and the deep sound channel. They developed the Sound Surveillance System (SOSUS), which involved underwater microphones, called hydrophones, that were placed on the ocean bottom and connected by cables to onshore processing centers. It was Christopher Clark of Cornell University who soon realised that SOSUS could be used to listen to whales. Using a SOSUS receiver in the West Indies, he could hear whales that were 1,770 kilometers away.</p>
+<p><strong>E</strong> Whales are the biggest of Earth's creatures, yet these animals are also remarkably elusive. Scientists wishing to observe blue whales must simply wait in their ships for the whales to surface. A few whales have been tracked briefly in the wild in this way, but not for very great distances, and much about them remains unknown. But by using SOSUS, scientists can track the whales and position them on a map. Moreover, they can track not just one whale at a time, but many creatures simultaneously. They can also learn to distinguish whale calls; researchers have detected changes in the calls of finback whales as the seasons change, and have found that blue whales in different regions of the Pacific Ocean have different calls.</p>
+<p><strong>F</strong> SOSUS has also proved instrumental in obtaining information crucial to our understanding of climate. The system has enabled researchers to begin making ocean temperature measurements on a global scale, measurements that are key to understanding the workings of heat transfer between the ocean and the atmosphere. The ocean plays an enormous role in determining air temperature - the heat capacity in only the upper few meters of the ocean is thought to be equal to all of the heat in the entire atmosphere. For sound waves traveling horizontally in the ocean, speed is largely a function of temperature. Thus, the travel time of a wave of sound between two points is a sensitive indicator of the average temperature along its path. Transmitting sound in numerous directions through the deep sound channel can give scientists measurements spanning vast areas of the globe. Thousands of sound paths in the ocean can be pieced together into a map of global ocean temperatures, and by repeating measurements along the same paths over time, scientists can track changes in temperature over months or years.</p>
+<p><strong>G</strong> Researchers are also using other acoustic techniques to monitor climate. Oceanographer Jeff Nystuen, for example, has explored the use of sound to measure rainfall over the ocean. Monitoring changing global rainfall patterns will contribute to understanding major climate change, as well as the weather phenomenon known as El Niño. Since 1985, Nystuen has used hydrophones to listen to rain over the ocean, acoustically measuring not only the rainfall rate but also the rainfall type, ranging from drizzle to thunderstorms. By using the sound of rain underwater as a 'natural' rain gauge, the measurement of rainfall over the oceans has become available to climatologists. In this way, modern society continues to benefit from the investigations of those who, like Leonardo da Vinci, pursued the answers to some basic questions of nature.</p>
+</div>
+</div>
+<div class="splitter" id="splitter"></div>
+<div class="pane right" id="questionsPane">
+<div class="qblock">
+<h3>Questions 1–4</h3>
+<div class="instructions">
+          Do the following statements agree with the information given in Reading Passage 1?<br/>
+          In boxes 1–4 on your answer sheet, write<br/><br/>
+<strong>TRUE</strong>             if the statement agrees with the information<br/>
+<strong>FALSE</strong>           if the statement contradicts the information<br/>
+<strong>NOT GIVEN</strong>    if there is no information on this
+        </div>
+<div class="yn-row">
+<span class="qnum-yn">1</span>
+<span class="yn-stem">In the past, it was easier for scientists to study the Moon than the oceans.</span>
+<select class="yn-select question" data-q="1">
+<option value=""></option>
+<option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">2</span>
+<span class="yn-stem">Techniques for investigating the Moon are the same as techniques for researching the ocean.</span>
+<select class="yn-select question" data-q="2">
+<option value=""></option>
+<option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">3</span>
+<span class="yn-stem">Measuring temperature changes in the ocean using sound is more time-consuming than other methods.</span>
+<select class="yn-select question" data-q="3">
+<option value=""></option>
+<option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">4</span>
+<span class="yn-stem">Hydrophones can distinguish different kinds of rain.</span>
+<select class="yn-select question" data-q="4">
+<option value=""></option>
+<option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option>
+</select>
+</div>
+</div>
+<div class="qblock">
+<h3>Questions 5–8</h3>
+<div class="instructions">
+          Reading Passage 1 has seven paragraphs, <strong>A–G</strong>.<br/>
+          Which paragraph contains the following information?<br/>
+          Write the correct letter, <strong>A–G</strong>, in boxes 5–8 on your answer sheet.<br/>
+<em>NB You may use any letter more than once.</em>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">5</span>
+<span class="yn-stem">5 examples of things that affect the distance sound can travel in water</span>
+<select class="yn-select question" data-q="5">
+<option value=""></option>
+<option value="A">A</option><option value="B">B</option><option value="C">C</option>
+<option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">6</span>
+<span class="yn-stem">details of the connection between ocean temperatures and climate</span>
+<select class="yn-select question" data-q="6">
+<option value=""></option>
+<option value="A">A</option><option value="B">B</option><option value="C">C</option>
+<option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">7</span>
+<span class="yn-stem">details of ways in which light and sound are similar</span>
+<select class="yn-select question" data-q="7">
+<option value=""></option>
+<option value="A">A</option><option value="B">B</option><option value="C">C</option>
+<option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">8</span>
+<span class="yn-stem">reference to a long-term study of different types of weather</span>
+<select class="yn-select question" data-q="8">
+<option value=""></option>
+<option value="A">A</option><option value="B">B</option><option value="C">C</option>
+<option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option>
+</select>
+</div>
+</div>
+<div class="qblock">
+<h3>Questions 9–13</h3>
+<div class="instructions">
+          Choose the correct letter, <strong>A, B, C</strong> or <strong>D</strong>.<br/>
+          Write the correct letter in boxes 9–13 on your answer sheet.
+        </div>
+<div class="yn-row">
+<span class="qnum-yn">9</span>
+<span class="yn-stem">
+            According to the passage, who conducted research into the rate at which sound travels in water?<br/>
+<strong>A</strong> Leonardo da Vinci<br/>
+<strong>B</strong> Colladon and Sturm<br/>
+<strong>C</strong> Ewing and Worzel<br/>
+<strong>D</strong> Jeff Nystuen
+          </span>
+<select class="yn-select question" data-q="9">
+<option value=""></option>
+<option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">10</span>
+<span class="yn-stem">
+            According to the passage, who conducted research into the distances certain types of sound waves travel in water?<br/>
+<strong>A</strong> Leonardo da Vinci<br/>
+<strong>B</strong> Colladon and Sturm<br/>
+<strong>C</strong> Ewing and Worzel<br/>
+<strong>D</strong> Christopher Clark
+          </span>
+<select class="yn-select question" data-q="10">
+<option value=""></option>
+<option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">11</span>
+<span class="yn-stem">
+            SOSUS allows whale researchers to<br/>
+<strong>A</strong> follow a number of whales at the same time.<br/>
+<strong>B</strong> protect whales as they migrate.<br/>
+<strong>C</strong> imitate whale calls of different species.<br/>
+<strong>D</strong> change the whales' direction of travel.
+          </span>
+<select class="yn-select question" data-q="11">
+<option value=""></option>
+<option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">12</span>
+<span class="yn-stem">
+            Finback whale calls change<br/>
+<strong>A</strong> when scientists track them.<br/>
+<strong>B</strong> at different times of the year.<br/>
+<strong>C</strong> when whales communicate with other species.<br/>
+<strong>D</strong> when whales come to the surface.
+          </span>
+<select class="yn-select question" data-q="12">
+<option value=""></option>
+<option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+</select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">13</span>
+<span class="yn-stem">
+            SOSUS allows scientists to<br/>
+<strong>A</strong> make accurate maps of the ocean floor.<br/>
+<strong>B</strong> measure water level changes.<br/>
+<strong>C</strong> investigate ocean currents.<br/>
+<strong>D</strong> measure variations in temperature.
+          </span>
+<select class="yn-select question" data-q="13">
+<option value=""></option>
+<option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<div class="part-tab">
+<span class="label">Part 1</span>
+<span class="progress" id="progress-1">0 of 13</span>
+<div class="qnav" id="qnav-1"></div>
+</div>
+<div class="nav-arrows">
+<button class="arrow-btn" id="prevBtn">←</button>
+<button class="arrow-btn dark" id="nextBtn">→</button>
+</div>
+<button class="check-btn" id="finishBtn" title="Submit">✓</button>
+</div>
+<div class="highlight-popup" id="highlightPopup">
+<button id="hpHighlight"><span class="hp-swatch"></span>Highlight</button>
+<button id="hpRemove">Remove highlight</button>
+<button class="hp-close" id="hpClose">×</button>
+</div>
+<div class="overlay" id="overlay">
+<div class="modal" id="modal"></div>
+</div>
+<script>
+const TOTAL = 13;
+const Q_START = 1;
+const Q_END = 13;
+
+// JAVOBLAR KALITI
+const KEY = {
+  1:  ['TRUE'],
+  2:  ['FALSE'],
+  3:  ['NOT GIVEN'],
+  4:  ['TRUE'],
+  5:  ['C'],
+  6:  ['F'],
+  7:  ['C'],
+  8:  ['G'],
+  9:  ['B'],
+  10: ['C'],
+  11: ['A'],
+  12: ['B'],
+  13: ['D']
+};
+
+const answers = {};
+
+function normalize(v) { return (v || '').toString().trim().toUpperCase().replace(/\s+/g, ' '); }
+function isCorrect(n, val) {
+  const given = normalize(val);
+  return KEY[n].some(a => normalize(a) === given);
+}
+
+document.querySelectorAll('select.question').forEach(el => {
+  const q = +el.dataset.q;
+  el.addEventListener('change', () => { answers[q] = el.value; updateNav(); });
+});
+document.querySelectorAll('input.question').forEach(el => {
+  const q = +el.dataset.q;
+  el.addEventListener('input', () => { answers[q] = el.value; updateNav(); });
+});
+
+const qnavEl = document.getElementById('qnav-1');
+const progressEl = document.getElementById('progress-1');
+let activeQ = Q_START;
+
+function buildNav() {
+  qnavEl.innerHTML = '';
+  for (let n = Q_START; n <= Q_END; n++) {
+    const btn = document.createElement('button');
+    btn.className = 'qbtn';
+    btn.textContent = n;
+    btn.dataset.n = n;
+    btn.addEventListener('click', () => scrollToQ(n));
+    qnavEl.appendChild(btn);
+  }
+}
+function updateNav() {
+  const answered = Object.keys(answers).filter(k => answers[k] !== undefined && answers[k] !== '').length;
+  progressEl.textContent = `${answered} of ${TOTAL}`;
+  qnavEl.querySelectorAll('.qbtn').forEach(btn => {
+    const n = +btn.dataset.n;
+    btn.classList.toggle('answered', !!answers[n] && answers[n] !== '');
+    btn.classList.toggle('current', n === activeQ);
+  });
+}
+function scrollToQ(n) {
+  activeQ = n;
+  const el = document.querySelector(`.question[data-q="${n}"]`);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.focus({ preventScroll: true }); }
+  updateNav();
+}
+document.querySelectorAll('.question').forEach(el => {
+  el.addEventListener('focus', () => { activeQ = +el.dataset.q; updateNav(); });
+});
+document.getElementById('prevBtn').addEventListener('click', () => { if (activeQ > Q_START) scrollToQ(activeQ - 1); });
+document.getElementById('nextBtn').addEventListener('click', () => { if (activeQ < Q_END) scrollToQ(activeQ + 1); });
+
+buildNav();
+updateNav();
+
+function getBand(score) {
+  if (score >= 13) return '9.0';
+  if (score >= 12) return '8.5';
+  if (score >= 11) return '8.0';
+  if (score >= 10) return '7.5';
+  if (score >= 9)  return '7.0';
+  if (score >= 8)  return '6.5';
+  if (score >= 7)  return '6.0';
+  if (score >= 6)  return '5.5';
+  if (score >= 5)  return '5.0';
+  if (score >= 4)  return '4.5';
+  if (score >= 3)  return '4.0';
+  return '3.5';
+}
+function showResults() {
+  let score = 0;
+  const rows = [];
+  for (let n = Q_START; n <= Q_END; n++) {
+    const ok = isCorrect(n, answers[n]);
+    if (ok) score++;
+    rows.push({ n, given: answers[n] || '—', correct: KEY[n][0], ok });
+  }
+  const pct = Math.round(score / TOTAL * 100);
+  const band = getBand(score);
+  const color = pct >= 70 ? 'var(--correct)' : pct >= 50 ? '#d4800a' : 'var(--wrong)';
+
+  let html = `<h2>Your Results</h2>
+    <div class="score-row" style="color:${color}">${score} / ${TOTAL} <span>(${pct}%)</span></div>
+    <div class="band-row">IELTS Band: ${band}</div>
+    <table class="results-table">
+      <thead><tr><th>Q</th><th>Your Answer</th><th>Correct</th><th></th></tr></thead><tbody>`;
+  rows.forEach(r => {
+    html += `<tr>
+      <td><strong>${r.n}</strong></td>
+      <td>${r.given}</td>
+      <td>${r.correct}</td>
+      <td class="${r.ok ? 'mark-ok' : 'mark-bad'}">${r.ok ? '✓' : '✗'}</td>
+    </tr>`;
+  });
+  html += `</tbody></table>
+    <div class="actions">
+      <button class="secondary" onclick="document.getElementById('overlay').classList.remove('visible')">Review</button>
+    </div>`;
+
+  document.getElementById('modal').innerHTML = html;
+  document.getElementById('overlay').classList.add('visible');
+}
+document.getElementById('finishBtn').addEventListener('click', () => {
+  if (confirm('Submit and see your results?')) showResults();
+});
+document.getElementById('overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('overlay')) document.getElementById('overlay').classList.remove('visible');
+});
+
+document.getElementById('btn-dark').addEventListener('click', () => document.body.classList.add('dark'));
+document.getElementById('btn-light').addEventListener('click', () => document.body.classList.remove('dark'));
+
+let fontScale = 1;
+document.getElementById('btn-font-up').addEventListener('click', () => {
+  fontScale = Math.min(1.4, fontScale + 0.08);
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+});
+document.getElementById('btn-font-down').addEventListener('click', () => {
+  fontScale = Math.max(0.7, fontScale - 0.08);
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+});
+
+const splitter = document.getElementById('splitter');
+const leftPane = document.querySelector('.pane.left');
+let dragging = false, startX = 0, startW = 0;
+splitter.addEventListener('mousedown', e => { dragging = true; startX = e.clientX; startW = leftPane.offsetWidth; e.preventDefault(); });
+document.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  const newW = Math.max(200, Math.min(window.innerWidth - 250, startW + e.clientX - startX));
+  leftPane.style.width = newW + 'px';
+});
+document.addEventListener('mouseup', () => { dragging = false; });
+
+// ---- Highlight funksiyalari ----
+const popup = document.getElementById('highlightPopup');
+let lastRange = null;
+
+function isInsideForm(node) {
+  while (node && node !== document.body) {
+    if (node.nodeType === 1 && /^(INPUT|SELECT|TEXTAREA|OPTION|BUTTON)$/.test(node.tagName)) return true;
+    node = node.parentNode;
+  }
+  return false;
+}
+function handleSelection() {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || sel.toString().trim() === '') { popup.classList.remove('visible'); return; }
+  const range = sel.getRangeAt(0);
+  if (isInsideForm(range.commonAncestorContainer)) { popup.classList.remove('visible'); return; }
+  const pane = range.commonAncestorContainer.parentElement?.closest('#passagePane, #questionsPane');
+  if (!pane) { popup.classList.remove('visible'); return; }
+  lastRange = range.cloneRange();
+  const rect = range.getBoundingClientRect();
+  popup.style.left = (rect.left + rect.width / 2 - popup.offsetWidth / 2 + window.scrollX) + 'px';
+  popup.style.top = (rect.top - 48 + window.scrollY) + 'px';
+  popup.classList.add('visible');
+}
+document.getElementById('passagePane').addEventListener('mouseup', handleSelection);
+document.getElementById('questionsPane').addEventListener('mouseup', handleSelection);
+
+document.getElementById('hpHighlight').addEventListener('click', () => {
+  if (!lastRange) return;
+  const mark = document.createElement('mark');
+  mark.className = 'user-highlight';
+  try { lastRange.surroundContents(mark); }
+  catch (e) {
+    try { mark.appendChild(lastRange.extractContents()); lastRange.insertNode(mark); } catch (e2) {}
+  }
+  window.getSelection().removeAllRanges();
+  popup.classList.remove('visible');
+});
+document.getElementById('hpRemove').addEventListener('click', () => {
+  document.querySelectorAll('.user-highlight').forEach(m => {
+    const parent = m.parentNode;
+    while (m.firstChild) parent.insertBefore(m.firstChild, m);
+    parent.removeChild(m);
+    parent.normalize();
+  });
+  popup.classList.remove('visible');
+});
+document.getElementById('hpClose').addEventListener('click', () => popup.classList.remove('visible'));
+</script>
+<script>
+const TEST_ID = 'listening-to-the-ocean-t2';
+const TEST_DURATION_MIN = 20;
+
+const C1_WORDS = [
+  { word: 'penetrate', def: 'To force a way into or through something' },
+  { word: 'vacuum', def: 'A space entirely devoid of matter' },
+  { word: 'salinity', def: 'The concentration of dissolved salts in water' },
+  { word: 'vulnerable', def: 'Susceptible to physical or emotional harm' },
+  { word: 'pipeline', def: 'A direct channel for information or materials' },
+  { word: 'surveillance', def: 'Close observation, especially of a suspected spy or criminal' },
+  { word: 'elusive', def: 'Difficult to find, catch, or achieve' },
+  { word: 'simultaneously', def: 'At the same time' },
+  { word: 'acoustic', def: 'Relating to sound or the sense of hearing' },
+  { word: 'indicator', def: 'A thing, especially a trend or fact, that indicates the state or level of something' }
+];
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="db.js"></script>
+
+
+<script src="reading-test-common.js"></script>
+<script src="highlight-auto-dismiss.js"></script>
+<script src="activity-bridge-v15.js"></script>
+</body>
+</html>

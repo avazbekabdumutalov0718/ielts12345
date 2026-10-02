@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IELTS Reading – Bird Migration</title>
+<link href="reading-test-common.css" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #ffffff; --bg-alt: #f4f5f7; --bg-panel: #ffffff;
+    --text: #111111; --text-muted: #555; --border: #d4d4d4;
+    --border-strong: #333; --accent: #e51e2a;
+    --select-bg: #cfe3ff; --select-active: #1e6cd8;
+    --footer-bg: #f4f5f7; --btn-bg: #ededed;
+    --arrow-bg: #1f1f1f; --arrow-fg: #ffffff;
+    --correct: #1a8a3c; --wrong: #cc2222;
+  }
+  body.dark {
+    --bg: #1a1a1d; --bg-alt: #232327; --bg-panel: #1f1f22;
+    --text: #ececec; --text-muted: #b5b5b5; --border: #3a3a3f;
+    --border-strong: #cfcfcf; --accent: #ff5c66;
+    --select-bg: #2c4d7a; --select-active: #4a8be0;
+    --footer-bg: #232327; --btn-bg: #2e2e33;
+    --arrow-bg: #ececec; --arrow-fg: #1a1a1d;
+    --correct: #4ed684; --wrong: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+  .topbar { height: 50px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; background: var(--bg); position: relative; z-index: 5; }
+  .logo { font-weight: 800; font-size: 22px; letter-spacing: 1px; color: var(--accent); margin-right: 20px; user-select: none; }
+  .test-taker { font-size: 14px; font-weight: 700; }
+  .top-controls { margin-left: auto; display: flex; gap: 2px; align-items: center; }
+  .top-controls .icon-btn, .top-controls .text-btn { background: transparent; border: none; color: var(--text); padding: 6px 10px; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s; }
+  .top-controls .icon-btn:hover, .top-controls .text-btn:hover { background: var(--bg-alt); }
+  .top-controls .icon-btn svg { width: 20px; height: 20px; display: block; }
+  .top-controls .text-btn { font-weight: 700; font-size: 16px; font-family: inherit; }
+  .top-controls .divider { width: 1px; height: 26px; background: var(--border); margin: 0 6px; }
+  .part-header { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 10px 20px; }
+  .part-header h2 { margin: 0 0 3px 0; font-size: 14px; font-weight: 700; }
+  .part-header p { margin: 0; font-size: 12px; color: var(--text-muted); }
+  .main { position: absolute; top: 50px; left: 0; right: 0; bottom: 50px; display: flex; flex-direction: column; }
+  .panes { flex: 1; display: flex; overflow: hidden; position: relative; }
+  .pane { overflow-y: auto; padding: 18px 28px; background: var(--bg-panel); line-height: 1.55; font-size: calc(14.5px * var(--font-scale, 1)); }
+  .pane.left { width: 50%; }
+  .pane.right { flex: 1; }
+  .splitter { width: 10px; background: var(--bg-alt); border-left: 1px solid var(--border); border-right: 1px solid var(--border); cursor: col-resize; position: relative; user-select: none; flex-shrink: 0; }
+  .splitter::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; background: var(--bg); border: 1px solid var(--border); border-radius: 3px; background-image: linear-gradient(to right, transparent 6px, var(--text) 6px, var(--text) 7px, transparent 7px, transparent 11px, var(--text) 11px, var(--text) 12px, transparent 12px); }
+  .passage h1 { font-size: 16px; font-weight: 700; margin: 0 0 14px 0; text-align: center; }
+  .passage p { margin: 0 0 11px 0; text-align: justify; }
+  .qblock { margin-bottom: 28px; }
+  .qblock h3 { margin: 0 0 6px 0; font-size: 14.5px; font-weight: 700; }
+  .qblock .instructions { font-size: 13px; margin-bottom: 12px; line-height: 1.6; }
+  .heading-list { border: 1px solid var(--border); background: var(--bg-alt); padding: 12px 16px; margin: 10px 0 16px; font-size: 13.5px; }
+  .heading-list .title { font-weight: 700; text-align: center; margin-bottom: 8px; }
+  .heading-list div { margin-bottom: 4px; }
+  .yn-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; padding: 6px 8px; border-radius: 4px; border: 1px solid transparent; }
+  .yn-row:focus-within { border-color: var(--select-active); }
+  .qnum-yn { display: inline-block; min-width: 26px; font-weight: 700; border: 1px solid var(--border-strong); padding: 0 4px; text-align: center; font-size: 12px; flex-shrink: 0; margin-top: 3px; }
+  .yn-stem { flex: 1; font-size: 14px; line-height: 1.5; }
+  .yn-select { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 4px 6px; font-size: 13px; font-family: inherit; border-radius: 3px; min-width: 120px; flex-shrink: 0; }
+  .mcq-options { margin: 8px 0 12px 2px; font-size: 14px; }
+  .mcq-options div { margin: 6px 0; }
+  .sentence { margin-bottom: 11px; line-height: 1.8; font-size: 14px; }
+  .gap-num { font-weight: 700; margin: 0 2px; font-size: 12px; border: 1px solid var(--border-strong); padding: 0 3px; }
+  .text-gap { background: var(--bg); color: var(--text); border: none; border-bottom: 2px solid var(--border-strong); padding: 2px 6px; font-size: 13px; font-family: inherit; width: 125px; text-align: center; outline: none; }
+  .text-gap:focus { border-bottom-color: var(--select-active); }
+  .footer { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: var(--footer-bg); border-top: 1px solid var(--border); display: flex; align-items: center; padding: 0 12px; gap: 8px; z-index: 4; }
+  .part-tab { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 3px; border: 1px solid var(--border); background: var(--bg); user-select: none; }
+  .part-tab .label { font-weight: 700; font-size: 13px; }
+  .part-tab .progress { font-size: 11.5px; color: var(--text-muted); }
+  .qnav { display: flex; gap: 3px; margin-left: 2px; flex-wrap: wrap; }
+  .qbtn { width: 24px; height: 22px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 2px; font-family: inherit; }
+  .qbtn:hover { background: var(--bg-alt); }
+  .qbtn.current { border: 2px solid var(--text); font-weight: 700; }
+  .qbtn.answered { background: var(--bg-alt); }
+  .nav-arrows { display: flex; gap: 4px; margin-left: auto; }
+  .arrow-btn { width: 32px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .arrow-btn.dark { background: var(--arrow-bg); color: var(--arrow-fg); border-color: var(--arrow-bg); }
+  .check-btn { width: 36px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-left: 4px; }
+  .user-highlight { background: #f4ff55; padding: 1px 0; }
+  body.dark .user-highlight { background: #8a9100; color: #fff; }
+  .highlight-popup { position: absolute; display: none; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.18); padding: 4px; z-index: 200; align-items: center; gap: 2px; font-size: 13.5px; user-select: none; }
+  .highlight-popup.visible { display: inline-flex; }
+  .highlight-popup button { background: transparent; border: none; padding: 8px 12px; cursor: pointer; color: var(--text); border-radius: 5px; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 13.5px; font-weight: 500; }
+  .highlight-popup button:hover { background: var(--bg-alt); }
+  .highlight-popup .hp-swatch { display: inline-block; width: 16px; height: 16px; background: #f4ff55; border-radius: 3px; flex-shrink: 0; }
+  .highlight-popup .hp-close { padding: 6px 10px; font-size: 18px; color: var(--text-muted); line-height: 1; }
+  .pane::-webkit-scrollbar { width: 10px; }
+  .pane::-webkit-scrollbar-track { background: var(--bg-alt); }
+  .pane::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-start; justify-content: center; z-index: 100; padding: 20px; overflow-y: auto; }
+  .overlay.visible { display: flex; }
+  .modal { background: var(--bg-panel); color: var(--text); border: 1px solid var(--border); border-radius: 8px; max-width: 640px; width: 100%; padding: 28px 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); margin: auto; }
+  .modal h2 { margin: 0 0 10px 0; color: var(--accent); font-size: 22px; text-align: center; }
+  .score-row { text-align: center; font-size: 28px; font-weight: 800; margin: 6px 0 4px; }
+  .score-row span { font-size: 16px; font-weight: 400; color: var(--text-muted); }
+  .band-row { text-align: center; font-size: 18px; font-weight: 700; margin-bottom: 18px; color: var(--accent); }
+  .results-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 18px; }
+  .results-table th { background: var(--bg-alt); padding: 6px 10px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border); }
+  .results-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .mark-ok { color: var(--correct); font-weight: 700; font-size: 15px; }
+  .mark-bad { color: var(--wrong); font-weight: 700; font-size: 15px; }
+  .modal .actions { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+  .modal button { background: var(--accent); color: #fff; border: none; padding: 9px 22px; font-size: 14px; font-weight: 600; border-radius: 4px; cursor: pointer; }
+  .modal button.secondary { background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); }
+</style>
+<link href="max-bridge.css?v=1" rel="stylesheet"/><script defer="" src="max-bridge.js?v=1"></script>
+<link href="reading-v12.css" rel="stylesheet"/><script defer="True" src="reading-v12.js"></script></head>
+<body>
+<div class="topbar">
+<div class="logo">IELTS</div>
+<div class="test-taker">VIVID IELTS</div>
+<div class="top-controls">
+<button class="icon-btn" id="btn-light" title="Light mode"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><line x1="12" x2="12" y1="2" y2="4"></line><line x1="12" x2="12" y1="20" y2="22"></line><line x1="4.93" x2="6.34" y1="4.93" y2="6.34"></line><line x1="17.66" x2="19.07" y1="17.66" y2="19.07"></line><line x1="2" x2="4" y1="12" y2="12"></line><line x1="20" x2="22" y1="12" y2="12"></line><line x1="4.93" x2="6.34" y1="19.07" y2="17.66"></line><line x1="17.66" x2="19.07" y1="6.34" y2="4.93"></line></svg></button>
+<button class="icon-btn" id="btn-dark" title="Dark mode"><svg fill="currentColor" viewbox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button>
+<div class="divider"></div>
+<button class="text-btn" id="btn-font-down" title="Decrease font size">A-</button>
+<button class="text-btn" id="btn-font-up" title="Increase font size">A+</button>
+</div>
+</div>
+<div class="main">
+<div class="part-header"><h2>Reading Passage 2</h2><p>Read the text and answer questions 14–26.</p></div>
+<div class="panes">
+<div class="pane left" id="passagePane"><div class="passage">
+<div style="font-weight:700;font-size:14px;margin-bottom:4px;">READING PASSAGE 2</div>
+<div style="font-size:13px;margin-bottom:14px;color:var(--text-muted);">You should spend about 20 minutes on Questions 14–26, which are based on Reading Passage 2 below.</div>
+<h1>Bird Migration</h1>
+<p><strong>A</strong> Birds have many unique design features that enable them to perform such amazing feats of endurance. They are equipped with lightweight, hollow bones, intricately designed feathers providing both lift and thrust for rapid flight, navigation systems superior to any that man has developed, and an ingenious heat conserving design that, among other things, concentrates all blood circulation beneath layers of warm, waterproof plumage, leaving them fit to face life in the harshest of climates. Their respiratory systems have to perform efficiently during sustained flights at altitude, so they have a system of extracting oxygen from their lungs that far exceeds that of any other animal. During the later stages of the summer breeding season, when food is plentiful, their bodies can accumulate considerable layers of fat, to provide sufficient energy for their long migratory flights.</p>
+<p><strong>B</strong> The fundamental reason that birds migrate is to find adequate food during the winter months when it is in short supply. This particularly applies to birds that breed in the temperate and Arctic regions of the Northern Hemisphere, where food is abundant during the short growing season. Many species can tolerate cold temperatures if food is plentiful, but when food is not available, they must migrate. However, intriguing questions remain.</p>
+<p><strong>C</strong> One puzzling fact is that many birds journey much further than would be necessary just to find food and good weather. Nobody knows, for instance, why British swallows, which could presumably survive equally well if they spent the winter in equatorial Africa, instead of flying several thousands of miles further to their preferred winter home in South Africa's Cape Province. Another mystery involves the huge migrations performed by arctic terns and mudflat-feeding shorebirds that breed close to the Polar Regions. In general, the further north a migrant species breeds, the further south it spends the winter. For arctic terns, this necessitates an annual round trip of 25,000 miles. Yet, en route to their final destination in far-flung southern latitudes, all these individuals overfly other areas of seemingly suitable habitat spanning two hemispheres. While we may not fully understand birds' reasons for going to particular places, we can marvel at their feats.</p>
+<p><strong>D</strong> One of the greatest mysteries is how young birds know how to find the traditional wintering areas without parental guidance. Very few adults migrate with juveniles in tow, and youngsters may even have little or no inkling of their parents' appearance. A familiar example is that of the cuckoo, which lays its eggs in another species' nest and never reencounters its young. It is mind-boggling to consider that, once raised by its host species, the young cuckoo makes its way to ancestral wintering grounds in the tropics before returning single-handedly to northern Europe the next season to seek out a mate among its kind. The obvious implication is that it inherits from its parents an inbuilt route map and direction-finding capability, as well as a mental image of what another cuckoo looks like. Yet nobody has the slightest idea as to how this is possible.</p>
+<p><strong>E</strong> Mounting evidence has confirmed that birds use the positions of the sun and stars to obtain compass directions. They also seem to be able to detect the earth's magnetic field, probably due to having minute crystals of magnetite in the region of their brains. However, accurate navigation also requires an awareness of position and time, especially when lost. Experiments have shown that after being taken thousands of miles over an unfamiliar land mass, birds are still capable of returning rapidly to nest sites. Such phenomenal powers are the product of computing several sophisticated cues, including an inborn map of the night sky and the pull of the earth's magnetic field. How the birds use their 'instruments' remains unknown, but one thing is clear: they see the world with a superior sensory perception to ours. Most small birds migrate at night and take their direction from the position of the setting sun. However, as well as seeing the sun go down, they also seem to see the plane of polarized light caused by it, which calibrates their compass. Traveling at night provides other benefits. Daytime predators are avoided and the danger of dehydration due to flying for long periods in warm, sunlit skies is reduced. Furthermore, at night the air is generally cool and less turbulent and so conducive to sustained, stable flight.</p>
+<p><strong>F</strong> Nevertheless, all journeys involve considerable risk, and part of the skill in arriving safely is setting off at the right time. This means accurate weather forecasting and utilizing favorable winds. Birds are adept at both, and, in laboratory tests, some have been shown to detect the minute difference in barometric pressure between the floor and ceiling of a room. Often birds react to weather changes before there is any visible sign of them. Lapwings, which feed on grassland, flee west from the Netherlands to the British Isles, France, and Spain at the onset of a cold snap. When the ground surface freezes, the birds could starve. Yet they return to Holland ahead of a thaw, their arrival linked to a pressure change presaging an improvement in the weather.</p>
+<p><strong>G</strong> In one instance a Welsh Manx shearwater carried to America and released was back in its burrow on Skokholm Island, off the Pembrokeshire coast, one day before a letter announcing its release! Conversely, each autumn a small number of North American birds are blown across the Atlantic by fast-moving westerly tailwinds. Not only do they arrive safely in Europe, but, based on ringing evidence, some make it back to North America the following spring, after probably spending the winter with European migrants in sunny African climes.</p>
+</div></div>
+<div class="splitter" id="splitter"></div>
+<div class="pane right" id="questionsPane">
+<div class="qblock">
+<h3>Questions 14–20</h3>
+<div class="instructions">Reading Passage 2 has seven paragraphs, A–G.<br/>Choose the correct heading for each paragraph from the list of headings below.<br/>Write the correct number, i–x, in boxes 14–20 on your answer sheet.</div>
+<div class="heading-list"><div class="title">List of Headings</div>
+<div><strong>i</strong> The best moment to migrate</div><div><strong>ii</strong> The unexplained rejection of closer feeding ground</div><div><strong>iii</strong> The influence of weather on the migration route</div><div><strong>iv</strong> Physical characteristics that allow birds to migrate</div><div><strong>v</strong> The main reason why birds migrate</div><div><strong>vi</strong> The best wintering grounds for birds</div><div><strong>vii</strong> Research findings on how birds migrate</div><div><strong>viii</strong> Successful migration despite the problem of wind</div><div><strong>ix</strong> The contrast between long-distance migration and short-distance migration</div><div><strong>x</strong> Mysterious migration despite lack of teaching</div>
+</div>
+<div class="yn-row"><span class="qnum-yn">14</span><span class="yn-stem">Paragraph A</span><select class="yn-select question" data-q="14"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option><option value="x">x</option></select></div>
+<div class="yn-row"><span class="qnum-yn">15</span><span class="yn-stem">Paragraph B</span><select class="yn-select question" data-q="15"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option><option value="x">x</option></select></div>
+<div class="yn-row"><span class="qnum-yn">16</span><span class="yn-stem">Paragraph C</span><select class="yn-select question" data-q="16"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option><option value="x">x</option></select></div>
+<div class="yn-row"><span class="qnum-yn">17</span><span class="yn-stem">Paragraph D</span><select class="yn-select question" data-q="17"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option><option value="x">x</option></select></div>
+<div class="yn-row"><span class="qnum-yn">18</span><span class="yn-stem">Paragraph E</span><select class="yn-select question" data-q="18"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option><option value="x">x</option></select></div>
+<div class="yn-row"><span class="qnum-yn">19</span><span class="yn-stem">Paragraph F</span><select class="yn-select question" data-q="19"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option><option value="x">x</option></select></div>
+<div class="yn-row"><span class="qnum-yn">20</span><span class="yn-stem">Paragraph G</span><select class="yn-select question" data-q="20"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option><option value="viii">viii</option><option value="ix">ix</option><option value="x">x</option></select></div>
+</div>
+<div class="qblock">
+<h3>Questions 21 and 22</h3>
+<div class="instructions">Choose <strong>TWO</strong> letters, A–E.<br/>Write the correct letter in boxes 21 and 22 on your answer sheet.</div>
+<div style="font-weight:700;margin-bottom:8px;">Which TWO of the following statements are true about bird migration?</div>
+<div class="mcq-options"><div><strong>A</strong> Birds often fly further than they need to</div><div><strong>B</strong> Birds traveling in family groups are safe.</div><div><strong>C</strong> Birds flying at night need less water.</div><div><strong>D</strong> Birds have much sharper eyesight than humans.</div><div><strong>E</strong> Only shorebirds are resistant to strong winds.</div></div>
+<div class="yn-row"><span class="qnum-yn">21</span><span class="yn-stem">First answer</span><select class="yn-select question" data-q="21"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select></div>
+<div class="yn-row"><span class="qnum-yn">22</span><span class="yn-stem">Second answer</span><select class="yn-select question" data-q="22"><option value=""></option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select></div>
+</div>
+<div class="qblock">
+<h3>Questions 23–26</h3>
+<div class="instructions">Complete the sentences below.<br/>Choose <strong>NO MORE THAN ONE WORD OR A NUMBER</strong> from the passage for each answer.<br/>Write your answers in boxes 23–26 on your answer sheet.</div>
+<div class="sentence"><span class="gap-num">23</span> It is a great mystery that young birds like cuckoos can find their wintering grounds without <input class="text-gap question" data-q="23" maxlength="30" type="text"/> assistance.</div>
+<div class="sentence"><span class="gap-num">24</span> Evidence shows birds can tell <input class="text-gap question" data-q="24" maxlength="30" type="text"/> like a compass by observing the sun and the stars.</div>
+<div class="sentence"><span class="gap-num">25</span> One advantage for birds flying at night is that they can avoid contact with <input class="text-gap question" data-q="25" maxlength="30" type="text"/>.</div>
+<div class="sentence"><span class="gap-num">26</span> Laboratory tests show that birds can detect weather without <input class="text-gap question" data-q="26" maxlength="30" type="text"/> signs.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer"><div class="part-tab"><span class="label">Part 2</span><span class="progress" id="progress-1">0 of 13</span><div class="qnav" id="qnav-1"></div></div><div class="nav-arrows"><button class="arrow-btn" id="prevBtn">←</button><button class="arrow-btn dark" id="nextBtn">→</button></div><button class="check-btn" id="finishBtn" title="Submit">✓</button></div>
+<div class="highlight-popup" id="highlightPopup"><button id="hpHighlight"><span class="hp-swatch"></span>Highlight</button><button id="hpRemove">Remove highlight</button><button class="hp-close" id="hpClose">×</button></div>
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+<script>
+const TOTAL = 13, Q_START = 14, Q_END = 26;
+const KEY = {14:['iv'],15:['v'],16:['ii'],17:['x'],18:['vii'],19:['i'],20:['viii'],23:['parental'],24:['directions'],25:['predators'],26:['visible']};
+const GROUP_KEYS = {'21-22':['A','C']};
+const answers = {};
+function normalize(v){return (v||'').toString().trim().toUpperCase().replace(/\s+/g,' ');}
+function isCorrect(n,val){const given=normalize(val); return KEY[n] && KEY[n].some(a=>normalize(a)===given);}
+function groupCorrectness(){
+  const key = GROUP_KEYS['21-22'];
+  const a21 = normalize(answers[21]);
+  const a22 = normalize(answers[22]);
+
+  // Partial scoring for Q21-22:
+  // Each correct letter earns 1 point independently, even if the other box is wrong.
+  // A repeated correct letter (e.g. A/A or C/C) earns only 1 point, not 2.
+  const usedCorrect = [];
+  const ok21 = key.includes(a21);
+  if (ok21) usedCorrect.push(a21);
+
+  const ok22 = key.includes(a22) && !usedCorrect.includes(a22);
+  if (ok22) usedCorrect.push(a22);
+
+  return {
+    21: ok21,
+    22: ok22,
+    score: usedCorrect.length,
+    correct21: 'A or C',
+    correct22: 'A or C'
+  };
+}
+document.querySelectorAll('select.question').forEach(el=>{const q=+el.dataset.q;el.addEventListener('change',()=>{answers[q]=el.value;updateNav();});});
+document.querySelectorAll('input.question').forEach(el=>{const q=+el.dataset.q;el.addEventListener('input',()=>{answers[q]=el.value;updateNav();});});
+const qnavEl=document.getElementById('qnav-1'),progressEl=document.getElementById('progress-1'); let activeQ=Q_START;
+function buildNav(){qnavEl.innerHTML='';for(let n=Q_START;n<=Q_END;n++){const btn=document.createElement('button');btn.className='qbtn';btn.textContent=n;btn.dataset.n=n;btn.addEventListener('click',()=>scrollToQ(n));qnavEl.appendChild(btn);}}
+function updateNav(){const answered=Array.from({length:Q_END-Q_START+1},(_,i)=>i+Q_START).filter(n=>answers[n]!==undefined&&answers[n]!=='').length;progressEl.textContent=`${answered} of ${TOTAL}`;qnavEl.querySelectorAll('.qbtn').forEach(btn=>{const n=+btn.dataset.n;btn.classList.toggle('answered',!!answers[n]&&answers[n]!=='');btn.classList.toggle('current',n===activeQ);});}
+function scrollToQ(n){activeQ=n;const el=document.querySelector(`.question[data-q="${n}"]`);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.focus({preventScroll:true});}updateNav();}
+document.querySelectorAll('.question').forEach(el=>el.addEventListener('focus',()=>{activeQ=+el.dataset.q;updateNav();}));
+document.getElementById('prevBtn').addEventListener('click',()=>{if(activeQ>Q_START)scrollToQ(activeQ-1);});
+document.getElementById('nextBtn').addEventListener('click',()=>{if(activeQ<Q_END)scrollToQ(activeQ+1);});
+buildNav();updateNav();
+function getBand(score){if(score>=13)return'8.5';if(score>=12)return'8.0';if(score>=11)return'7.5';if(score>=10)return'7.0';if(score>=9)return'6.5';if(score>=8)return'6.0';if(score>=7)return'5.5';if(score>=6)return'5.0';if(score>=5)return'4.5';if(score>=4)return'4.0';if(score>=3)return'3.5';return'3.0';}
+function showResults(){
+  let score = 0;
+  const rows = [];
+  const gc = groupCorrectness();
+
+  for (let n = Q_START; n <= Q_END; n++) {
+    let ok, correct;
+    if (n === 21) {
+      ok = gc[21];
+      correct = gc.correct21;
+    } else if (n === 22) {
+      ok = gc[22];
+      correct = gc.correct22;
+    } else {
+      ok = isCorrect(n, answers[n]);
+      correct = KEY[n][0];
+    }
+    if (ok) score++;
+    rows.push({ n, given: answers[n] || '—', correct, ok });
+  }
+
+  const pct = Math.round(score / TOTAL * 100), band = getBand(score), color = pct >= 70 ? 'var(--correct)' : pct >= 50 ? '#d4800a' : 'var(--wrong)';
+  let html = `<h2>Your Results</h2><div class="score-row" style="color:${color}">${score} / ${TOTAL} <span>(${pct}%)</span></div><div class="band-row">IELTS Band: ${band}</div><table class="results-table"><thead><tr><th>Q</th><th>Your Answer</th><th>Correct</th><th></th></tr></thead><tbody>`;
+  rows.forEach(r => {
+    html += `<tr><td><strong>${r.n}</strong></td><td>${r.given}</td><td>${r.correct}</td><td class="${r.ok ? 'mark-ok' : 'mark-bad'}">${r.ok ? '✓' : '✗'}</td></tr>`;
+  });
+  html += `</tbody></table><div class="actions"><button class="secondary" onclick="document.getElementById('overlay').classList.remove('visible')">Review</button></div>`;
+  document.getElementById('modal').innerHTML = html;
+  document.getElementById('overlay').classList.add('visible');
+}
+document.getElementById('finishBtn').addEventListener('click',()=>{if(confirm('Submit and see your results?'))showResults();});
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target===document.getElementById('overlay'))document.getElementById('overlay').classList.remove('visible');});
+document.getElementById('btn-dark').addEventListener('click',()=>document.body.classList.add('dark'));
+document.getElementById('btn-light').addEventListener('click',()=>document.body.classList.remove('dark'));
+let fontScale=1;document.getElementById('btn-font-up').addEventListener('click',()=>{fontScale=Math.min(1.4,fontScale+0.08);document.documentElement.style.setProperty('--font-scale',fontScale);});document.getElementById('btn-font-down').addEventListener('click',()=>{fontScale=Math.max(0.7,fontScale-0.08);document.documentElement.style.setProperty('--font-scale',fontScale);});
+const splitter=document.getElementById('splitter'),leftPane=document.querySelector('.pane.left');let dragging=false,startX=0,startW=0;splitter.addEventListener('mousedown',e=>{dragging=true;startX=e.clientX;startW=leftPane.offsetWidth;e.preventDefault();});document.addEventListener('mousemove',e=>{if(!dragging)return;const newW=Math.max(200,Math.min(window.innerWidth-250,startW+e.clientX-startX));leftPane.style.width=newW+'px';});document.addEventListener('mouseup',()=>{dragging=false;});
+const popup=document.getElementById('highlightPopup');let lastRange=null;function isInsideForm(node){while(node&&node!==document.body){if(node.nodeType===1&&/^(INPUT|SELECT|TEXTAREA|OPTION|BUTTON)$/.test(node.tagName))return true;node=node.parentNode;}return false;}function handleSelection(){const sel=window.getSelection();if(!sel||sel.isCollapsed||sel.toString().trim()===''){popup.classList.remove('visible');return;}const range=sel.getRangeAt(0);if(isInsideForm(range.commonAncestorContainer)){popup.classList.remove('visible');return;}const pane=range.commonAncestorContainer.parentElement?.closest('#passagePane, #questionsPane');if(!pane){popup.classList.remove('visible');return;}lastRange=range.cloneRange();const rect=range.getBoundingClientRect();popup.style.left=(rect.left+rect.width/2-popup.offsetWidth/2+window.scrollX)+'px';popup.style.top=(rect.top-48+window.scrollY)+'px';popup.classList.add('visible');}
+document.getElementById('passagePane').addEventListener('mouseup',handleSelection);document.getElementById('questionsPane').addEventListener('mouseup',handleSelection);document.getElementById('hpHighlight').addEventListener('click',()=>{if(!lastRange)return;const mark=document.createElement('mark');mark.className='user-highlight';try{lastRange.surroundContents(mark);}catch(e){try{mark.appendChild(lastRange.extractContents());lastRange.insertNode(mark);}catch(e2){}}window.getSelection().removeAllRanges();popup.classList.remove('visible');});document.getElementById('hpRemove').addEventListener('click',()=>{document.querySelectorAll('.user-highlight').forEach(m=>{const parent=m.parentNode;while(m.firstChild)parent.insertBefore(m.firstChild,m);parent.removeChild(m);parent.normalize();});popup.classList.remove('visible');});document.getElementById('hpClose').addEventListener('click',()=>popup.classList.remove('visible'));
+</script>
+<script>
+const TEST_ID = 'day29-bird-migration';
+const TEST_DURATION_MIN = 20;
+const C1_WORDS = [
+  { word: 'endurance', def: 'The ability to withstand hardship or exertion over a long time' },
+  { word: 'intricately', def: 'In a highly detailed and complex way' },
+  { word: 'ingenious', def: 'Clever, original, and inventive' },
+  { word: 'conserve', def: 'To protect something from harm, loss, or waste' },
+  { word: 'sustained', def: 'Continued over an extended period without interruption' },
+  { word: 'accumulate', def: 'To gather or collect something gradually over time' },
+  { word: 'adequate', def: 'Enough or satisfactory for a particular purpose' },
+  { word: 'abundant', def: 'Existing or available in large quantities' },
+  { word: 'tolerate', def: 'To endure or put up with something difficult' },
+  { word: 'intriguing', def: 'Fascinating and arousing curiosity or interest' },
+  { word: 'presumably', def: 'Used to express what is likely to be true, though not certain' },
+  { word: 'guidance', def: 'Advice or help given to direct someone' },
+  { word: 'inbuilt', def: 'Existing as a natural or permanent feature of someone or something' },
+  { word: 'phenomenal', def: 'Remarkable or exceptional, especially exceeding expectations' },
+  { word: 'sophisticated', def: 'Highly developed, complex, and refined' },
+  { word: 'turbulent', def: 'Characterised by conflict, disorder, or unsteady movement of air' },
+  { word: 'adept', def: 'Very skilled or proficient at something' },
+  { word: 'minute', def: 'Extremely small in size or amount' },
+  { word: 'conversely', def: 'Introducing a statement that is the opposite of what has just been said' },
+  { word: 'release', def: 'To set something or someone free from captivity or restraint' },
+];
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="db.js"></script>
+<script src="reading-test-common.js"></script>
+<script src="highlight-auto-dismiss.js"></script>
+<script src="activity-bridge-v15.js"></script>
+</body>
+</html>

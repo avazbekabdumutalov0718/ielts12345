@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IELTS Reading – Born to trade</title>
+<link href="reading-test-common.css" rel="stylesheet"/>
+<style>
+
+:root {
+    --bg: #ffffff; --bg-alt: #f4f5f7; --bg-panel: #ffffff;
+    --text: #111111; --text-muted: #555; --border: #d4d4d4;
+    --border-strong: #333; --accent: #e51e2a;
+    --select-bg: #cfe3ff; --select-active: #1e6cd8;
+    --footer-bg: #f4f5f7; --btn-bg: #ededed;
+    --arrow-bg: #1f1f1f; --arrow-fg: #ffffff;
+    --correct: #1a8a3c; --wrong: #cc2222;
+  }
+  body.dark {
+    --bg: #1a1a1d; --bg-alt: #232327; --bg-panel: #1f1f22;
+    --text: #ececec; --text-muted: #b5b5b5; --border: #3a3a3f;
+    --border-strong: #cfcfcf; --accent: #ff5c66;
+    --select-bg: #2c4d7a; --select-active: #4a8be0;
+    --footer-bg: #232327; --btn-bg: #2e2e33;
+    --arrow-bg: #ececec; --arrow-fg: #1a1a1d;
+    --correct: #4ed684; --wrong: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+
+  .topbar { height: 50px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; background: var(--bg); position: relative; z-index: 5; }
+  .logo { font-weight: 800; font-size: 22px; letter-spacing: 1px; color: var(--accent); margin-right: 20px; user-select: none; }
+  .test-taker { font-size: 14px; font-weight: 700; }
+  .top-controls { margin-left: auto; display: flex; gap: 2px; align-items: center; }
+  .top-controls .icon-btn, .top-controls .text-btn { background: transparent; border: none; color: var(--text); padding: 6px 10px; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s; }
+  .top-controls .icon-btn:hover, .top-controls .text-btn:hover { background: var(--bg-alt); }
+  .top-controls .icon-btn svg { width: 20px; height: 20px; display: block; }
+  .top-controls .text-btn { font-weight: 700; font-size: 16px; font-family: inherit; }
+  .top-controls .divider { width: 1px; height: 26px; background: var(--border); margin: 0 6px; }
+
+  .part-header { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 10px 20px; }
+  .part-header h2 { margin: 0 0 3px 0; font-size: 14px; font-weight: 700; }
+  .part-header p { margin: 0; font-size: 12px; color: var(--text-muted); }
+
+  .main { position: absolute; top: 50px; left: 0; right: 0; bottom: 50px; display: flex; flex-direction: column; }
+  .panes { flex: 1; display: flex; overflow: hidden; position: relative; }
+  .pane { overflow-y: auto; padding: 18px 28px; background: var(--bg-panel); line-height: 1.55; font-size: calc(14.5px * var(--font-scale, 1)); }
+  .pane.left { width: 50%; }
+  .pane.right { flex: 1; }
+  .splitter { width: 10px; background: var(--bg-alt); border-left: 1px solid var(--border); border-right: 1px solid var(--border); cursor: col-resize; position: relative; user-select: none; flex-shrink: 0; }
+  .splitter::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; background: var(--bg); border: 1px solid var(--border); border-radius: 3px; background-image: linear-gradient(to right, transparent 6px, var(--text) 6px, var(--text) 7px, transparent 7px, transparent 11px, var(--text) 11px, var(--text) 12px, transparent 12px); }
+
+  .passage h1 { font-size: 16px; font-weight: 700; margin: 0 0 14px 0; text-align: center; }
+  .passage .subtitle { font-size: 13px; font-style: italic; text-align: center; margin: -8px 0 14px 0; color: var(--text-muted); }
+  .passage h2.sec { font-size: 14px; font-weight: 700; margin: 16px 0 6px 0; }
+  .passage p { margin: 0 0 11px 0; text-align: justify; }
+
+  .qblock { margin-bottom: 28px; }
+  .qblock h3 { margin: 0 0 6px 0; font-size: 14.5px; font-weight: 700; }
+  .qblock .instructions { font-size: 13px; margin-bottom: 12px; line-height: 1.6; }
+  .qblock .instructions strong { font-weight: 700; }
+
+  /* Row styles */
+  .yn-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; padding: 6px 8px; border-radius: 4px; border: 1px solid transparent; }
+  .yn-row:focus-within { border-color: var(--select-active); }
+  .qnum-yn { display: inline-block; min-width: 22px; font-weight: 700; border: 1px solid var(--border-strong); padding: 0 4px; text-align: center; font-size: 12px; flex-shrink: 0; margin-top: 3px; }
+  .yn-stem { flex: 1; font-size: 14px; line-height: 1.5; }
+  .yn-select { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 4px 6px; font-size: 13px; font-family: inherit; border-radius: 3px; min-width: 110px; flex-shrink: 0; }
+  .gap-input { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 3px 6px; font-size: 13px; border-radius: 3px; width: 160px; font-family: inherit; }
+
+  /* Radio Options */
+  .mc-option { display: block; margin: 5px 0; font-size: 13.5px; cursor: pointer; }
+  .mc-option input { margin-right: 8px; }
+
+  /* Notes / summary completion */
+  .notes-box { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; margin-bottom: 6px; }
+  .notes-title { font-weight: 700; font-size: 14px; margin-bottom: 8px; text-align: center; }
+  .notes-list { margin: 0; padding-left: 18px; }
+  .notes-list li { margin-bottom: 10px; font-size: 13.5px; line-height: 1.6; }
+  .summary-para { font-size: 13.5px; line-height: 1.9; }
+
+  /* Footer */
+  .footer { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: var(--footer-bg); border-top: 1px solid var(--border); display: flex; align-items: center; padding: 0 12px; gap: 8px; z-index: 4; }
+  .part-tab { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 3px; border: 1px solid var(--border); background: var(--bg); user-select: none; }
+  .part-tab .label { font-weight: 700; font-size: 13px; }
+  .part-tab .progress { font-size: 11.5px; color: var(--text-muted); }
+  .qnav { display: flex; gap: 3px; margin-left: 2px; flex-wrap: wrap; }
+  .qbtn { width: 22px; height: 22px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 2px; font-family: inherit; }
+  .qbtn:hover { background: var(--bg-alt); }
+  .qbtn.current { border: 2px solid var(--text); font-weight: 700; }
+  .qbtn.answered { background: var(--bg-alt); }
+  .nav-arrows { display: flex; gap: 4px; margin-left: auto; }
+  .arrow-btn { width: 32px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .arrow-btn.dark { background: var(--arrow-bg); color: var(--arrow-fg); border-color: var(--arrow-bg); }
+  .check-btn { width: 36px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-left: 4px; }
+
+  .user-highlight { background: #f4ff55; padding: 1px 0; }
+  body.dark .user-highlight { background: #8a9100; color: #fff; }
+
+  .highlight-popup { position: absolute; display: none; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.18); padding: 4px; z-index: 200; align-items: center; gap: 2px; font-size: 13.5px; user-select: none; }
+  .highlight-popup.visible { display: inline-flex; }
+  .highlight-popup button { background: transparent; border: none; padding: 8px 12px; cursor: pointer; color: var(--text); border-radius: 5px; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 13.5px; font-weight: 500; }
+  .highlight-popup button:hover { background: var(--bg-alt); }
+  .highlight-popup .hp-swatch { display: inline-block; width: 16px; height: 16px; background: #f4ff55; border-radius: 3px; flex-shrink: 0; }
+  .highlight-popup .hp-close { padding: 6px 10px; font-size: 18px; color: var(--text-muted); line-height: 1; }
+
+  .pane::-webkit-scrollbar { width: 10px; }
+  .pane::-webkit-scrollbar-track { background: var(--bg-alt); }
+  .pane::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+
+  /* Results overlay */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-start; justify-content: center; z-index: 100; padding: 20px; overflow-y: auto; }
+  .overlay.visible { display: flex; }
+  .modal { background: var(--bg-panel); color: var(--text); border: 1px solid var(--border); border-radius: 8px; max-width: 600px; width: 100%; padding: 28px 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); margin: auto; }
+  .modal h2 { margin: 0 0 10px 0; color: var(--accent); font-size: 22px; text-align: center; }
+  .score-row { text-align: center; font-size: 28px; font-weight: 800; margin: 6px 0 4px; }
+  .score-row span { font-size: 16px; font-weight: 400; color: var(--text-muted); }
+  .band-row { text-align: center; font-size: 18px; font-weight: 700; margin-bottom: 18px; color: var(--accent); }
+  .results-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 18px; }
+  .results-table th { background: var(--bg-alt); padding: 6px 10px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border); }
+  .results-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .results-table tr:last-child td { border-bottom: none; }
+  .mark-ok  { color: var(--correct); font-weight: 700; font-size: 15px; }
+  .mark-bad { color: var(--wrong);   font-weight: 700; font-size: 15px; }
+  .modal .actions { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+  .modal button { background: var(--accent); color: #fff; border: none; padding: 9px 22px; font-size: 14px; font-weight: 600; border-radius: 4px; cursor: pointer; }
+  .modal button.secondary { background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); }
+  .modal button:hover { opacity: 0.9; }
+
+</style>
+<link href="max-bridge.css?v=1" rel="stylesheet"/><script defer="" src="max-bridge.js?v=1"></script>
+<link href="reading-v12.css" rel="stylesheet"/><script defer="True" src="reading-v12.js"></script></head>
+<body>
+<div class="topbar">
+<div class="logo">IELTS</div>
+<div class="test-taker">VIVID IELTS</div>
+<div class="top-controls">
+<button class="icon-btn" id="btn-light" title="Light mode">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="4"></circle>
+<line x1="12" x2="12" y1="2" y2="4"></line><line x1="12" x2="12" y1="20" y2="22"></line>
+<line x1="4.93" x2="6.34" y1="4.93" y2="6.34"></line><line x1="17.66" x2="19.07" y1="17.66" y2="19.07"></line>
+<line x1="2" x2="4" y1="12" y2="12"></line><line x1="20" x2="22" y1="12" y2="12"></line>
+<line x1="4.93" x2="6.34" y1="19.07" y2="17.66"></line><line x1="17.66" x2="19.07" y1="6.34" y2="4.93"></line>
+</svg>
+</button>
+<button class="icon-btn" id="btn-dark" title="Dark mode">
+<svg fill="currentColor" viewbox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+</button>
+<div class="divider"></div>
+<button class="text-btn" id="btn-font-down" title="Decrease font size">A-</button>
+<button class="text-btn" id="btn-font-up" title="Increase font size">A+</button>
+</div>
+</div>
+<div class="main">
+<div class="part-header">
+<h2>Reading Passage 2</h2>
+<p>You should spend about 20 minutes on Questions 14–26, which are based on Reading Passage 2 below.</p>
+</div>
+<div class="panes">
+<div class="pane left" id="passagePane">
+<div class="passage">
+<div style="font-weight:700;font-size:14px;margin-bottom:4px;">READING PASSAGE 2</div>
+<div style="font-size:13px;margin-bottom:14px;color:var(--text-muted);">You should spend about 20 minutes on Questions 14–26, which are based on Reading Passage 2 below.</div>
+<h1>Born to trade</h1>
+<div class="subtitle">Long before our ancestors had any trappings of civilisation, they had a taste for material goods. Kate Douglas discovers where this ancient obsession has led us.</div>
+<p><strong>A</strong> Humans are born to trade and we don't need shops or money to do it – the heart of commerce is an instinctive ability for what anthropologists call “reciprocity”. This is an ability to exchange goods of equal worth and it evolved as the brains of our ancient ancestors and societies became more complex, allowing individuals to keep a running tally of their interactions with others. Evidence from modern hunter-gatherers leaves little doubt that the exchange of food and flavors is innate, as is the ability to keep track of the credits and debits that accrue as a result. Combine this skill for mental book-keeping with even the most basic material culture, and trade inevitably follows.</p>
+<p><strong>B</strong> Once trade gets off the ground, the economic benefits quickly make it irresistible. But exchanging tools, food and other essentials of life in a barter economy is a far cry from the shopping mall. Modern consumerism sways beyond subsistence and utilitarianism to encompass everything from Gucci handbags and BMW convertibles to valuable paintings. Clearly, the worth of such goods is not inherent but resides in certain intangible qualities that we invest in them. When did humans start holding these goods in such high esteem?</p>
+<p><strong>C</strong> All the archaeological evidence for the flowering of consumer culture has up to now pointed to a date of around 40,000 years ago. That's when early modern humans started making increasingly intricate bone and stone tools, carving patterns into rocks and creating representational art such as carved figurines, jewellery and cave paintings. However, discoveries in Africa are pushing the origins of consumerism much further back into human prehistory. A few years ago, reports began to emerge of discoveries made at the Blombos cave, a site of ancient human habitation in South Africa. Christopher Henshilwood and colleagues from the University of Bergen in Norway dated thousands of pieces of ochre from the cave, many of which proved to be more than 100,000 years old – before the time that early humans moved out of Africa. Ochre, a coloured clay that comes in various shades from red to black, does not occur naturally around Blombos and must have been imported from quarries at least 30 kilometres away, either directly by Blombos residents or through trade. Although ochre can be used to dry and preserve or cure animal hides, the researchers are convinced the Blombos ochre had a symbolic purpose. For a start, it is predominantly red – any of the other colours available would have done for curing – and the surfaces of the clay had been scraped in a way that indicates they were used to yield pigment for dyes.</p>
+<p><strong>D</strong> An even more intriguing discovery from Blombos was of 41 beads dating from 76,000 years ago, found in clusters and made from the shells of a tiny mollusc. These cannot be natural deposits, argue the researchers, as each cluster contains shells of a similar size and colour with consistently placed holes. What's more, all the beads display a pattern of wear suggesting friction from rubbing against thread, clothes or other beads. The previous oldest find of beads in Africa dates back to just 45,000 years ago. And it seems the Blombos people's taste for beautiful items was not an isolated phenomenon. Jessica Thompson of Arizona State University in Tempe has described finding shell fragments from a site in Tanzania that she believes may represent debris from bead manufacture. They are at least 45,000 and possibly 280,000 years old. Although there is no evidence of how the ancient beads were used, their modern counterparts are often traded. So it looks as though our taste for jewellery and art is much older than we thought.</p>
+<p><strong>E</strong> But why did we come to value these objects in the first place? In many animal species, individuals signal their genetic fitness by showing off with attention-grabbing adornment. Some researchers think that in humans, consumer products play a similar role. Archaeologist Aimee Plourde, from the University of California, also argues that even in egalitarian societies, some people are more successful than others. Among our ancestors, superior skills in areas such as hunting, crafts, environmental knowledge and contact with neighbouring groups would have brought respect – in other words, prestige. And because prestige brings social benefits, people would want to show off their talents. The best way to do this would be through demonstrating possession of material items that are hard to fake. “A good hunter, for instance, could advertise his skills by wearing the tooth of an animal that is elusive or dangerous,” says Plourde. The benefits of prestige would also lead to competition to acquire it. As a result, the value and variety of prestige goods would spiral and there would be a parallel increase in the ranking of social systems. If Plourde is correct, prestige goods form a direct link between our innate drive for trade and the development of structured, hierarchical societies. They are arguably the first step on the road to modern civilisation, paving the way for agriculture and urbanisation. We may not be impressed by beads anymore, but their modern equivalents have the same fascination. Nobody believes the guy who spends £670,000 on a Bugatti Veyron car does so because he needs to travel at 250mph. We all know in today's consumer society that he's buying an exclusive status symbol.</p>
+</div>
+</div>
+<div class="splitter" id="splitter"></div>
+<div class="pane right" id="questionsPane">
+<div class="qblock">
+<h3>Questions 14–18</h3>
+<div class="instructions">Reading Passage 2 has five sections, <strong>A–E</strong>.<br/>Choose the correct heading for each section from the list of headings below.<br/>Write the correct number, <strong>i–vii</strong>, in boxes 14–18 on your answer sheet.</div>
+<div style="background:var(--bg-alt); padding:12px; border-radius:5px; margin-bottom:15px; font-size:13px; border:1px solid var(--border);"><div style="font-weight:700; margin-bottom:6px;">List of Headings</div><strong>i</strong> The desire to make expensive jewellery<br/>
+<strong>ii</strong> The clues that indicate ancient items were decorative<br/>
+<strong>iii</strong> Querying the changes in the value of traded items<br/>
+<strong>iv</strong> A natural human talent<br/>
+<strong>v</strong> How status can be gained from ownership of goods<br/>
+<strong>vi</strong> Recent finds alter theories about when consumerism started<br/>
+<strong>vii</strong> Changes in research methods</div>
+<div class="yn-row">
+<span class="qnum-yn">14</span>
+<span class="yn-stem">Section A</span>
+<select class="yn-select question" data-q="14"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option></select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">15</span>
+<span class="yn-stem">Section B</span>
+<select class="yn-select question" data-q="15"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option></select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">16</span>
+<span class="yn-stem">Section C</span>
+<select class="yn-select question" data-q="16"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option></select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">17</span>
+<span class="yn-stem">Section D</span>
+<select class="yn-select question" data-q="17"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option></select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">18</span>
+<span class="yn-stem">Section E</span>
+<select class="yn-select question" data-q="18"><option value=""></option><option value="i">i</option><option value="ii">ii</option><option value="iii">iii</option><option value="iv">iv</option><option value="v">v</option><option value="vi">vi</option><option value="vii">vii</option></select>
+</div>
+</div>
+<div class="qblock">
+<h3>Questions 19–21</h3>
+<div class="instructions">Choose the correct letter, <strong>A</strong>, <strong>B</strong>, <strong>C</strong> or <strong>D</strong>.<br/>Write the correct letter in boxes 19–21 on your answer sheet.</div>
+<div class="yn-row" style="flex-direction:column;">
+<div><span class="qnum-yn">19</span> <strong style="font-size:14px;">In section A, reciprocity refers to our ancestors’ ability to</strong></div>
+<div style="padding-left:32px; width:100%;">
+<label class="mc-option"><input class="question-radio question" data-q="19" name="q19" type="radio" value="A"/> A keep written records of different goods traded.</label>
+<label class="mc-option"><input class="question-radio question" data-q="19" name="q19" type="radio" value="B"/> B monitor the balance between goods given and received.</label>
+<label class="mc-option"><input class="question-radio question" data-q="19" name="q19" type="radio" value="C"/> C produce more materials for trading purposes.</label>
+<label class="mc-option"><input class="question-radio question" data-q="19" name="q19" type="radio" value="D"/> D make money from trading goods and services.</label>
+</div>
+</div>
+<div class="yn-row" style="flex-direction:column;">
+<div><span class="qnum-yn">20</span> <strong style="font-size:14px;">What is said about the ochre found around Blombos?</strong></div>
+<div style="padding-left:32px; width:100%;">
+<label class="mc-option"><input class="question-radio question" data-q="20" name="q20" type="radio" value="A"/> A It is of a type only found in this particular area.</label>
+<label class="mc-option"><input class="question-radio question" data-q="20" name="q20" type="radio" value="B"/> B It has all been dyed to give the same shade of red.</label>
+<label class="mc-option"><input class="question-radio question" data-q="20" name="q20" type="radio" value="C"/> C It has been perfectly preserved despite its age.</label>
+<label class="mc-option"><input class="question-radio question" data-q="20" name="q20" type="radio" value="D"/> D It appears it was selected for its colour.</label>
+</div>
+</div>
+<div class="yn-row" style="flex-direction:column;">
+<div><span class="qnum-yn">21</span> <strong style="font-size:14px;">What made the researchers realise the purpose of the beads found at the Blombos caves?</strong></div>
+<div style="padding-left:32px; width:100%;">
+<label class="mc-option"><input class="question-radio question" data-q="21" name="q21" type="radio" value="A"/> A They are a great variety of shapes and sizes.</label>
+<label class="mc-option"><input class="question-radio question" data-q="21" name="q21" type="radio" value="B"/> B They were found in large numbers all grouped around each other.</label>
+<label class="mc-option"><input class="question-radio question" data-q="21" name="q21" type="radio" value="C"/> C They have patterns in many different colours.</label>
+<label class="mc-option"><input class="question-radio question" data-q="21" name="q21" type="radio" value="D"/> D They have holes and markings suggesting they were joined together.</label>
+</div>
+</div>
+</div>
+<div class="qblock">
+<h3>Questions 22–26</h3>
+<div class="instructions">Complete the summary using the list of words/phrases, <strong>A–I</strong>, below.<br/>Write the correct letter, <strong>A–I</strong>, in boxes 22–26 on your answer sheet.</div>
+<div class="notes-box"><div class="notes-title">Why are certain objects valued?</div><div style="background:var(--bg-alt); padding:12px; border-radius:5px; margin-bottom:15px; font-size:13px; border:1px solid var(--border); display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px;"><div><strong>A</strong> competitiveness</div><div><strong>B</strong> power</div><div><strong>C</strong> recognition</div><div><strong>D</strong> wealth</div><div><strong>E</strong> esteem</div><div><strong>F</strong> ancestors</div><div><strong>G</strong> species</div><div><strong>H</strong> goods</div><div><strong>I</strong> city</div></div><p class="summary-para">Some researchers argue that we may use ownership of desirable goods to demonstrate our strength and fitness as other <span class="qnum-yn" style="margin-top:0;">22</span> <input autocomplete="off" class="gap-input question" data-q="22" type="text"/> use their attractive physical features. Showing off one's superiority is not a new phenomenon and even in ancient times successful people would have gained <span class="qnum-yn" style="margin-top:0;">23</span> <input autocomplete="off" class="gap-input question" data-q="23" type="text"/> from this. A desire for status could have led to an increase in the worth of prestige goods and to <span class="qnum-yn" style="margin-top:0;">24</span> <input autocomplete="off" class="gap-input question" data-q="24" type="text"/> among people wishing to achieve this status.</p><p class="summary-para">It is thought that our natural desire to trade provided a basis for organised farming and <span class="qnum-yn" style="margin-top:0;">25</span> <input autocomplete="off" class="gap-input question" data-q="25" type="text"/> development and finally resulted in the complex societies which can be seen today. Whilst we do not value things such as beads nowadays, other items hold the same appeal for us and bring the same status as owing beads did for our <span class="qnum-yn" style="margin-top:0;">26</span> <input autocomplete="off" class="gap-input question" data-q="26" type="text"/>.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<div class="part-tab">
+<span class="label">2</span>
+<span class="progress" id="progress-1">0 of 13</span>
+<div class="qnav" id="qnav-1"></div>
+</div>
+<div class="nav-arrows">
+<button class="arrow-btn" id="prevBtn">←</button>
+<button class="arrow-btn dark" id="nextBtn">→</button>
+</div>
+<button class="check-btn" id="finishBtn" title="Submit">✓</button>
+</div>
+<div class="highlight-popup" id="highlightPopup">
+<button id="hpHighlight"><span class="hp-swatch"></span>Highlight</button>
+<button id="hpRemove">Remove highlight</button>
+<button class="hp-close" id="hpClose">×</button>
+</div>
+<div class="overlay" id="overlay">
+<div class="modal" id="modal"></div>
+</div>
+<script>
+
+const TOTAL = 13;
+const Q_START = 14;
+const Q_END = 26;
+
+const KEY = {"14": ["IV"], "15": ["III"], "16": ["VI"], "17": ["II"], "18": ["V"], "19": ["B"], "20": ["D"], "21": ["D"], "22": ["G"], "23": ["E"], "24": ["A"], "25": ["I"], "26": ["F"]};
+
+const answers = {};
+
+function normalize(v) { return (v || '').toString().trim().toUpperCase().replace(/\s+/g, ' '); }
+
+function isCorrect(n, val) {
+  const normVal = normalize(val);
+  return KEY[n].some(k => normalize(k) === normVal);
+}
+
+document.querySelectorAll('.question-radio').forEach(el => {
+  el.addEventListener('change', () => { answers[el.dataset.q] = el.value; updateNav(); });
+});
+
+document.querySelectorAll('select.question').forEach(el => {
+  const q = +el.dataset.q;
+  el.addEventListener('change', () => { answers[q] = el.value; updateNav(); });
+});
+
+document.querySelectorAll('input.gap-input.question').forEach(el => {
+  const q = +el.dataset.q;
+  el.addEventListener('input', () => { answers[q] = el.value; updateNav(); });
+});
+
+const qnavEl = document.getElementById('qnav-1');
+const progressEl = document.getElementById('progress-1');
+let activeQ = Q_START;
+
+function buildNav() {
+  qnavEl.innerHTML = '';
+  for (let n = Q_START; n <= Q_END; n++) {
+    const btn = document.createElement('button');
+    btn.className = 'qbtn';
+    btn.textContent = n;
+    btn.dataset.n = n;
+    btn.addEventListener('click', () => scrollToQ(n));
+    qnavEl.appendChild(btn);
+  }
+}
+
+function updateNav() {
+  const answered = Object.keys(answers).filter(k => answers[k] !== undefined && answers[k] !== '').length;
+  progressEl.textContent = `${answered} of ${TOTAL}`;
+  qnavEl.querySelectorAll('.qbtn').forEach(btn => {
+    const n = +btn.dataset.n;
+    btn.classList.toggle('answered', !!answers[n] && answers[n] !== '');
+    btn.classList.toggle('current', n === activeQ);
+  });
+}
+
+function scrollToQ(n) {
+  activeQ = n;
+  const el = document.querySelector(`.question-radio[data-q="${n}"], select.question[data-q="${n}"], input.question[data-q="${n}"]`);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.focus({ preventScroll: true }); }
+  updateNav();
+}
+
+document.querySelectorAll('.question, .question-radio').forEach(el => {
+  el.addEventListener('focus', () => { activeQ = +el.dataset.q; updateNav(); });
+});
+
+document.getElementById('prevBtn').addEventListener('click', () => { if (activeQ > Q_START) scrollToQ(activeQ - 1); });
+document.getElementById('nextBtn').addEventListener('click', () => { if (activeQ < Q_END) scrollToQ(activeQ + 1); });
+
+buildNav();
+updateNav();
+
+function getBand(score) {
+  const pct = score / TOTAL;
+  if (pct >= 0.97) return '9.0';
+  if (pct >= 0.90) return '8.5';
+  if (pct >= 0.83) return '8.0';
+  if (pct >= 0.76) return '7.5';
+  if (pct >= 0.69) return '7.0';
+  if (pct >= 0.62) return '6.5';
+  if (pct >= 0.54) return '6.0';
+  if (pct >= 0.46) return '5.5';
+  if (pct >= 0.38) return '5.0';
+  if (pct >= 0.30) return '4.5';
+  return '4.0';
+}
+
+function showResults() {
+  let score = 0;
+  const rows = [];
+  for (let n = Q_START; n <= Q_END; n++) {
+    const ok = isCorrect(n, answers[n]);
+    if (ok) score++;
+    rows.push({ n, given: answers[n] || '—', correct: KEY[n].join(' / '), ok });
+  }
+  const pct = Math.round(score / TOTAL * 100);
+  const band = getBand(score);
+  const color = pct >= 70 ? 'var(--correct)' : pct >= 50 ? '#d4800a' : 'var(--wrong)';
+
+  let html = `<h2>Your Results</h2>
+    <div class="score-row" style="color:${color}">${score} / ${TOTAL} <span>(${pct}%)</span></div>
+    <div class="band-row">Estimated Band: ${band}</div>
+    <table class="results-table">
+      <thead><tr><th>Q</th><th>Your Answer</th><th>Correct</th><th></th></tr></thead><tbody>`;
+  rows.forEach(r => {
+    html += `<tr>
+      <td><strong>${r.n}</strong></td>
+      <td>${r.given}</td>
+      <td>${r.correct}</td>
+      <td class="${r.ok ? 'mark-ok' : 'mark-bad'}">${r.ok ? '✓' : '✗'}</td>
+    </tr>`;
+  });
+  html += `</tbody></table>
+    <div class="actions">
+      <button class="secondary" onclick="document.getElementById('overlay').classList.remove('visible')">Review</button>
+    </div>`;
+
+  document.getElementById('modal').innerHTML = html;
+  document.getElementById('overlay').classList.add('visible');
+}
+
+document.getElementById('finishBtn').addEventListener('click', () => {
+  if (confirm('Submit and see your results?')) showResults();
+});
+
+document.getElementById('overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('overlay')) document.getElementById('overlay').classList.remove('visible');
+});
+
+document.getElementById('btn-dark').addEventListener('click', () => document.body.classList.add('dark'));
+document.getElementById('btn-light').addEventListener('click', () => document.body.classList.remove('dark'));
+
+let fontScale = 1;
+document.getElementById('btn-font-up').addEventListener('click', () => {
+  fontScale = Math.min(1.4, fontScale + 0.08);
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+});
+document.getElementById('btn-font-down').addEventListener('click', () => {
+  fontScale = Math.max(0.7, fontScale - 0.08);
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+});
+
+const splitter = document.getElementById('splitter');
+const leftPane = document.querySelector('.pane.left');
+let dragging = false, startX = 0, startW = 0;
+splitter.addEventListener('mousedown', e => { dragging = true; startX = e.clientX; startW = leftPane.offsetWidth; e.preventDefault(); });
+document.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  const newW = Math.max(200, Math.min(window.innerWidth - 250, startW + e.clientX - startX));
+  leftPane.style.width = newW + 'px';
+});
+document.addEventListener('mouseup', () => { dragging = false; });
+
+// ---- Selection Highlight ----
+const popup = document.getElementById('highlightPopup');
+let lastRange = null;
+
+function isInsideForm(node) {
+  while (node && node !== document.body) {
+    if (node.nodeType === 1 && /^(INPUT|SELECT|TEXTAREA|OPTION|BUTTON)$/.test(node.tagName)) return true;
+    node = node.parentNode;
+  }
+  return false;
+}
+
+function handleSelection() {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || sel.toString().trim() === '') { popup.classList.remove('visible'); return; }
+  const range = sel.getRangeAt(0);
+  if (isInsideForm(range.commonAncestorContainer)) { popup.classList.remove('visible'); return; }
+  const pane = range.commonAncestorContainer.parentElement?.closest('#passagePane, #questionsPane');
+  if (!pane) { popup.classList.remove('visible'); return; }
+  lastRange = range.cloneRange();
+  const rect = range.getBoundingClientRect();
+  popup.style.left = (rect.left + rect.width / 2 - popup.offsetWidth / 2 + window.scrollX) + 'px';
+  popup.style.top = (rect.top - 48 + window.scrollY) + 'px';
+  popup.classList.add('visible');
+}
+
+document.getElementById('passagePane').addEventListener('mouseup', handleSelection);
+document.getElementById('questionsPane').addEventListener('mouseup', handleSelection);
+
+document.getElementById('hpHighlight').addEventListener('click', () => {
+  if (!lastRange) return;
+  const mark = document.createElement('mark');
+  mark.className = 'user-highlight';
+  try { lastRange.surroundContents(mark); }
+  catch (e) {
+    try { mark.appendChild(lastRange.extractContents()); lastRange.insertNode(mark); } catch (e2) {}
+  }
+  window.getSelection().removeAllRanges();
+  popup.classList.remove('visible');
+});
+
+document.getElementById('hpRemove').addEventListener('click', () => {
+  document.querySelectorAll('.user-highlight').forEach(m => {
+    const parent = m.parentNode;
+    while (m.firstChild) parent.insertBefore(m.firstChild, m);
+    parent.removeChild(m);
+    parent.normalize();
+  });
+  popup.classList.remove('visible');
+});
+document.getElementById('hpClose').addEventListener('click', () => popup.classList.remove('visible'));
+
+</script>
+<script>
+const TEST_ID = 'born-to-trade-t17';
+const TEST_DURATION_MIN = 20;
+
+const C1_WORDS = [
+  {
+    "word": "reciprocity",
+    "def": "The practice of exchanging things with others for mutual benefit"
+  },
+  {
+    "word": "barter",
+    "def": "To exchange goods or services without using money"
+  },
+  {
+    "word": "intangible",
+    "def": "Unable to be touched; not having physical presence"
+  },
+  {
+    "word": "intricate",
+    "def": "Very complicated or detailed"
+  },
+  {
+    "word": "ochre",
+    "def": "A natural clay pigment ranging from light yellow to deep orange or red"
+  },
+  {
+    "word": "quarry",
+    "def": "A place where stone or minerals are extracted from the ground"
+  },
+  {
+    "word": "mollusc",
+    "def": "A soft-bodied invertebrate animal, often with a hard shell"
+  },
+  {
+    "word": "adornment",
+    "def": "A thing that adds beauty or decoration to something"
+  },
+  {
+    "word": "egalitarian",
+    "def": "Believing in or based on the principle that all people are equal"
+  },
+  {
+    "word": "hierarchical",
+    "def": "Arranged in order of rank or status"
+  }
+];
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="db.js"></script>
+
+
+<script src="reading-test-common.js"></script>
+<script src="highlight-auto-dismiss.js"></script>
+<script src="activity-bridge-v15.js"></script>
+</body>
+</html>

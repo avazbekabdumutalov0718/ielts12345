@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IELTS Reading – A Brief History of Ballet</title>
+<link href="reading-test-common.css" rel="stylesheet"/>
+<style>
+
+:root {
+    --bg: #ffffff; --bg-alt: #f4f5f7; --bg-panel: #ffffff;
+    --text: #111111; --text-muted: #555; --border: #d4d4d4;
+    --border-strong: #333; --accent: #e51e2a;
+    --select-bg: #cfe3ff; --select-active: #1e6cd8;
+    --footer-bg: #f4f5f7; --btn-bg: #ededed;
+    --arrow-bg: #1f1f1f; --arrow-fg: #ffffff;
+    --correct: #1a8a3c; --wrong: #cc2222;
+  }
+  body.dark {
+    --bg: #1a1a1d; --bg-alt: #232327; --bg-panel: #1f1f22;
+    --text: #ececec; --text-muted: #b5b5b5; --border: #3a3a3f;
+    --border-strong: #cfcfcf; --accent: #ff5c66;
+    --select-bg: #2c4d7a; --select-active: #4a8be0;
+    --footer-bg: #232327; --btn-bg: #2e2e33;
+    --arrow-bg: #ececec; --arrow-fg: #1a1a1d;
+    --correct: #4ed684; --wrong: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+
+  .topbar { height: 50px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; background: var(--bg); position: relative; z-index: 5; }
+  .logo { font-weight: 800; font-size: 22px; letter-spacing: 1px; color: var(--accent); margin-right: 20px; user-select: none; }
+  .test-taker { font-size: 14px; font-weight: 700; }
+  .top-controls { margin-left: auto; display: flex; gap: 2px; align-items: center; }
+  .top-controls .icon-btn, .top-controls .text-btn { background: transparent; border: none; color: var(--text); padding: 6px 10px; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s; }
+  .top-controls .icon-btn:hover, .top-controls .text-btn:hover { background: var(--bg-alt); }
+  .top-controls .icon-btn svg { width: 20px; height: 20px; display: block; }
+  .top-controls .text-btn { font-weight: 700; font-size: 16px; font-family: inherit; }
+  .top-controls .divider { width: 1px; height: 26px; background: var(--border); margin: 0 6px; }
+
+  .part-header { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 10px 20px; }
+  .part-header h2 { margin: 0 0 3px 0; font-size: 14px; font-weight: 700; }
+  .part-header p { margin: 0; font-size: 12px; color: var(--text-muted); }
+
+  .main { position: absolute; top: 50px; left: 0; right: 0; bottom: 50px; display: flex; flex-direction: column; }
+  .panes { flex: 1; display: flex; overflow: hidden; position: relative; }
+  .pane { overflow-y: auto; padding: 18px 28px; background: var(--bg-panel); line-height: 1.55; font-size: calc(14.5px * var(--font-scale, 1)); }
+  .pane.left { width: 50%; }
+  .pane.right { flex: 1; }
+  .splitter { width: 10px; background: var(--bg-alt); border-left: 1px solid var(--border); border-right: 1px solid var(--border); cursor: col-resize; position: relative; user-select: none; flex-shrink: 0; }
+  .splitter::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; background: var(--bg); border: 1px solid var(--border); border-radius: 3px; background-image: linear-gradient(to right, transparent 6px, var(--text) 6px, var(--text) 7px, transparent 7px, transparent 11px, var(--text) 11px, var(--text) 12px, transparent 12px); }
+
+  .passage h1 { font-size: 16px; font-weight: 700; margin: 0 0 14px 0; text-align: center; }
+  .passage .subtitle { font-size: 13px; font-style: italic; text-align: center; margin: -8px 0 14px 0; color: var(--text-muted); }
+  .passage h2.sec { font-size: 14px; font-weight: 700; margin: 16px 0 6px 0; }
+  .passage p { margin: 0 0 11px 0; text-align: justify; }
+
+  .qblock { margin-bottom: 28px; }
+  .qblock h3 { margin: 0 0 6px 0; font-size: 14.5px; font-weight: 700; }
+  .qblock .instructions { font-size: 13px; margin-bottom: 12px; line-height: 1.6; }
+  .qblock .instructions strong { font-weight: 700; }
+
+  /* Row styles */
+  .yn-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; padding: 6px 8px; border-radius: 4px; border: 1px solid transparent; }
+  .yn-row:focus-within { border-color: var(--select-active); }
+  .qnum-yn { display: inline-block; min-width: 22px; font-weight: 700; border: 1px solid var(--border-strong); padding: 0 4px; text-align: center; font-size: 12px; flex-shrink: 0; margin-top: 3px; }
+  .yn-stem { flex: 1; font-size: 14px; line-height: 1.5; }
+  .yn-select { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 4px 6px; font-size: 13px; font-family: inherit; border-radius: 3px; min-width: 110px; flex-shrink: 0; }
+  .gap-input { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 3px 6px; font-size: 13px; border-radius: 3px; width: 160px; font-family: inherit; }
+
+  /* Radio Options */
+  .mc-option { display: block; margin: 5px 0; font-size: 13.5px; cursor: pointer; }
+  .mc-option input { margin-right: 8px; }
+
+  /* Notes / summary completion */
+  .notes-box { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; margin-bottom: 6px; }
+  .notes-title { font-weight: 700; font-size: 14px; margin-bottom: 8px; text-align: center; }
+  .notes-list { margin: 0; padding-left: 18px; }
+  .notes-list li { margin-bottom: 10px; font-size: 13.5px; line-height: 1.6; }
+  .summary-para { font-size: 13.5px; line-height: 1.9; }
+
+  /* Footer */
+  .footer { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: var(--footer-bg); border-top: 1px solid var(--border); display: flex; align-items: center; padding: 0 12px; gap: 8px; z-index: 4; }
+  .part-tab { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 3px; border: 1px solid var(--border); background: var(--bg); user-select: none; }
+  .part-tab .label { font-weight: 700; font-size: 13px; }
+  .part-tab .progress { font-size: 11.5px; color: var(--text-muted); }
+  .qnav { display: flex; gap: 3px; margin-left: 2px; flex-wrap: wrap; }
+  .qbtn { width: 22px; height: 22px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 2px; font-family: inherit; }
+  .qbtn:hover { background: var(--bg-alt); }
+  .qbtn.current { border: 2px solid var(--text); font-weight: 700; }
+  .qbtn.answered { background: var(--bg-alt); }
+  .nav-arrows { display: flex; gap: 4px; margin-left: auto; }
+  .arrow-btn { width: 32px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .arrow-btn.dark { background: var(--arrow-bg); color: var(--arrow-fg); border-color: var(--arrow-bg); }
+  .check-btn { width: 36px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-left: 4px; }
+
+  .user-highlight { background: #f4ff55; padding: 1px 0; }
+  body.dark .user-highlight { background: #8a9100; color: #fff; }
+
+  .highlight-popup { position: absolute; display: none; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.18); padding: 4px; z-index: 200; align-items: center; gap: 2px; font-size: 13.5px; user-select: none; }
+  .highlight-popup.visible { display: inline-flex; }
+  .highlight-popup button { background: transparent; border: none; padding: 8px 12px; cursor: pointer; color: var(--text); border-radius: 5px; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 13.5px; font-weight: 500; }
+  .highlight-popup button:hover { background: var(--bg-alt); }
+  .highlight-popup .hp-swatch { display: inline-block; width: 16px; height: 16px; background: #f4ff55; border-radius: 3px; flex-shrink: 0; }
+  .highlight-popup .hp-close { padding: 6px 10px; font-size: 18px; color: var(--text-muted); line-height: 1; }
+
+  .pane::-webkit-scrollbar { width: 10px; }
+  .pane::-webkit-scrollbar-track { background: var(--bg-alt); }
+  .pane::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+
+  /* Results overlay */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-start; justify-content: center; z-index: 100; padding: 20px; overflow-y: auto; }
+  .overlay.visible { display: flex; }
+  .modal { background: var(--bg-panel); color: var(--text); border: 1px solid var(--border); border-radius: 8px; max-width: 600px; width: 100%; padding: 28px 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); margin: auto; }
+  .modal h2 { margin: 0 0 10px 0; color: var(--accent); font-size: 22px; text-align: center; }
+  .score-row { text-align: center; font-size: 28px; font-weight: 800; margin: 6px 0 4px; }
+  .score-row span { font-size: 16px; font-weight: 400; color: var(--text-muted); }
+  .band-row { text-align: center; font-size: 18px; font-weight: 700; margin-bottom: 18px; color: var(--accent); }
+  .results-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 18px; }
+  .results-table th { background: var(--bg-alt); padding: 6px 10px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border); }
+  .results-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .results-table tr:last-child td { border-bottom: none; }
+  .mark-ok  { color: var(--correct); font-weight: 700; font-size: 15px; }
+  .mark-bad { color: var(--wrong);   font-weight: 700; font-size: 15px; }
+  .modal .actions { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+  .modal button { background: var(--accent); color: #fff; border: none; padding: 9px 22px; font-size: 14px; font-weight: 600; border-radius: 4px; cursor: pointer; }
+  .modal button.secondary { background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); }
+  .modal button:hover { opacity: 0.9; }
+
+</style>
+<link href="max-bridge.css?v=1" rel="stylesheet"/><script defer="" src="max-bridge.js?v=1"></script>
+<link href="reading-v12.css" rel="stylesheet"/><script defer="True" src="reading-v12.js"></script></head>
+<body>
+<div class="topbar">
+<div class="logo">IELTS</div>
+<div class="test-taker">VIVID IELTS</div>
+<div class="top-controls">
+<button class="icon-btn" id="btn-light" title="Light mode">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="4"></circle>
+<line x1="12" x2="12" y1="2" y2="4"></line><line x1="12" x2="12" y1="20" y2="22"></line>
+<line x1="4.93" x2="6.34" y1="4.93" y2="6.34"></line><line x1="17.66" x2="19.07" y1="17.66" y2="19.07"></line>
+<line x1="2" x2="4" y1="12" y2="12"></line><line x1="20" x2="22" y1="12" y2="12"></line>
+<line x1="4.93" x2="6.34" y1="19.07" y2="17.66"></line><line x1="17.66" x2="19.07" y1="6.34" y2="4.93"></line>
+</svg>
+</button>
+<button class="icon-btn" id="btn-dark" title="Dark mode">
+<svg fill="currentColor" viewbox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+</button>
+<div class="divider"></div>
+<button class="text-btn" id="btn-font-down" title="Decrease font size">A-</button>
+<button class="text-btn" id="btn-font-up" title="Increase font size">A+</button>
+</div>
+</div>
+<div class="main">
+<div class="part-header">
+<h2>Reading Passage 1</h2>
+<p>You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.</p>
+</div>
+<div class="panes">
+<div class="pane left" id="passagePane">
+<div class="passage">
+<div style="font-weight:700;font-size:14px;margin-bottom:4px;">READING PASSAGE 1</div>
+<div style="font-size:13px;margin-bottom:14px;color:var(--text-muted);">You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.</div>
+<h1>A Brief History of Ballet</h1>
+<div class="subtitle">Classical ballet on pointe</div>
+<p>Ballet originated in the Italian Renaissance of the 15th century. The nobility were treated to extravagant events, especially wedding celebrations, where dancing and music created a detailed and fascinating spectacle. Dancing masters taught the dance steps to the nobility, who participated in the performances. In the 16th century Catherine de Medici, an Italian noblewoman, wife of the king of France and a great patron of the arts, began to fund ballet in the French court. Her elaborate festivals encouraged the growth of ballet de cour, a programme that included dance, costume, song, music and poetry. A century later, King Louis XIV helped to popularise and standardise the ballet. A passionate dancer, he performed many roles himself, including that of the Sun King in Ballet de la Nuit. His love of ballet raised it from a hobby for amateurs to a skill requiring professional training.</p>
+<p>By 1661, a dance academy had opened in Paris, and in 1681 ballet moved to the stage. The French opera <em>Le Triomphe de L'Amour</em> incorporated ballet elements in its performance, creating a long-standing opera-ballet tradition in France. In the mid-18th century, however, French ballet master Jean Georges Noverre rebelled against the artifice of opera-ballet, believing that ballet could stand on its own as an art form. His idea — that ballet should contain expressive dramatic movement, and this should reveal relationships between characters — introduced the ballet d'action, a dramatic style of ballet that features a narrative. Noverre's work is considered the forerunner to the narrative ballets of the 19th century.</p>
+<p>Early classical ballets such as <em>Giselle</em> explored the world of spirits and magic, and often showed women as passive and fragile. These themes are reflected in the ballets of the time which are called romantic ballets. This is the period which dancing on tiptoe, known as pointe work, became the normal style for the ballerina. The romantic tutu, a calf-length, full skirt, was also introduced at this time.</p>
+<p>By the 19th century the popularity of ballet had soared in Russia and by the end of that century its composers and choreographers — who designed the movements and steps the dancers took — had taken the art form to new levels. <em>The Nutcracker</em> and <em>The Sleeping Beauty</em>, as choreographed by Marius Petipa, represent classical ballet in its grandest form. The primary purpose of Russian ballet in this period was to display classical technique such as pointe work, high leg lifts and precision of movement. Complicated sequences that drew attention to demanding steps, leaps and turns were choreographed into the story. The classical tutu, much shorter and stiffer than the romantic tutu, was introduced in the second half of the century to reveal a ballerina's legs and emphasise the skill of her footwork. George Balanchine is considered by many to be the greatest innovator of the contemporary “plotless” ballet, with no definite story line. Its purpose is to use movement to express the music and to depict human emotions. Today, the ballet takes many forms. Classical approaches, traditional stories and contemporary choreographic innovations blend together to produce the character of modern ballet.</p>
+<p>Despite all the changes which ballet has undergone, pointe shoes, which were first worn in the 1830s, have remained the key ballet equipment. Specially made to allow ballerinas to dance on tiptoe, they create an illusion of lightness and even give a sense that the ballerina is floating on air. While they look very delicate, pointe shoes are, in fact, quite the opposite. The tip of the shoe is a rigid box made of densely packed layers of fabric, cardboard or paper which has been hardened by glue. The box needs to be extremely sturdy since the entire weight of the dancer's body is balanced on it. The rest of the shoe is made of leather, cotton and satin, and each shoe is hand-made to fit a dancer's specifications, which means that you'll never see two pairs that are identical. Sometimes, men will also wear pointe shoes, usually for comedic effect, but male dancers usually wear a leather or canvas slipper with a soft sole, which provides flexibility when jumping.</p>
+<p>Each time a ballerina gets a new pair of pointe shoes, she has to break them in. This is done by pounding the box of the shoe with a hammer to soften it. Dancers also sew on ribbons and elastic to hold their shoes in place. Despite this time-consuming preparation, the shoes may only last for one performance, or even part of a performance, depending on the difficulty of the ballet. In the course of a single season, a professional ballerina can go through 100–120 pairs of pointe shoes.</p>
+</div>
+</div>
+<div class="splitter" id="splitter"></div>
+<div class="pane right" id="questionsPane">
+<div class="qblock">
+<h3>Questions 1–7</h3>
+<div class="instructions">Do the following statements agree with the information given in Reading Passage 1?<br/>In boxes 1–7 on your answer sheet, write<br/><strong>TRUE</strong> if the statement agrees with the information<br/><strong>FALSE</strong> if the statement contradicts the information<br/><strong>NOT GIVEN</strong> if there is no information on this</div>
+<div class="yn-row">
+<span class="qnum-yn">1</span>
+<span class="yn-stem">The first form of ballet was designed as entertainment for Italian society's upper classes.</span>
+<select class="yn-select question" data-q="1"><option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">2</span>
+<span class="yn-stem">The Ballet de la Nuit was Louis XIV's favourite ballet.</span>
+<select class="yn-select question" data-q="2"><option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">3</span>
+<span class="yn-stem">The strong link between ballet and opera was challenged in mid-18th century France.</span>
+<select class="yn-select question" data-q="3"><option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">4</span>
+<span class="yn-stem">In the first half of the 19th century the majority of ballet dancers were women.</span>
+<select class="yn-select question" data-q="4"><option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">5</span>
+<span class="yn-stem">Choreographers in 19th-century Russia were mostly interested in telling a story.</span>
+<select class="yn-select question" data-q="5"><option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">6</span>
+<span class="yn-stem">The classical tutu was very popular with ballerinas when it was first introduced.</span>
+<select class="yn-select question" data-q="6"><option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select>
+</div>
+<div class="yn-row">
+<span class="qnum-yn">7</span>
+<span class="yn-stem">George Balanchine began his ballet career in New York.</span>
+<select class="yn-select question" data-q="7"><option value=""></option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option><option value="NOT GIVEN">NOT GIVEN</option></select>
+</div>
+</div>
+<div class="qblock">
+<h3>Questions 8–13</h3>
+<div class="instructions">Complete the notes below.<br/>Choose <strong>ONE WORD AND/OR A NUMBER</strong> from the passage for each answer.<br/>Write your answers in boxes 8–13 on your answer sheet.</div>
+<div style="background:var(--bg-alt); padding:12px 16px; border-radius:6px; border:1px solid var(--border); margin-bottom:6px;">
+<div style="font-weight:700; text-align:center; margin-bottom:10px;">Pointe shoes</div>
+<div style="font-size:13.5px; margin-bottom:8px;">• first worn in 1830s</div>
+<div class="yn-row"><span class="qnum-yn">8</span><span class="yn-stem">make it seem as if the dancer is <input autocomplete="off" class="gap-input question" data-q="8" type="text"/> on air rather than dancing</span></div>
+<div class="yn-row"><span class="qnum-yn">9</span><span class="yn-stem">shoes are <input autocomplete="off" class="gap-input question" data-q="9" type="text"/> in appearance, but this is misleading</span></div>
+<div class="yn-row"><span class="qnum-yn">10</span><span class="yn-stem">in the tip, layers of fabric, cardboard or paper form a rigid <input autocomplete="off" class="gap-input question" data-q="10" type="text"/></span></div>
+<div class="yn-row"><span class="qnum-yn">11</span><span class="yn-stem"><input autocomplete="off" class="gap-input question" data-q="11" type="text"/> is used to make the materials tougher</span></div>
+<div style="font-size:13.5px; margin:8px 0;">• no two pairs are identical</div>
+<div class="yn-row"><span class="qnum-yn">12</span><span class="yn-stem">a <input autocomplete="off" class="gap-input question" data-q="12" type="text"/> is used to prepare shoes for dancing</span></div>
+<div style="font-size:13.5px; margin:8px 0;">• dancers attach ribbons or elastic to their shoes</div>
+<div class="yn-row"><span class="qnum-yn">13</span><span class="yn-stem">a ballerina can wear up to <input autocomplete="off" class="gap-input question" data-q="13" type="text"/> pairs in one season</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<div class="part-tab">
+<span class="label">1</span>
+<span class="progress" id="progress-1">0 of 13</span>
+<div class="qnav" id="qnav-1"></div>
+</div>
+<div class="nav-arrows">
+<button class="arrow-btn" id="prevBtn">←</button>
+<button class="arrow-btn dark" id="nextBtn">→</button>
+</div>
+<button class="check-btn" id="finishBtn" title="Submit">✓</button>
+</div>
+<div class="highlight-popup" id="highlightPopup">
+<button id="hpHighlight"><span class="hp-swatch"></span>Highlight</button>
+<button id="hpRemove">Remove highlight</button>
+<button class="hp-close" id="hpClose">×</button>
+</div>
+<div class="overlay" id="overlay">
+<div class="modal" id="modal"></div>
+</div>
+<script>
+
+const TOTAL = 13;
+const Q_START = 1;
+const Q_END = 13;
+
+const KEY = {"1": ["TRUE"], "2": ["NOT GIVEN"], "3": ["TRUE"], "4": ["NOT GIVEN"], "5": ["NOT GIVEN"], "6": ["NOT GIVEN"], "7": ["NOT GIVEN"], "8": ["FLOATING"], "9": ["DELICATE"], "10": ["BOX"], "11": ["GLUE"], "12": ["HAMMER"], "13": ["120", "100-120"]};
+
+const answers = {};
+
+function normalize(v) { return (v || '').toString().trim().toUpperCase().replace(/\s+/g, ' '); }
+
+function isCorrect(n, val) {
+  const normVal = normalize(val);
+  return KEY[n].some(k => normalize(k) === normVal);
+}
+
+document.querySelectorAll('.question-radio').forEach(el => {
+  el.addEventListener('change', () => { answers[el.dataset.q] = el.value; updateNav(); });
+});
+
+document.querySelectorAll('select.question').forEach(el => {
+  const q = +el.dataset.q;
+  el.addEventListener('change', () => { answers[q] = el.value; updateNav(); });
+});
+
+document.querySelectorAll('input.gap-input.question').forEach(el => {
+  const q = +el.dataset.q;
+  el.addEventListener('input', () => { answers[q] = el.value; updateNav(); });
+});
+
+const qnavEl = document.getElementById('qnav-1');
+const progressEl = document.getElementById('progress-1');
+let activeQ = Q_START;
+
+function buildNav() {
+  qnavEl.innerHTML = '';
+  for (let n = Q_START; n <= Q_END; n++) {
+    const btn = document.createElement('button');
+    btn.className = 'qbtn';
+    btn.textContent = n;
+    btn.dataset.n = n;
+    btn.addEventListener('click', () => scrollToQ(n));
+    qnavEl.appendChild(btn);
+  }
+}
+
+function updateNav() {
+  const answered = Object.keys(answers).filter(k => answers[k] !== undefined && answers[k] !== '').length;
+  progressEl.textContent = `${answered} of ${TOTAL}`;
+  qnavEl.querySelectorAll('.qbtn').forEach(btn => {
+    const n = +btn.dataset.n;
+    btn.classList.toggle('answered', !!answers[n] && answers[n] !== '');
+    btn.classList.toggle('current', n === activeQ);
+  });
+}
+
+function scrollToQ(n) {
+  activeQ = n;
+  const el = document.querySelector(`.question-radio[data-q="${n}"], select.question[data-q="${n}"], input.question[data-q="${n}"]`);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.focus({ preventScroll: true }); }
+  updateNav();
+}
+
+document.querySelectorAll('.question, .question-radio').forEach(el => {
+  el.addEventListener('focus', () => { activeQ = +el.dataset.q; updateNav(); });
+});
+
+document.getElementById('prevBtn').addEventListener('click', () => { if (activeQ > Q_START) scrollToQ(activeQ - 1); });
+document.getElementById('nextBtn').addEventListener('click', () => { if (activeQ < Q_END) scrollToQ(activeQ + 1); });
+
+buildNav();
+updateNav();
+
+function getBand(score) {
+  const pct = score / TOTAL;
+  if (pct >= 0.97) return '9.0';
+  if (pct >= 0.90) return '8.5';
+  if (pct >= 0.83) return '8.0';
+  if (pct >= 0.76) return '7.5';
+  if (pct >= 0.69) return '7.0';
+  if (pct >= 0.62) return '6.5';
+  if (pct >= 0.54) return '6.0';
+  if (pct >= 0.46) return '5.5';
+  if (pct >= 0.38) return '5.0';
+  if (pct >= 0.30) return '4.5';
+  return '4.0';
+}
+
+function showResults() {
+  let score = 0;
+  const rows = [];
+  for (let n = Q_START; n <= Q_END; n++) {
+    const ok = isCorrect(n, answers[n]);
+    if (ok) score++;
+    rows.push({ n, given: answers[n] || '—', correct: KEY[n].join(' / '), ok });
+  }
+  const pct = Math.round(score / TOTAL * 100);
+  const band = getBand(score);
+  const color = pct >= 70 ? 'var(--correct)' : pct >= 50 ? '#d4800a' : 'var(--wrong)';
+
+  let html = `<h2>Your Results</h2>
+    <div class="score-row" style="color:${color}">${score} / ${TOTAL} <span>(${pct}%)</span></div>
+    <div class="band-row">Estimated Band: ${band}</div>
+    <table class="results-table">
+      <thead><tr><th>Q</th><th>Your Answer</th><th>Correct</th><th></th></tr></thead><tbody>`;
+  rows.forEach(r => {
+    html += `<tr>
+      <td><strong>${r.n}</strong></td>
+      <td>${r.given}</td>
+      <td>${r.correct}</td>
+      <td class="${r.ok ? 'mark-ok' : 'mark-bad'}">${r.ok ? '✓' : '✗'}</td>
+    </tr>`;
+  });
+  html += `</tbody></table>
+    <div class="actions">
+      <button class="secondary" onclick="document.getElementById('overlay').classList.remove('visible')">Review</button>
+    </div>`;
+
+  document.getElementById('modal').innerHTML = html;
+  document.getElementById('overlay').classList.add('visible');
+}
+
+document.getElementById('finishBtn').addEventListener('click', () => {
+  if (confirm('Submit and see your results?')) showResults();
+});
+
+document.getElementById('overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('overlay')) document.getElementById('overlay').classList.remove('visible');
+});
+
+document.getElementById('btn-dark').addEventListener('click', () => document.body.classList.add('dark'));
+document.getElementById('btn-light').addEventListener('click', () => document.body.classList.remove('dark'));
+
+let fontScale = 1;
+document.getElementById('btn-font-up').addEventListener('click', () => {
+  fontScale = Math.min(1.4, fontScale + 0.08);
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+});
+document.getElementById('btn-font-down').addEventListener('click', () => {
+  fontScale = Math.max(0.7, fontScale - 0.08);
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+});
+
+const splitter = document.getElementById('splitter');
+const leftPane = document.querySelector('.pane.left');
+let dragging = false, startX = 0, startW = 0;
+splitter.addEventListener('mousedown', e => { dragging = true; startX = e.clientX; startW = leftPane.offsetWidth; e.preventDefault(); });
+document.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  const newW = Math.max(200, Math.min(window.innerWidth - 250, startW + e.clientX - startX));
+  leftPane.style.width = newW + 'px';
+});
+document.addEventListener('mouseup', () => { dragging = false; });
+
+// ---- Selection Highlight ----
+const popup = document.getElementById('highlightPopup');
+let lastRange = null;
+
+function isInsideForm(node) {
+  while (node && node !== document.body) {
+    if (node.nodeType === 1 && /^(INPUT|SELECT|TEXTAREA|OPTION|BUTTON)$/.test(node.tagName)) return true;
+    node = node.parentNode;
+  }
+  return false;
+}
+
+function handleSelection() {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || sel.toString().trim() === '') { popup.classList.remove('visible'); return; }
+  const range = sel.getRangeAt(0);
+  if (isInsideForm(range.commonAncestorContainer)) { popup.classList.remove('visible'); return; }
+  const pane = range.commonAncestorContainer.parentElement?.closest('#passagePane, #questionsPane');
+  if (!pane) { popup.classList.remove('visible'); return; }
+  lastRange = range.cloneRange();
+  const rect = range.getBoundingClientRect();
+  popup.style.left = (rect.left + rect.width / 2 - popup.offsetWidth / 2 + window.scrollX) + 'px';
+  popup.style.top = (rect.top - 48 + window.scrollY) + 'px';
+  popup.classList.add('visible');
+}
+
+document.getElementById('passagePane').addEventListener('mouseup', handleSelection);
+document.getElementById('questionsPane').addEventListener('mouseup', handleSelection);
+
+document.getElementById('hpHighlight').addEventListener('click', () => {
+  if (!lastRange) return;
+  const mark = document.createElement('mark');
+  mark.className = 'user-highlight';
+  try { lastRange.surroundContents(mark); }
+  catch (e) {
+    try { mark.appendChild(lastRange.extractContents()); lastRange.insertNode(mark); } catch (e2) {}
+  }
+  window.getSelection().removeAllRanges();
+  popup.classList.remove('visible');
+});
+
+document.getElementById('hpRemove').addEventListener('click', () => {
+  document.querySelectorAll('.user-highlight').forEach(m => {
+    const parent = m.parentNode;
+    while (m.firstChild) parent.insertBefore(m.firstChild, m);
+    parent.removeChild(m);
+    parent.normalize();
+  });
+  popup.classList.remove('visible');
+});
+document.getElementById('hpClose').addEventListener('click', () => popup.classList.remove('visible'));
+
+</script>
+<script>
+const TEST_ID = 'ballet-history-t10';
+const TEST_DURATION_MIN = 20;
+
+const C1_WORDS = [
+  {
+    "word": "extravagant",
+    "def": "Lacking restraint in spending money or using resources; elaborate and showy"
+  },
+  {
+    "word": "patron",
+    "def": "A person who gives financial or other support to a person, organisation or cause"
+  },
+  {
+    "word": "rebel",
+    "def": "To resist or rise against an established convention or authority"
+  },
+  {
+    "word": "narrative",
+    "def": "A spoken or written account of connected events; a story"
+  },
+  {
+    "word": "passive",
+    "def": "Accepting what happens without active response or resistance"
+  },
+  {
+    "word": "choreograph",
+    "def": "To compose the sequence of steps and movements for a dance"
+  },
+  {
+    "word": "precision",
+    "def": "The quality of being exact and accurate"
+  },
+  {
+    "word": "rigid",
+    "def": "Unable to bend or be forced out of shape; stiff"
+  },
+  {
+    "word": "sturdy",
+    "def": "Strongly and solidly built"
+  },
+  {
+    "word": "illusion",
+    "def": "A false impression or belief; something that deceives the senses"
+  }
+];
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="db.js"></script>
+
+
+<script src="reading-test-common.js"></script>
+<script src="highlight-auto-dismiss.js"></script>
+<script src="activity-bridge-v15.js"></script>
+</body>
+</html>

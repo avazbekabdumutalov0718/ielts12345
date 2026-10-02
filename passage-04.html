@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>IELTS Reading – Mind Music</title><style>
+
+:root {
+    --bg: #ffffff; --bg-alt: #f4f5f7; --bg-panel: #ffffff;
+    --text: #111111; --text-muted: #555; --border: #d4d4d4;
+    --border-strong: #333; --accent: #e51e2a;
+    --select-bg: #cfe3ff; --select-active: #1e6cd8;
+    --footer-bg: #f4f5f7; --btn-bg: #ededed;
+    --arrow-bg: #1f1f1f; --arrow-fg: #ffffff;
+    --correct: #1a8a3c; --wrong: #cc2222;
+  }
+  body.dark {
+    --bg: #1a1a1d; --bg-alt: #232327; --bg-panel: #1f1f22;
+    --text: #ececec; --text-muted: #b5b5b5; --border: #3a3a3f;
+    --border-strong: #cfcfcf; --accent: #ff5c66;
+    --select-bg: #2c4d7a; --select-active: #4a8be0;
+    --footer-bg: #232327; --btn-bg: #2e2e33;
+    --arrow-bg: #ececec; --arrow-fg: #1a1a1d;
+    --correct: #4ed684; --wrong: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+
+  .topbar { height: 50px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; background: var(--bg); position: relative; z-index: 5; }
+  .logo { font-weight: 800; font-size: 22px; letter-spacing: 1px; color: var(--accent); margin-right: 20px; user-select: none; }
+  .test-taker { font-size: 14px; font-weight: 700; }
+  .top-controls { margin-left: auto; display: flex; gap: 2px; align-items: center; }
+  .top-controls .icon-btn, .top-controls .text-btn { background: transparent; border: none; color: var(--text); padding: 6px 10px; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s; }
+  .top-controls .icon-btn:hover, .top-controls .text-btn:hover { background: var(--bg-alt); }
+  .top-controls .icon-btn svg { width: 20px; height: 20px; display: block; }
+  .top-controls .text-btn { font-weight: 700; font-size: 16px; font-family: inherit; }
+  .top-controls .divider { width: 1px; height: 26px; background: var(--border); margin: 0 6px; }
+
+  .part-header { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 10px 20px; }
+  .part-header h2 { margin: 0 0 3px 0; font-size: 14px; font-weight: 700; }
+  .part-header p { margin: 0; font-size: 12px; color: var(--text-muted); }
+
+  .main { position: absolute; top: 50px; left: 0; right: 0; bottom: 50px; display: flex; flex-direction: column; }
+  .panes { flex: 1; display: flex; overflow: hidden; position: relative; }
+  .pane { overflow-y: auto; padding: 18px 28px; background: var(--bg-panel); line-height: 1.55; font-size: calc(14.5px * var(--font-scale, 1)); }
+  .pane.left { width: 50%; }
+  .pane.right { flex: 1; }
+  .splitter { width: 10px; background: var(--bg-alt); border-left: 1px solid var(--border); border-right: 1px solid var(--border); cursor: col-resize; position: relative; user-select: none; flex-shrink: 0; }
+  .splitter::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 18px; height: 18px; background: var(--bg); border: 1px solid var(--border); border-radius: 3px; background-image: linear-gradient(to right, transparent 6px, var(--text) 6px, var(--text) 7px, transparent 7px, transparent 11px, var(--text) 11px, var(--text) 12px, transparent 12px); }
+
+  .passage h1 { font-size: 16px; font-weight: 700; margin: 0 0 14px 0; text-align: center; }
+  .passage .subtitle { font-size: 13px; font-style: italic; text-align: center; margin: -8px 0 14px 0; color: var(--text-muted); }
+  .passage h2.sec { font-size: 14px; font-weight: 700; margin: 16px 0 6px 0; }
+  .passage p { margin: 0 0 11px 0; text-align: justify; }
+
+  .qblock { margin-bottom: 28px; }
+  .qblock h3 { margin: 0 0 6px 0; font-size: 14.5px; font-weight: 700; }
+  .qblock .instructions { font-size: 13px; margin-bottom: 12px; line-height: 1.6; }
+  .qblock .instructions strong { font-weight: 700; }
+
+  /* Row styles */
+  .yn-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; padding: 6px 8px; border-radius: 4px; border: 1px solid transparent; }
+  .yn-row:focus-within { border-color: var(--select-active); }
+  .qnum-yn { display: inline-block; min-width: 22px; font-weight: 700; border: 1px solid var(--border-strong); padding: 0 4px; text-align: center; font-size: 12px; flex-shrink: 0; margin-top: 3px; }
+  .yn-stem { flex: 1; font-size: 14px; line-height: 1.5; }
+  .yn-select { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 4px 6px; font-size: 13px; font-family: inherit; border-radius: 3px; min-width: 110px; flex-shrink: 0; }
+  .gap-input { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 3px 6px; font-size: 13px; border-radius: 3px; width: 160px; font-family: inherit; }
+
+  /* Radio Options */
+  .mc-option { display: block; margin: 5px 0; font-size: 13.5px; cursor: pointer; }
+  .mc-option input { margin-right: 8px; }
+
+  /* Notes / summary completion */
+  .notes-box { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; margin-bottom: 6px; }
+  .notes-title { font-weight: 700; font-size: 14px; margin-bottom: 8px; text-align: center; }
+  .notes-list { margin: 0; padding-left: 18px; }
+  .notes-list li { margin-bottom: 10px; font-size: 13.5px; line-height: 1.6; }
+  .summary-para { font-size: 13.5px; line-height: 1.9; }
+
+  /* Footer */
+  .footer { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: var(--footer-bg); border-top: 1px solid var(--border); display: flex; align-items: center; padding: 0 12px; gap: 8px; z-index: 4; }
+  .part-tab { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 3px; border: 1px solid var(--border); background: var(--bg); user-select: none; }
+  .part-tab .label { font-weight: 700; font-size: 13px; }
+  .part-tab .progress { font-size: 11.5px; color: var(--text-muted); }
+  .qnav { display: flex; gap: 3px; margin-left: 2px; flex-wrap: wrap; }
+  .qbtn { width: 22px; height: 22px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 2px; font-family: inherit; }
+  .qbtn:hover { background: var(--bg-alt); }
+  .qbtn.current { border: 2px solid var(--text); font-weight: 700; }
+  .qbtn.answered { background: var(--bg-alt); }
+  .nav-arrows { display: flex; gap: 4px; margin-left: auto; }
+  .arrow-btn { width: 32px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .arrow-btn.dark { background: var(--arrow-bg); color: var(--arrow-fg); border-color: var(--arrow-bg); }
+  .check-btn { width: 36px; height: 32px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-left: 4px; }
+
+  .user-highlight { background: #f4ff55; padding: 1px 0; }
+  body.dark .user-highlight { background: #8a9100; color: #fff; }
+
+  .highlight-popup { position: absolute; display: none; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.18); padding: 4px; z-index: 200; align-items: center; gap: 2px; font-size: 13.5px; user-select: none; }
+  .highlight-popup.visible { display: inline-flex; }
+  .highlight-popup button { background: transparent; border: none; padding: 8px 12px; cursor: pointer; color: var(--text); border-radius: 5px; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 13.5px; font-weight: 500; }
+  .highlight-popup button:hover { background: var(--bg-alt); }
+  .highlight-popup .hp-swatch { display: inline-block; width: 16px; height: 16px; background: #f4ff55; border-radius: 3px; flex-shrink: 0; }
+  .highlight-popup .hp-close { padding: 6px 10px; font-size: 18px; color: var(--text-muted); line-height: 1; }
+
+  .pane::-webkit-scrollbar { width: 10px; }
+  .pane::-webkit-scrollbar-track { background: var(--bg-alt); }
+  .pane::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+
+  /* Results overlay */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-start; justify-content: center; z-index: 100; padding: 20px; overflow-y: auto; }
+  .overlay.visible { display: flex; }
+  .modal { background: var(--bg-panel); color: var(--text); border: 1px solid var(--border); border-radius: 8px; max-width: 600px; width: 100%; padding: 28px 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); margin: auto; }
+  .modal h2 { margin: 0 0 10px 0; color: var(--accent); font-size: 22px; text-align: center; }
+  .score-row { text-align: center; font-size: 28px; font-weight: 800; margin: 6px 0 4px; }
+  .score-row span { font-size: 16px; font-weight: 400; color: var(--text-muted); }
+  .band-row { text-align: center; font-size: 18px; font-weight: 700; margin-bottom: 18px; color: var(--accent); }
+  .results-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 18px; }
+  .results-table th { background: var(--bg-alt); padding: 6px 10px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border); }
+  .results-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .results-table tr:last-child td { border-bottom: none; }
+  .mark-ok  { color: var(--correct); font-weight: 700; font-size: 15px; }
+  .mark-bad { color: var(--wrong);   font-weight: 700; font-size: 15px; }
+  .modal .actions { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+  .modal button { background: var(--accent); color: #fff; border: none; padding: 9px 22px; font-size: 14px; font-weight: 600; border-radius: 4px; cursor: pointer; }
+  .modal button.secondary { background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); }
+  .modal button:hover { opacity: 0.9; }
+
+
+/* ===== Start screen ===== */
+#startOverlay{
+  position:fixed; inset:0; z-index:500; background:rgba(10,10,12,0.92);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.start-card{
+  background:var(--bg-panel,#fff); color:var(--text,#111); border-radius:10px;
+  max-width:460px; width:100%; padding:32px 30px; text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.start-logo{ font-weight:800; letter-spacing:1px; color:var(--accent,#e51e2a); font-size:14px; margin-bottom:8px; }
+.start-card h2{ margin:0 0 10px; font-size:19px; }
+.start-card > p{ font-size:13.5px; color:var(--text-muted,#555); margin-bottom:16px; }
+.start-rules{ text-align:left; font-size:13px; line-height:1.7; margin:0 0 22px; padding-left:20px; color:var(--text,#111); }
+.start-btn{
+  background:var(--accent,#e51e2a); color:#fff; border:none; border-radius:5px;
+  padding:12px 26px; font-size:14.5px; font-weight:700; cursor:pointer; width:100%;
+}
+.start-btn:hover{ opacity:0.92; }
+
+/* ===== Timer ===== */
+.test-timer{
+  font-family: 'Courier New', monospace; font-weight:800; font-size:15px;
+  padding:5px 12px; border:1px solid var(--border,#d4d4d4); border-radius:4px;
+  margin-left:14px; color:var(--text,#111);
+}
+.test-timer.low{ color:#fff; background:#cc2222; border-color:#cc2222; }
+
+/* ===== Flagged question buttons ===== */
+.qbtn.flagged{ position:relative; border-color:#e0a300 !important; }
+.qbtn.flagged::after{
+  content:''; position:absolute; top:-4px; right:-4px; width:8px; height:8px;
+  background:#e0a300; border-radius:50%;
+}
+
+/* ===== Notes panel ===== */
+#notesPanel{
+  position:fixed; top:0; right:-320px; width:300px; height:100%; z-index:400;
+  background:var(--bg-panel,#fff); border-left:1px solid var(--border,#d4d4d4);
+  box-shadow:-6px 0 20px rgba(0,0,0,0.15); transition:right .25s ease;
+  display:flex; flex-direction:column;
+}
+#notesPanel.open{ right:0; }
+.notes-panel-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px; border-bottom:1px solid var(--border,#d4d4d4); font-weight:700; font-size:14px;
+  color:var(--text,#111);
+}
+.notes-panel-head button{ background:none; border:none; font-size:20px; cursor:pointer; color:var(--text-muted,#555); }
+#notesArea{
+  flex:1; border:none; outline:none; resize:none; padding:16px; font-size:13.5px;
+  font-family: Arial, Helvetica, sans-serif; background:var(--bg-panel,#fff); color:var(--text,#111);
+}
+
+/* ===== Review mode markers ===== */
+.question.q-correct{ outline:2px solid var(--correct,#1a8a3c) !important; background:rgba(26,138,60,0.06); }
+.question.q-incorrect{ outline:2px solid var(--wrong,#cc2222) !important; background:rgba(204,34,34,0.06); }
+.q-correct-badge{
+  display:inline-block; margin-left:8px; font-size:11.5px; font-weight:700;
+  color:var(--correct,#1a8a3c); background:rgba(26,138,60,0.1); padding:2px 6px; border-radius:3px;
+}
+
+#modal .actions #goVocabBtn{ background:#7c5cfc; }
+
+/* ===== Vocabulary test overlay ===== */
+#vocabOverlay{
+  position:fixed; inset:0; z-index:600; background:rgba(10,10,12,0.92);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.vocab-card{
+  background:var(--bg-panel,#fff); color:var(--text,#111); border-radius:10px;
+  max-width:460px; width:100%; padding:32px 30px; text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.vocab-progress{ font-size:12px; color:var(--text-muted,#555); font-weight:700; margin-bottom:6px; }
+.vocab-card h2{ font-size:26px; margin:6px 0 4px; color:var(--accent,#e51e2a); }
+.vocab-sub{ font-size:13px; color:var(--text-muted,#555); margin-bottom:18px; }
+.vocab-options{ display:flex; flex-direction:column; gap:10px; }
+.vocab-option{
+  border:1px solid var(--border,#d4d4d4); border-radius:6px; background:var(--bg,#fff);
+  color:var(--text,#111); padding:11px; font-size:13.5px; cursor:pointer; font-family:inherit;
+}
+.vocab-option:hover:not(:disabled){ border-color:var(--accent,#e51e2a); }
+.vocab-option.correct{ border-color:var(--correct,#1a8a3c); background:rgba(26,138,60,0.12); font-weight:700; }
+.vocab-option.incorrect{ border-color:var(--wrong,#cc2222); background:rgba(204,34,34,0.1); }
+
+/* ===== Certificate ===== */
+#certOverlay{
+  position:fixed; inset:0; z-index:700; background:rgba(10,10,12,0.92);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.cert-card{ max-width:600px; width:100%; }
+.cert-border{
+  background:#fffdf6; color:#1a1a1a; border:6px double #c9a227; border-radius:6px;
+  padding:44px 36px; text-align:center;
+}
+.cert-brand{ letter-spacing:3px; font-weight:800; font-size:12px; color:#c9a227; margin-bottom:10px; }
+.cert-title{ font-size:26px; margin:0 0 18px; font-family: Georgia, serif; }
+.cert-sub{ font-size:13px; color:#555; margin:4px 0; }
+.cert-name{ font-size:24px; margin:6px 0 10px; font-family: Georgia, serif; color:#1a1a1a; }
+.cert-test{ font-size:15px; font-weight:700; margin:0 0 20px; }
+.cert-stats{ display:flex; justify-content:center; gap:30px; margin:18px 0; }
+.cert-stats div{ display:flex; flex-direction:column; }
+.cert-stats span{ font-size:20px; font-weight:800; color:#c9a227; }
+.cert-stats label{ font-size:11px; color:#666; }
+.cert-date{ font-size:12px; color:#777; margin-top:20px; }
+.cert-actions{ display:flex; gap:10px; justify-content:center; margin-top:18px; }
+.cert-actions button{
+  background:#c9a227; color:#fff; border:none; padding:10px 20px; border-radius:5px;
+  font-size:13.5px; font-weight:700; cursor:pointer;
+}
+.cert-actions button.secondary{ background:#eee; color:#333; }
+
+@media print{
+  body *{ visibility:hidden; }
+  #certCard, #certCard *{ visibility:visible; }
+  #certCard{ position:fixed; inset:0; margin:auto; }
+  .cert-actions{ display:none; }
+}
+[hidden]{display:none!important}
+.part-tabs{display:flex;gap:8px;min-width:0;overflow-x:auto;padding:5px 1px;flex:1}
+.part-tab{flex-shrink:0}.part-tab.active-part{border-color:var(--border-strong)}
+.part-label{border:0;background:none;color:inherit;cursor:pointer;font-family:inherit;padding:2px}
+.qnav{flex-wrap:nowrap}.nav-arrows{flex-shrink:0}.footer{gap:4px}
+.pane{min-width:0}.pane.left{flex-shrink:0}.pane.right{min-width:0}
+.passage h1,.passage h2:not(.sec){font-size:16px;text-align:center;margin:0 0 14px}
+.pane p,.pane li{font-size:1em;line-height:1.6}
+.pane img,.pane svg{max-width:100%;height:auto}
+.pane table{border-collapse:collapse;max-width:100%;width:100%;margin:12px 0;font-size:.93em}
+.pane th,.pane td{border:1px solid var(--border);padding:8px;text-align:left;vertical-align:top}
+.pane ul,.pane ol{padding-left:24px}
+.pane.right .question-prompt,.pane.right .question-instructions,.pane.right .instructions{margin-bottom:14px;font-size:.95em}
+.pane.right div.question,.pane.right .question-item,.pane.right .question-block,.pane.right .qbox,.pane.right .q-box,.pane.right .q-group,.pane.right .question-group{margin-bottom:22px}
+.pane.right h2,.pane.right h3{font-size:1em;margin:18px 0 8px}
+.pane .tf-question-line,.pane .question-text,.pane .q-text{margin:8px 0}
+.pane .tf-options,.pane .mcq-options,.pane .options,.pane .question-options{display:flex;flex-direction:column;gap:6px;margin:8px 0 14px}
+.pane label.tf-option,.pane label.option,.pane label.mc-option,.pane label.mcq-option,.pane label.radio-option{display:block;line-height:1.6;padding:4px 0}
+.pane label input{margin-right:7px}
+.pane input.question-radio,.pane input.question-group{accent-color:var(--select-active);width:auto;min-width:0;vertical-align:middle}
+.pane .yn-select{max-width:100%;min-width:96px;margin:3px 5px;padding:5px 6px;font-size:.95em}
+.pane .gap-input{max-width:100%;width:145px;margin:4px 6px;font-size:.95em}
+.pane .notes-box,.pane .summary-box,.pane .completion-box{padding:12px 16px;background:var(--bg-alt);border:1px solid var(--border);border-radius:6px;margin:14px 0}
+.pane .notes-title,.pane .summary-title{font-weight:700;text-align:center;margin-bottom:10px}
+.pane .summary-text,.pane .summary-para,.pane .notes-section-body{line-height:2}
+.pane .matching-row,.pane .yn-row{display:flex;align-items:flex-start;flex-wrap:wrap;gap:8px;margin:10px 0}
+.pane .paragraph-label,.pane .paragraph-letter,.pane .qnum,.pane .q-number,.pane .q-label{font-weight:bold}
+.pane .word-bank,.pane .heading-list,.pane .headings-box,.pane .options-box,.pane .word-list{padding:12px;border:1px solid var(--border);margin:12px 0;background:var(--bg-alt)}
+.pane a{color:var(--select-active)}
+.test-timer{margin-left:auto;white-space:nowrap}.top-controls{margin-left:8px}
+.topbar .test-taker{max-width:160px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.notes-panel-head button,.icon-btn,.text-btn{font-family:inherit}
+.group-correct{outline:1px solid var(--correct);background:rgba(26,138,60,.06)}
+.group-incorrect{outline:1px solid var(--wrong)}
+.source-warning{font-size:12px;line-height:1.5;color:var(--text-muted);border-left:3px solid #b78516;padding:5px 10px}
+.start-card{max-height:92dvh;overflow:auto}.start-card .source-warning{text-align:left}
+#highlightPopup{position:fixed;max-width:calc(100vw - 8px)}
+#submitDialog{background:var(--bg-panel);color:var(--text);border:1px solid var(--border);padding:24px;border-radius:8px;max-width:calc(100vw - 32px)}
+#submitDialog::backdrop{background:rgba(0,0,0,.6)}
+#submitDialog button{padding:10px 18px;margin:8px 6px 0 0;cursor:pointer;border:1px solid var(--border);border-radius:4px;background:var(--btn-bg);color:var(--text)}
+#submitConfirm{background:var(--accent)!important;color:white!important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--select-active);outline-offset:2px}
+@media(max-width:650px){
+ .topbar{padding:0 8px}.logo{font-size:18px;margin-right:4px}.test-taker{display:none}
+ .top-controls{gap:0;margin-left:4px}.top-controls .icon-btn,.top-controls .text-btn{padding:6px}
+ .top-controls .divider{margin:0 2px}.test-timer{font-size:13px;padding:4px 6px}
+ .panes{flex-direction:column}.pane.left{width:100%!important;height:45%;min-height:90px}.pane.right{flex:1;min-height:90px}
+ .pane{padding:14px 16px}.splitter{height:10px;width:100%;cursor:row-resize;border:1px solid var(--border);touch-action:none}
+ .splitter::before{transform:translate(-50%,-50%) rotate(90deg)}
+ .part-header{padding:8px 12px}.part-header p{font-size:11px}
+ .footer{padding:0 6px}.part-tab{padding:3px 5px}.part-tab .progress{display:none}
+ .qbtn{width:25px;height:28px}.arrow-btn{width:28px}.check-btn{width:30px;margin-left:0}
+ .modal{padding:22px 14px}.results-table{font-size:12px}.results-table td,.results-table th{padding:5px}
+ .modal .actions{flex-wrap:wrap}.cert-border{padding:25px 16px}.cert-title{font-size:23px}.cert-stats{gap:18px}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+@media print{body:has(#certCard) #certCard,body:has(#certCard) #certCard *{visibility:visible}body:not(:has(#certCard)) .pane,body:not(:has(#certCard)) .pane *{visibility:visible}body:not(:has(#certCard)) .main{position:static}.cert-actions{display:none!important}}
+</style><link href="../max-bridge.css?v=1" rel="stylesheet"/><script defer="" src="../max-bridge.js?v=1"></script>
+<link href="../reading-v12.css" rel="stylesheet"/><script defer="True" src="../reading-v12.js"></script></head><body>
+<div class="topbar">
+<div class="logo">IELTS</div>
+<div class="test-taker">VIVID IELTS</div>
+<div class="test-timer" id="testTimer" role="timer"></div><div class="top-controls"><button aria-label="Notes" class="icon-btn" id="btn-notes" title="Notes">📝</button>
+<button class="icon-btn" id="btn-light" title="Light mode">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="4"></circle>
+<line x1="12" x2="12" y1="2" y2="4"></line><line x1="12" x2="12" y1="20" y2="22"></line>
+<line x1="4.93" x2="6.34" y1="4.93" y2="6.34"></line><line x1="17.66" x2="19.07" y1="17.66" y2="19.07"></line>
+<line x1="2" x2="4" y1="12" y2="12"></line><line x1="20" x2="22" y1="12" y2="12"></line>
+<line x1="4.93" x2="6.34" y1="19.07" y2="17.66"></line><line x1="17.66" x2="19.07" y1="6.34" y2="4.93"></line>
+</svg>
+</button>
+<button class="icon-btn" id="btn-dark" title="Dark mode">
+<svg fill="currentColor" viewbox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+</button>
+<div class="divider"></div>
+<button class="text-btn" id="btn-font-down" title="Decrease font size">A-</button>
+<button class="text-btn" id="btn-font-up" title="Increase font size">A+</button>
+</div>
+</div>
+<main class="main"><div class="part-header"><h2 id="partTitle"></h2><p id="partInstructions"></p></div><div class="panes" id="panes"><div aria-label="Reading passage" class="pane left" id="passagePane"><section class="reading-part passage" data-part-index="0"><h4>Mind Music</h4>
+<p class="subtitle">Scientists investigate "earworms", the music we can't get out of our head</p>
+<div class="para"><span class="para-letter">A</span><p>Ever had a song stuck in your head, playing on an endless loop? Scientists call them 'involuntary musical images', or 'earworms', and a wave of new research is shining light on why they occur and what can be learned from them. Some neuroscientists and cognitive psychologists are studying 'earworms' to explore the mysteries of memory and the part of the brain that is beyond our conscious control. "The idea that we have full control over our thought processes is an illusion," says psychologist Lauren Stewart, who founded the master's program in music, mind and brain at Goldsmiths, University of London, UK, where recent research has taken place. Researchers haven't been able to watch what happens in the brain when earworms occur, because they happen unpredictably. Much of what is known about them comes from surveys, questionnaires, diaries and lab experiments.</p></div>
+<div class="para"><span class="para-letter">B</span><p>A Goldsmiths study published in the journal Memory and Cognition this year showed that the singing we hear in our heads tends to be true to actual recordings. Researchers had 17 volunteers tap to the beat of any earworm they heard during a four-day period while a device attached to their wrist recorded their movements. The tapping tempos were within 10% of the tempos of the original recordings. Another Goldsmiths study, published this year in Consciousness and Cognition, found that people who report hearing earworms often, and find them most intrusive, have slightly different brain structures, with more gray matter in areas associated with processing emotions.</p></div>
+<div class="para"><span class="para-letter">C</span><p>Studies also show that the music in our heads often starts playing during times of 'low cognitive load', such as while showering, getting dressed, walking, or doing chores. Dr Stewart likens 'earworms' to 'sonic screen savers' that keep the mind entertained while it is otherwise unoccupied. She and her colleagues tested that theory by having volunteers listen to songs and giving them various tasks afterwards. The volunteers who sat idly for the next five minutes were the most likely to report hearing the music in their heads. Dr Stewart observed that the more challenging the activity, the less likely the volunteers were to hear the music. Diary studies also show songs tend to match people's moods and therefore they are not random. If you are energized and upbeat, an 'earworm' that occurs is likely to be uptempo too.</p></div>
+<div class="para"><span class="para-letter">D</span><p>Songs the brain fixates on are usually those it has been exposed to recently, surveys show, which is why tunes getting heavy radio play frequently top the earworm charts. Even tunes you may have heard but didn't pay attention to can worm their way into your subconscious, says Ira Hyman, a psychologist at Western Washington University in Bellingham, USA. In an unpublished study there, participants who listened to music while doing other tasks were more likely to report that the songs returned as earworms later on, compared with participants who simply listened.</p></div>
+<div class="para"><span class="para-letter">E</span><p>Some earworms are just fragments of a song that repeat like a broken record. So, when the mind hits a part of a song it can't remember, it loops back rather than moving on. That could make an earworm even more entrenched, Dr Hyman says. According to a theory known as the Zeigarnik effect, named for a Soviet psychologist, Bluma Zeigarnik, unfinished thoughts and activities weigh on the mind more heavily than those that are completed, although experiments exposing students to interrupted songs have yielded mixed results.</p></div>
+<div class="para"><span class="para-letter">F</span><p>Researchers say they can't pinpoint a spot in the brain where earworms live. Imaging studies by Andrea Halpern at Bucknell University, in Lewisburg, USA, have shown that deliberately imagining music and actually listening to music activate many of the same neurological networks. Dr Halpern's earlier studies showed that when subjects listened to the first few notes of familiar music, areas in the right frontal and superior temporal portions of the brain became activated, along with the supplementary motor area at the top, which is typically involved in remembering sequences. When the same subjects were asked to voluntarily imagine music and were asked to recall it, there was activity in the left frontal portions of the brain instead.</p></div>
+<div class="para"><span class="para-letter">G</span><p>One factor that makes some songs stick might be repetition. 'Repetition leads to familiarity which leads to anticipation, which is satisfied by hearing the song,' says John Seabrook, author of The Song Machine: Inside the Hit Factory, about how producers pump pop songs full of 'hooks', the punchy melodic phrases designed to target the brain and leave it wanting more. The researchers are comparing the melodic structure of 100 often-mentioned songs with 100 similarly popular songs that weren't cited as earworms, to assess the difference. Songs with earworm potential appear to share certain features: a repeating pattern of ups and downs in pitch, and an irregular musical interval.</p></div>
+<div class="para"><span class="para-letter">H</span><p>The researchers plan next to test their results in reverse, and play ringtones from songs of both the earworm and non-earworm variety for volunteers several times a day to see which ones get stuck. Drs Stewart and Halpern are now working together to recruit survey participants for a study looking at whether people at different stages of life experience earworms differently. 'You can argue that older people might get them more often because they know more songs,' Dr Halpern says. 'But the few responses we have so far indicate that they have earworms less often. It could be that they don't play music as often as younger people do.'</p></div>
+</section></div><div aria-label="Resize passage and questions" class="splitter" id="splitter" role="separator" tabindex="0"></div><div aria-label="Questions" class="pane right" id="questionsPane"><section class="reading-part questions" data-part-index="0"><!-- Q14–17: paragraph matching -->
+<div class="question-block" id="questions-0-0-question-container-14">
+<div class="question-prompt">
+<p><strong>Questions 14–17</strong></p>
+<p>The Reading Passage has eight paragraphs, <strong>A–H</strong>.</p>
+<p>Which paragraph contains the following information?</p>
+<p>Write the correct letter, <strong>A–H</strong>, in boxes 14–17 on your answer sheet.</p>
+</div>
+<div class="tf-question" id="questions-0-1-tf-q14">
+<div class="tf-question-line"><span class="tf-question-number">14</span><span class="tf-question-text">a description of the characteristics common to songs with earworms</span></div>
+<div class="tf-options">
+<label class="tf-option"><input aria-label="Question 14 — A" class="question question-radio" data-q="14" name="q14" type="radio" value="A"/> A</label>
+<label class="tf-option"><input aria-label="Question 14 — B" class="question question-radio" data-q="14" name="q14" type="radio" value="B"/> B</label>
+<label class="tf-option"><input aria-label="Question 14 — C" class="question question-radio" data-q="14" name="q14" type="radio" value="C"/> C</label>
+<label class="tf-option"><input aria-label="Question 14 — D" class="question question-radio" data-q="14" name="q14" type="radio" value="D"/> D</label>
+<label class="tf-option"><input aria-label="Question 14 — E" class="question question-radio" data-q="14" name="q14" type="radio" value="E"/> E</label>
+<label class="tf-option"><input aria-label="Question 14 — F" class="question question-radio" data-q="14" name="q14" type="radio" value="F"/> F</label>
+<label class="tf-option"><input aria-label="Question 14 — G" class="question question-radio" data-q="14" name="q14" type="radio" value="G"/> G</label>
+<label class="tf-option"><input aria-label="Question 14 — H" class="question question-radio" data-q="14" name="q14" type="radio" value="H"/> H</label>
+</div>
+</div>
+<div class="tf-question" id="questions-0-2-tf-q15">
+<div class="tf-question-line"><span class="tf-question-number">15</span><span class="tf-question-text">a justification for research into earworms</span></div>
+<div class="tf-options">
+<label class="tf-option"><input aria-label="Question 15 — A" class="question question-radio" data-q="15" name="q15" type="radio" value="A"/> A</label>
+<label class="tf-option"><input aria-label="Question 15 — B" class="question question-radio" data-q="15" name="q15" type="radio" value="B"/> B</label>
+<label class="tf-option"><input aria-label="Question 15 — C" class="question question-radio" data-q="15" name="q15" type="radio" value="C"/> C</label>
+<label class="tf-option"><input aria-label="Question 15 — D" class="question question-radio" data-q="15" name="q15" type="radio" value="D"/> D</label>
+<label class="tf-option"><input aria-label="Question 15 — E" class="question question-radio" data-q="15" name="q15" type="radio" value="E"/> E</label>
+<label class="tf-option"><input aria-label="Question 15 — F" class="question question-radio" data-q="15" name="q15" type="radio" value="F"/> F</label>
+<label class="tf-option"><input aria-label="Question 15 — G" class="question question-radio" data-q="15" name="q15" type="radio" value="G"/> G</label>
+<label class="tf-option"><input aria-label="Question 15 — H" class="question question-radio" data-q="15" name="q15" type="radio" value="H"/> H</label>
+</div>
+</div>
+<div class="tf-question" id="questions-0-3-tf-q16">
+<div class="tf-question-line"><span class="tf-question-number">16</span><span class="tf-question-text">a description of the brain's reaction to known and unknown songs</span></div>
+<div class="tf-options">
+<label class="tf-option"><input aria-label="Question 16 — A" class="question question-radio" data-q="16" name="q16" type="radio" value="A"/> A</label>
+<label class="tf-option"><input aria-label="Question 16 — B" class="question question-radio" data-q="16" name="q16" type="radio" value="B"/> B</label>
+<label class="tf-option"><input aria-label="Question 16 — C" class="question question-radio" data-q="16" name="q16" type="radio" value="C"/> C</label>
+<label class="tf-option"><input aria-label="Question 16 — D" class="question question-radio" data-q="16" name="q16" type="radio" value="D"/> D</label>
+<label class="tf-option"><input aria-label="Question 16 — E" class="question question-radio" data-q="16" name="q16" type="radio" value="E"/> E</label>
+<label class="tf-option"><input aria-label="Question 16 — F" class="question question-radio" data-q="16" name="q16" type="radio" value="F"/> F</label>
+<label class="tf-option"><input aria-label="Question 16 — G" class="question question-radio" data-q="16" name="q16" type="radio" value="G"/> G</label>
+<label class="tf-option"><input aria-label="Question 16 — H" class="question question-radio" data-q="16" name="q16" type="radio" value="H"/> H</label>
+</div>
+</div>
+<div class="tf-question" id="questions-0-4-tf-q17">
+<div class="tf-question-line"><span class="tf-question-number">17</span><span class="tf-question-text">details of proposed research into the frequency with which earworms occur in different age groups</span></div>
+<div class="tf-options">
+<label class="tf-option"><input aria-label="Question 17 — A" class="question question-radio" data-q="17" name="q17" type="radio" value="A"/> A</label>
+<label class="tf-option"><input aria-label="Question 17 — B" class="question question-radio" data-q="17" name="q17" type="radio" value="B"/> B</label>
+<label class="tf-option"><input aria-label="Question 17 — C" class="question question-radio" data-q="17" name="q17" type="radio" value="C"/> C</label>
+<label class="tf-option"><input aria-label="Question 17 — D" class="question question-radio" data-q="17" name="q17" type="radio" value="D"/> D</label>
+<label class="tf-option"><input aria-label="Question 17 — E" class="question question-radio" data-q="17" name="q17" type="radio" value="E"/> E</label>
+<label class="tf-option"><input aria-label="Question 17 — F" class="question question-radio" data-q="17" name="q17" type="radio" value="F"/> F</label>
+<label class="tf-option"><input aria-label="Question 17 — G" class="question question-radio" data-q="17" name="q17" type="radio" value="G"/> G</label>
+<label class="tf-option"><input aria-label="Question 17 — H" class="question question-radio" data-q="17" name="q17" type="radio" value="H"/> H</label>
+</div>
+</div>
+</div>
+<!-- Q18–21: summary completion -->
+<div class="question-block" id="questions-0-5-question-container-18">
+<div class="question-prompt">
+<p><strong>Questions 18–21</strong></p>
+<p>Complete the summary below. Choose <strong>ONE WORD ONLY</strong> from the passage for each answer.</p>
+<p>Write your answers in boxes 18–21 on your answer sheet.</p>
+</div>
+<div class="notes-box">
+<div class="notes-title">Goldsmiths study</div>
+<div class="notes-section-body">
+<div class="ni" id="questions-0-6-ni-q18">
+<span>Researchers from Goldsmiths concluded that the music we imagine in our minds is quite similar to recordings. They proved this by asking volunteers to record the rhythm of music using a monitor on their</span>
+<span class="q-label">18</span><input aria-label="Question 18" class="question gap-input" data-q="18" id="questions-0-7-q18" placeholder="18" type="text" value=""/>.
+                                <span>Further research has demonstrated that those who hear earworms more frequently have brains that may deal with</span>
+<span class="q-label">19</span><input aria-label="Question 19" class="question gap-input" data-q="19" id="questions-0-8-q19" placeholder="19" type="text" value=""/>
+<span>differently from other people. Dr Stewart also believes that the brain is</span>
+<span class="q-label">20</span><input aria-label="Question 20" class="question gap-input" data-q="20" id="questions-0-9-q20" placeholder="20" type="text" value=""/>
+<span>by earworms when it is not focused on a task. In fact, a reduction in the occurrence of earworms was found to be directly related to how</span>
+<span class="q-label">21</span><input aria-label="Question 21" class="question gap-input" data-q="21" id="questions-0-10-q21" placeholder="21" type="text" value=""/>
+<span>the task was. Interestingly, volunteers' diaries revealed that the songs they heard inside their head reflected their moods, so the choice of music is not accidental.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Q22–26: matching researchers -->
+<div class="question-block" id="questions-0-11-question-container-22">
+<div class="question-prompt">
+<p><strong>Questions 22–26</strong></p>
+<p>Look at the following statements and the list of researchers below.</p>
+<p>Match each statement with the correct person, <strong>A</strong>, <strong>B</strong>, <strong>C</strong> or <strong>D</strong>.</p>
+<p>Write the correct letter, <strong>A</strong>, <strong>B</strong>, <strong>C</strong> or <strong>D</strong>, in boxes 22–26 on your answer sheet.</p>
+<p><strong>NB</strong>  You may use any letter more than once.</p>
+</div>
+<div class="people-box">
+<div class="people-box-title">List of Researchers</div>
+<ul>
+<li><strong>A</strong> Lauren Stewart</li>
+<li><strong>B</strong> Ira Hyman</li>
+<li><strong>C</strong> Andrea Halpern</li>
+<li><strong>D</strong> John Seabrook</li>
+</ul>
+</div>
+<div class="tf-question" id="questions-0-12-tf-q22">
+<div class="tf-question-line"><span class="tf-question-number">22</span><span class="tf-question-text">Some musicians create music that is intentionally memorable.</span></div>
+<div class="tf-options">
+<label class="tf-option"><input aria-label="Question 22 — A" class="question question-radio" data-q="22" name="q22" type="radio" value="A"/> A</label>
+<label class="tf-option"><input aria-label="Question 22 — B" class="question question-radio" data-q="22" name="q22" type="radio" value="B"/> B</label>
+<label class="tf-option"><input aria-label="Question 22 — C" class="question question-radio" data-q="22" name="q22" type="radio" value="C"/> C</label>
+<label class="tf-option"><input aria-label="Question 22 — D" class="question question-radio" data-q="22" name="q22" type="radio" value="D"/> D</label>
+</div>
+</div>
+<div class="tf-question" id="questions-0-13-tf-q23">
+<div class="tf-question-line"><span class="tf-question-number">23</span><span class="tf-question-text">People are unable to completely regulate how they think.</span></div>
+<div class="tf-options">
+<label class="tf-option"><input aria-label="Question 23 — A" class="question question-radio" data-q="23" name="q23" type="radio" value="A"/> A</label>
+<label class="tf-option"><input aria-label="Question 23 — B" class="question question-radio" data-q="23" name="q23" type="radio" value="B"/> B</label>
+<label class="tf-option"><input aria-label="Question 23 — C" class="question question-radio" data-q="23" name="q23" type="radio" value="C"/> C</label>
+<label class="tf-option"><input aria-label="Question 23 — D" class="question question-radio" data-q="23" name="q23" type="radio" value="D"/> D</label>
+</div>
+</div>
+<div class="tf-question" id="questions-0-14-tf-q24">
+<div class="tf-question-line"><span class="tf-question-number">24</span><span class="tf-question-text">We can remember songs without knowing that we have heard them.</span></div>
+<div class="tf-options">
+<label class="tf-option"><input aria-label="Question 24 — A" class="question question-radio" data-q="24" name="q24" type="radio" value="A"/> A</label>
+<label class="tf-option"><input aria-label="Question 24 — B" class="question question-radio" data-q="24" name="q24" type="radio" value="B"/> B</label>
+<label class="tf-option"><input aria-label="Question 24 — C" class="question question-radio" data-q="24" name="q24" type="radio" value="C"/> C</label>
+<label class="tf-option"><input aria-label="Question 24 — D" class="question question-radio" data-q="24" name="q24" type="radio" value="D"/> D</label>
+</div>
+</div>
+<div class="tf-question" id="questions-0-15-tf-q25">
+<div class="tf-question-line"><span class="tf-question-number">25</span><span class="tf-question-text">Thinking about music has a similar effect on the brain to hearing music.</span></div>
+<div class="tf-options">
+<label class="tf-option"><input aria-label="Question 25 — A" class="question question-radio" data-q="25" name="q25" type="radio" value="A"/> A</label>
+<label class="tf-option"><input aria-label="Question 25 — B" class="question question-radio" data-q="25" name="q25" type="radio" value="B"/> B</label>
+<label class="tf-option"><input aria-label="Question 25 — C" class="question question-radio" data-q="25" name="q25" type="radio" value="C"/> C</label>
+<label class="tf-option"><input aria-label="Question 25 — D" class="question question-radio" data-q="25" name="q25" type="radio" value="D"/> D</label>
+</div>
+</div>
+<div class="tf-question" id="questions-0-16-tf-q26">
+<div class="tf-question-line"><span class="tf-question-number">26</span><span class="tf-question-text">Earworms are more persistent when only a short section of the song is constantly replayed.</span></div>
+<div class="tf-options">
+<label class="tf-option"><input aria-label="Question 26 — A" class="question question-radio" data-q="26" name="q26" type="radio" value="A"/> A</label>
+<label class="tf-option"><input aria-label="Question 26 — B" class="question question-radio" data-q="26" name="q26" type="radio" value="B"/> B</label>
+<label class="tf-option"><input aria-label="Question 26 — C" class="question question-radio" data-q="26" name="q26" type="radio" value="C"/> C</label>
+<label class="tf-option"><input aria-label="Question 26 — D" class="question question-radio" data-q="26" name="q26" type="radio" value="D"/> D</label>
+</div>
+</div>
+</div>
+</section></div></div></main>
+<footer class="footer"><div class="part-tabs" id="partTabs"></div><div class="nav-arrows"><button aria-label="Previous question" class="arrow-btn" id="prevBtn" title="Previous question">←</button><button aria-label="Next question" class="arrow-btn dark" id="nextBtn" title="Next question">→</button></div><button aria-label="Submit test" class="check-btn" id="finishBtn" title="Submit">✓</button></footer>
+<div class="highlight-popup" id="highlightPopup"><button id="hpHighlight"><span class="hp-swatch"></span>Highlight</button><button id="hpRemove">Remove highlight</button><button aria-label="Close highlight menu" class="hp-close" id="hpClose">×</button></div>
+<aside aria-label="My Notes" id="notesPanel"><div class="notes-panel-head"><span>My Notes</span><button aria-label="Close notes" id="notesClose">×</button></div><textarea aria-label="Notes" id="notesArea" placeholder="Jot down anything useful during the test..."></textarea></aside>
+<div aria-label="Your Results" aria-modal="true" class="overlay" id="overlay" role="dialog"><div class="modal" id="modal"></div></div>
+<dialog id="submitDialog"><h2>Submit your test?</h2><p>Your answers will be marked and the timer will stop.</p><button id="submitCancel">Continue test</button><button id="submitConfirm">Submit and see results</button></dialog>
+<div id="startOverlay"><div class="start-card"><div class="start-logo">IELTS READING PRACTICE</div><h2>Mind Music</h2><p>You are about to start a timed reading test (20 minutes).</p><ul class="start-rules"><li>The test opens in full-screen mode when supported.</li><li>Select text to <strong>highlight</strong> it.</li><li>Double-click a question number at the bottom to <strong>flag</strong> it for review.</li><li>Use the 📝 notes button to jot down thoughts during the test.</li><li>When time runs out, your test is submitted automatically.</li></ul><p class="source-warning">Source Q16 says "known and unknown songs", but paragraph F discusses familiar music and imagined music. The original question wording and intended answer F are retained.</p><button class="start-btn" id="startTestBtn">Start Test (Full Screen)</button></div></div>
+<div aria-live="polite" class="sr-only" id="status" role="status"></div><script id="test-data" type="application/json">{"source": "IELTS Passages/Mind Music.html", "title": "Mind Music", "duration": 20, "key": {"14": ["G"], "15": ["A"], "16": ["F"], "17": ["H"], "22": ["D"], "23": ["A"], "24": ["B"], "25": ["C"], "26": ["B"], "18": ["wrist"], "19": ["emotions"], "20": ["entertained"], "21": ["challenging"]}, "groups": [], "warnings": ["Source Q16 says \"known and unknown songs\", but paragraph F discusses familiar music and imagined music. The original question wording and intended answer F are retained."], "id": "17074929e5ca194cd3", "parts": [{"number": 2, "from": 14, "to": 26}]}</script><script>(function(root){
+  'use strict';
+  const normalize=value=>String(value??'').trim().replace(/\s+/g,' ').toUpperCase();
+  function grade(data,answers,groupAnswers={}){
+    const ids=Object.keys(data.key).map(Number).sort((a,b)=>a-b);
+    const grouped=new Set((data.groups||[]).flatMap(group=>group.ids));
+    const rows=new Map();
+    ids.forEach(q=>{
+      if(grouped.has(q))return;
+      const given=String(answers[q]??'').trim();
+      rows.set(q,{q,given,correct:data.key[q],ok:!!given&&data.key[q].some(value=>normalize(value)===normalize(given))});
+    });
+    (data.groups||[]).forEach(group=>{
+      const selected=[...new Set((groupAnswers[group.ids.join('-')]||[]).map(normalize))].slice(0,group.ids.length);
+      const allowed=new Set(group.answers.map(normalize));
+      const good=selected.filter(value=>allowed.has(value));
+      const ordered=[...good,...selected.filter(value=>!allowed.has(value))];
+      group.ids.forEach((q,i)=>rows.set(q,{q,given:ordered[i]||'',correct:group.answers,ok:i<good.length}));
+    });
+    return ids.map(q=>rows.get(q));
+  }
+  const api={normalize,grade};
+  if(typeof module!=='undefined'&&module.exports)module.exports=api;
+  else root.ReadingScoring=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+</script><script>(() => {
+  'use strict';
+  const data = JSON.parse(document.getElementById('test-data').textContent);
+  const ids = Object.keys(data.key).map(Number).sort((a,b)=>a-b);
+  const groups = data.groups || [];
+  const byId = Object.fromEntries(groups.flatMap(g=>g.ids.map(q=>[q,g])));
+  const controls = [...document.querySelectorAll('input.question,select.question,textarea.question,input.question-group')];
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const normalize = s => String(s??'').trim().replace(/\s+/g,' ').toUpperCase();
+  let active = ids[0], currentPart = 0, submitted = false, deadline = null, interval = null, fontScale=1;
+  let lastRange=null;
+  const flags=new Set();
+  const qcontrols = q => controls.filter(el=>+el.dataset.q===q);
+  const groupControls = group => controls.filter(el=>el.dataset.group===group.ids.join('-'));
+  function chosen(group){ return [...new Set(groupControls(group).filter(el=>el.checked).map(el=>el.value))]; }
+  function answer(q){
+    if(byId[q]) return chosen(byId[q])[byId[q].ids.indexOf(q)]||'';
+    const list=qcontrols(q);
+    return (list.find(el=>el.type==='radio'?el.checked:true)?.value||'').trim();
+  }
+  function assess(){
+    return ReadingScoring.grade(data,Object.fromEntries(ids.map(q=>[q,answer(q)])),Object.fromEntries(groups.map(g=>[g.ids.join('-'),chosen(g)])));
+  }
+  function showPart(index){
+    currentPart=index;
+    document.querySelectorAll('.reading-part').forEach(part=>part.hidden=+part.dataset.partIndex!==index);
+    document.querySelectorAll('.part-tab').forEach((tab,i)=>tab.classList.toggle('active-part',i===index));
+    const p=data.parts[index];
+    $('partTitle').textContent='Reading Passage '+p.number;
+    $('partInstructions').textContent=`You should spend about 20 minutes on Questions ${p.from}–${p.to}, which are based on Reading Passage ${p.number} below.`;
+    $('passagePane').scrollTop=0; $('questionsPane').scrollTop=0;
+  }
+  function gotoQuestion(q){
+    active=q;
+    const index=data.parts.findIndex(p=>q>=p.from&&q<=p.to);
+    if(index!==currentPart)showPart(index);
+    const el=byId[q]?groupControls(byId[q])[0]:qcontrols(q)[0];
+    if(el){el.scrollIntoView({block:'center',behavior:'auto'});if(!el.disabled)el.focus({preventScroll:true});}
+    updateNav();
+  }
+  function updateNav(){
+    data.parts.forEach((part,index)=>{
+      const partIds=ids.filter(q=>q>=part.from&&q<=part.to);
+      $('progress-'+index).textContent=partIds.filter(q=>answer(q)).length+' of '+partIds.length;
+    });
+    document.querySelectorAll('.qbtn').forEach(btn=>{
+      const q=+btn.dataset.n;
+      btn.classList.toggle('answered',!!answer(q));btn.classList.toggle('current',q===active);btn.classList.toggle('flagged',flags.has(q));
+      btn.setAttribute('aria-label',`Question ${q}${answer(q)?', answered':''}${flags.has(q)?', flagged':''}`);
+      if(q===active)btn.setAttribute('aria-current','true');else btn.removeAttribute('aria-current');
+    });
+  }
+  function handleInput(event){
+    if(submitted)return;
+    const el=event.target;
+    if(el.dataset.group){
+      const g=groups.find(g=>g.ids.join('-')===el.dataset.group);
+      if(chosen(g).length>g.ids.length){el.checked=false;announce(`Select up to ${g.ids.length} options.`);}
+      active=g.ids[0];
+    }else active=+el.dataset.q;
+    updateNav();
+  }
+  controls.forEach(el=>{
+    el.disabled=false;
+    if(el.type==='radio'||el.type==='checkbox')el.checked=false;else el.value='';
+    el.addEventListener('input',handleInput);el.addEventListener('change',handleInput);
+    el.addEventListener('focus',()=>{active=el.dataset.q?+el.dataset.q:Number(el.dataset.group.split('-')[0]);updateNav();});
+  });
+  data.parts.forEach((part,index)=>{
+    const tab=document.createElement('div');tab.className='part-tab';
+    const label=document.createElement('button');label.className='label part-label';label.textContent=part.number;label.title='Reading Passage '+part.number;
+    label.addEventListener('click',()=>gotoQuestion(part.from));tab.append(label);
+    const progress=document.createElement('span');progress.className='progress';progress.id='progress-'+index;tab.append(progress);
+    const nav=document.createElement('div');nav.className='qnav';
+    ids.filter(q=>q>=part.from&&q<=part.to).forEach(q=>{
+      const btn=document.createElement('button');btn.className='qbtn';btn.textContent=q;btn.dataset.n=q;btn.title='Double-click or press F to flag for review';
+      btn.addEventListener('click',()=>gotoQuestion(q));
+      const flag=()=>{flags.has(q)?flags.delete(q):flags.add(q);updateNav();};
+      btn.addEventListener('dblclick',flag);btn.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='f'){e.preventDefault();flag();}});
+      nav.append(btn);
+    });tab.append(nav);$('partTabs').append(tab);
+  });
+  $('prevBtn').addEventListener('click',()=>{const i=ids.indexOf(active);if(i>0)gotoQuestion(ids[i-1]);});
+  $('nextBtn').addEventListener('click',()=>{const i=ids.indexOf(active);if(i<ids.length-1)gotoQuestion(ids[i+1]);});
+  const storageKey='ielts-notes-'+data.id;
+  try{$('notesArea').value=localStorage.getItem(storageKey)||'';}catch{}
+  $('notesArea').addEventListener('input',()=>{try{localStorage.setItem(storageKey,$('notesArea').value);}catch{}});
+  $('btn-notes').addEventListener('click',()=>{$('notesPanel').classList.toggle('open');if($('notesPanel').classList.contains('open'))$('notesArea').focus();});
+  $('notesClose').addEventListener('click',()=>{$('notesPanel').classList.remove('open');$('btn-notes').focus();});
+  $('btn-dark').addEventListener('click',()=>document.body.classList.add('dark'));
+  $('btn-light').addEventListener('click',()=>document.body.classList.remove('dark'));
+  function font(delta){fontScale=Math.max(.7,Math.min(1.4,fontScale+delta));document.documentElement.style.setProperty('--font-scale',fontScale);}
+  $('btn-font-up').addEventListener('click',()=>font(.08));$('btn-font-down').addEventListener('click',()=>font(-.08));
+  function timeLabel(s){return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
+  $('testTimer').textContent=timeLabel(data.duration*60);
+  function tick(){
+    const remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));
+    $('testTimer').textContent=timeLabel(remaining);$('testTimer').classList.toggle('low',remaining<=300);
+    if(remaining===0)finish();
+  }
+  $('startTestBtn').addEventListener('click',()=>{
+    $('startOverlay').remove();deadline=Date.now()+data.duration*60000;interval=setInterval(tick,500);tick();
+    const request=document.documentElement.requestFullscreen;
+    if(request)try{Promise.resolve(request.call(document.documentElement)).catch(()=>{});}catch{}
+    gotoQuestion(ids[0]);
+  });
+  const split=$('splitter');let dragging=false;
+  split.addEventListener('pointerdown',e=>{dragging=true;split.setPointerCapture(e.pointerId);e.preventDefault();});
+  split.addEventListener('pointermove',e=>{
+    if(!dragging)return;
+    const bounds=$('panes').getBoundingClientRect();
+    if(innerWidth<=650){const h=Math.max(90,Math.min(bounds.height-100,e.clientY-bounds.top));$('passagePane').style.height=h+'px';}
+    else{$('passagePane').style.width=Math.max(180,Math.min(bounds.width-200,e.clientX-bounds.left))+'px';}
+  });
+  const stopDrag=()=>dragging=false;
+  split.addEventListener('pointerup',stopDrag);split.addEventListener('pointercancel',stopDrag);
+  split.addEventListener('keydown',e=>{
+    const step=(e.key==='ArrowRight'||e.key==='ArrowDown')?20:(e.key==='ArrowLeft'||e.key==='ArrowUp')?-20:0;if(!step)return;e.preventDefault();
+    const vertical=innerWidth<=650,bounds=$('panes').getBoundingClientRect(),pane=$('passagePane');
+    if(vertical)pane.style.height=Math.max(90,Math.min(bounds.height-100,pane.offsetHeight+step))+'px';
+    else pane.style.width=Math.max(180,Math.min(bounds.width-200,pane.offsetWidth+step))+'px';
+  });
+  function selection(){
+    const sel=getSelection();if(!sel||sel.isCollapsed||!sel.toString().trim())return;
+    const range=sel.getRangeAt(0),node=range.commonAncestorContainer;
+    const ancestor=node.nodeType===1?node:node.parentElement;
+    if(!ancestor?.closest('.pane')||ancestor.closest('input,select,textarea,button'))return;
+    lastRange=range.cloneRange();const rect=range.getBoundingClientRect();const popup=$('highlightPopup');popup.classList.add('visible');
+    popup.style.left=Math.max(4,Math.min(innerWidth-popup.offsetWidth-4,rect.left))+'px';
+    popup.style.top=Math.max(4,rect.top-popup.offsetHeight-6)+'px';
+  }
+  ['passagePane','questionsPane'].forEach(id=>{$(id).addEventListener('mouseup',selection);$(id).addEventListener('keyup',selection);});
+  $('highlightPopup').addEventListener('pointerdown',e=>e.preventDefault());
+  $('hpHighlight').addEventListener('click',()=>{
+    if(!lastRange)return;
+    const ancestor=lastRange.commonAncestorContainer.nodeType===1?lastRange.commonAncestorContainer:lastRange.commonAncestorContainer.parentElement;
+    const walker=document.createTreeWalker(ancestor,NodeFilter.SHOW_TEXT),nodes=[];
+    while(walker.nextNode()){
+      const n=walker.currentNode;
+      if(n.parentElement.closest('input,select,option,textarea,button,script,style')||!n.textContent.trim())continue;
+      if(lastRange.intersectsNode(n))nodes.push(n);
+    }
+    nodes.reverse().forEach(n=>{
+      const r=document.createRange();r.selectNodeContents(n);
+      if(n===lastRange.startContainer)r.setStart(n,lastRange.startOffset);
+      if(n===lastRange.endContainer)r.setEnd(n,lastRange.endOffset);
+      if(r.toString()){const mark=document.createElement('mark');mark.className='user-highlight';r.surroundContents(mark);}
+    });getSelection().removeAllRanges();$('highlightPopup').classList.remove('visible');lastRange=null;
+  });
+  $('hpRemove').addEventListener('click',()=>{document.querySelectorAll('.user-highlight').forEach(mark=>{const parent=mark.parentNode;mark.replaceWith(...mark.childNodes);parent.normalize();});$('highlightPopup').classList.remove('visible');lastRange=null;});
+  $('hpClose').addEventListener('click',()=>$('highlightPopup').classList.remove('visible'));
+  function announce(text){$('status').textContent=text;}
+  function review(rows){
+    rows.forEach(row=>{
+      if(byId[row.q])return;
+      const els=qcontrols(row.q);els.forEach(el=>el.classList.add(row.ok?'q-correct':'q-incorrect'));
+      if(!row.ok&&els.length){const badge=document.createElement('span');badge.className='q-correct-badge';badge.textContent='Answer: '+row.correct.join(' / ');els.at(-1).insertAdjacentElement('afterend',badge);}
+    });
+    groups.forEach(g=>groupControls(g).forEach(el=>{const correct=g.answers.some(a=>normalize(a)===normalize(el.value));el.closest('label')?.classList.add(correct?'group-correct':el.checked?'group-incorrect':'group-neutral');}));
+  }
+  function resultMarkup(rows){
+    const score=rows.filter(r=>r.ok).length,pct=Math.round(score/ids.length*100);
+    return `<h2>Your Results</h2><div class="score-row">${score} / ${ids.length} <span>(${pct}%)</span></div><div class="band-row">Reading practice score</div>${data.warnings?.length?'<p class="source-warning">Source answer-key notes apply to this test. See the note below.</p>':''}<table class="results-table"><thead><tr><th>Q</th><th>Your Answer</th><th>Correct</th><th>Result</th></tr></thead><tbody>${rows.map(r=>`<tr><td><strong>${r.q}</strong></td><td>${esc(r.given||'—')}</td><td>${esc(r.correct.join(' / '))}</td><td class="${r.ok?'mark-ok':'mark-bad'}">${r.ok?'✓':'✗'}</td></tr>`).join('')}</tbody></table>${(data.warnings||[]).map(w=>'<p class="source-warning">'+esc(w)+'</p>').join('')}<div class="actions"><button class="secondary" id="reviewBtn">Review</button><button id="certificateBtn">Certificate</button></div>`;
+  }
+  function finish(){
+    if(!submitted){submitted=true;clearInterval(interval);controls.forEach(el=>el.disabled=true);review(assess());try{const k="vivid_reading_completed";const completed=new Set(JSON.parse(localStorage.getItem(k)||"[]"));completed.add("imported-passage-04");localStorage.setItem(k,JSON.stringify([...completed]));}catch(e){}}
+    const rows=assess();$('modal').innerHTML=resultMarkup(rows);$('overlay').classList.add('visible');
+    $('reviewBtn').addEventListener('click',()=>{$('overlay').classList.remove('visible');$('finishBtn').focus();});
+    $('certificateBtn').addEventListener('click',()=>certificate(rows.filter(r=>r.ok).length));
+    $('reviewBtn').focus();
+  }
+  $('finishBtn').addEventListener('click',()=>{
+    if(submitted){finish();return;}
+    $('submitDialog').showModal();$('submitConfirm').focus();
+  });
+  $('submitCancel').addEventListener('click',()=>{$('submitDialog').close();$('finishBtn').focus();});
+  $('submitConfirm').addEventListener('click',()=>{$('submitDialog').close();finish();});
+  $('overlay').addEventListener('click',e=>{if(e.target===$('overlay'))$('overlay').classList.remove('visible');});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('overlay').classList.remove('visible');$('highlightPopup').classList.remove('visible');$('notesPanel').classList.remove('open');$('certOverlay')?.remove();}});
+  function certificate(score){
+    const panel=document.createElement('div');panel.id='certOverlay';
+    panel.innerHTML=`<div class="cert-card" id="certCard"><div class="cert-border"><p class="cert-brand">VIVID IELTS</p><h1 class="cert-title">Certificate of Completion</h1><p class="cert-sub">Reading practice completed</p><h3 class="cert-test">${esc(data.title)}</h3><div class="cert-stats"><div><span>${score}/${ids.length}</span><label>Reading score</label></div><div><span>${Math.round(score/ids.length*100)}%</span><label>Correct answers</label></div></div><p class="cert-date">${esc(new Date().toLocaleDateString('en-GB'))}</p></div><div class="cert-actions"><button id="certPrint">Print / Save PDF</button><button id="certClose" class="secondary">Close</button></div></div>`;
+    document.body.append(panel);$('certPrint').addEventListener('click',()=>window.print());$('certClose').addEventListener('click',()=>panel.remove());
+  }
+  showPart(0);updateNav();
+})();
+</script><script src="../highlight-auto-dismiss.js"></script>
+<script src="../activity-bridge-v15.js"></script>
+</body></html>

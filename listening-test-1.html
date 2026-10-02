@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IELTS Listening – Full Listening Test 1</title>
+<style>
+  :root {
+    --bg: #ffffff; --bg-alt: #f4f5f7; --bg-panel: #ffffff;
+    --text: #111111; --text-muted: #555; --border: #d4d4d4;
+    --border-strong: #333; --accent: #e51e2a;
+    --select-bg: #cfe3ff; --select-active: #1e6cd8;
+    --footer-bg: #f4f5f7; --btn-bg: #ededed;
+    --arrow-bg: #1f1f1f; --arrow-fg: #ffffff;
+    --correct: #1a8a3c; --wrong: #cc2222;
+  }
+  body.dark {
+    --bg: #1a1a1d; --bg-alt: #232327; --bg-panel: #1f1f22;
+    --text: #ececec; --text-muted: #b5b5b5; --border: #3a3a3f;
+    --border-strong: #cfcfcf; --accent: #ff5c66;
+    --select-bg: #2c4d7a; --select-active: #4a8be0;
+    --footer-bg: #232327; --btn-bg: #2e2e33;
+    --arrow-bg: #ececec; --arrow-fg: #1a1a1d;
+    --correct: #4ed684; --wrong: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+
+  .topbar { min-height: 60px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 8px 16px; background: var(--bg); position: relative; z-index: 5; gap: 16px; flex-wrap: wrap; }
+  .logo { font-weight: 800; font-size: 22px; letter-spacing: 1px; color: var(--accent); user-select: none; flex-shrink: 0; }
+  .test-taker { font-size: 13px; font-weight: 700; color: var(--text-muted); flex-shrink: 0; }
+
+  .audio-bar { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 260px; max-width: 560px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 40px; padding: 6px 14px; }
+  .audio-play-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); border: none; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; flex-shrink: 0; }
+  .audio-progress-wrap { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .audio-progress { width: 100%; height: 4px; accent-color: var(--accent); cursor: pointer; }
+  .audio-times { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--text-muted); }
+  .audio-vol-wrap { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .audio-vol-wrap button { background: none; border: none; cursor: pointer; color: var(--text); font-size: 14px; }
+  .audio-vol-wrap input { width: 60px; accent-color: var(--accent); }
+
+  .top-controls { margin-left: auto; display: flex; gap: 2px; align-items: center; flex-shrink: 0; }
+  .top-controls .icon-btn, .top-controls .text-btn { background: transparent; border: none; color: var(--text); padding: 6px 10px; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s; }
+  .top-controls .icon-btn:hover, .top-controls .text-btn:hover { background: var(--bg-alt); }
+  .top-controls .icon-btn svg { width: 20px; height: 20px; display: block; }
+  .top-controls .text-btn { font-weight: 700; font-size: 16px; font-family: inherit; }
+  .top-controls .divider { width: 1px; height: 26px; background: var(--border); margin: 0 6px; }
+
+  .part-header { background: var(--bg-alt); border-bottom: 1px solid var(--border); padding: 10px 20px; }
+  .part-header h2 { margin: 0 0 3px 0; font-size: 14px; font-weight: 700; }
+  .part-header p { margin: 0; font-size: 12px; color: var(--text-muted); }
+
+  .main { position: absolute; top: 0; left: 0; right: 0; bottom: 50px; display: flex; flex-direction: column; }
+  body[data-hasheader="1"] .main { top: 108px; }
+  .panes { flex: 1; display: flex; overflow: hidden; position: relative; }
+  .pane { overflow-y: auto; padding: 18px 24px; background: var(--bg-panel); line-height: 1.55; font-size: calc(14.5px * var(--font-scale, 1)); }
+  .pane.left { width: 100%; }
+  .pane.left.split { width: 70%; }
+  .pane.right { width: 30%; border-left: 1px solid var(--border); background: var(--bg-alt); display: none; }
+  .pane.right.visible { display: block; }
+
+  .qblock { margin: 0 0 24px 0; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; scroll-margin-top: 16px; }
+  .qblock h3 { margin: 0 0 6px 0; font-size: 14.5px; font-weight: 700; color: var(--accent); }
+  .qblock .instructions { font-size: 13px; margin-bottom: 12px; line-height: 1.6; }
+  .qblock .instructions strong { font-weight: 700; }
+  .qblock .centered-title { text-align: center; font-weight: 700; font-size: 15px; margin: 4px 0 14px; }
+
+  .notes-box { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .notes-box .group-head { font-weight: 700; margin: 12px 0 6px; font-size: 13.5px; }
+  .notes-box .group-head:first-child { margin-top: 0; }
+  .notes-box ul { margin: 0; padding-left: 18px; list-style: disc; }
+  .notes-box li { margin: 8px 0; line-height: 1.6; }
+  .notes-box p.plain { margin: 6px 0; }
+
+  .gap-input { background: var(--bg); color: var(--text); border: none; border-bottom: 2px solid var(--border-strong); border-radius: 0; padding: 2px 4px; font-size: 13.5px; width: 160px; font-family: inherit; outline: none; }
+  .gap-input:focus { border-bottom-color: var(--select-active); }
+  .gap-input.correct { border-bottom-color: var(--correct); background: rgba(26,138,60,0.08); }
+  .gap-input.incorrect { border-bottom-color: var(--wrong); background: rgba(204,34,34,0.06); }
+  .correct-inline { color: var(--correct); font-weight: 700; margin-left: 6px; font-size: 12.5px; }
+  .qnum { display: inline-block; min-width: 20px; font-weight: 700; color: var(--accent); font-size: 12.5px; margin-right: 2px; }
+
+  .mc-item { margin: 0 0 18px 0; }
+  .mc-item:last-child { margin-bottom: 0; }
+  .mc-item .q-stem { font-weight: 600; font-size: 14px; margin: 0 0 8px 0; }
+  .mc-option { display: block; margin: 5px 0 5px 8px; font-size: 13.5px; cursor: pointer; padding: 4px 6px; border-radius: 6px; }
+  .mc-option:hover { background: var(--bg-alt); }
+  .mc-option input { margin-right: 8px; }
+  .mc-option.correct-opt { background: rgba(26,138,60,0.1); }
+  .mc-option.incorrect-opt { background: rgba(204,34,34,0.08); }
+
+  .match-key { background: var(--select-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; }
+  .match-key .key-title { font-weight: 700; margin-bottom: 8px; }
+  .match-key .key-row { margin: 4px 0; }
+  .match-key .key-letter { display: inline-block; min-width: 20px; font-weight: 700; }
+
+  .match-list { list-style: none; margin: 0; padding: 0; }
+  .match-list li { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--border); font-size: 13.5px; }
+  .match-list li:last-child { border-bottom: none; }
+  .match-list .m-text { flex: 1; }
+  .match-select { background: var(--bg); color: var(--text); border: 1px solid var(--border-strong); padding: 4px 6px; font-size: 13px; font-family: inherit; border-radius: 3px; min-width: 60px; }
+  .match-select.correct { border-color: var(--correct); background: rgba(26,138,60,0.08); }
+  .match-select.incorrect { border-color: var(--wrong); background: rgba(204,34,34,0.06); }
+
+  .map-wrap { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+  .map-wrap img { width: 100%; display: block; }
+  .map-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .map-table th, .map-table td { border: 1px solid var(--border); padding: 6px 8px; text-align: center; }
+  .map-table th { background: var(--bg-alt); }
+  .map-table td:first-child { text-align: left; font-weight: 600; }
+  .map-table input[type="radio"] { transform: scale(1.1); }
+  .map-table td.correct-cell { background: rgba(26,138,60,0.12); }
+  .map-table td.incorrect-cell { background: rgba(204,34,34,0.1); }
+
+  .footer { position: fixed; bottom: 0; left: 0; right: 0; height: 50px; background: var(--footer-bg); border-top: 1px solid var(--border); display: flex; align-items: center; padding: 0 10px; gap: 8px; z-index: 4; overflow-x: auto; }
+  .part-select { display: flex; gap: 4px; flex-shrink: 0; }
+  .part-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); cursor: pointer; font-family: inherit; color: var(--text); flex-shrink: 0; }
+  .part-btn .p-label { font-weight: 700; font-size: 12px; }
+  .part-btn .p-count { font-size: 9.5px; color: var(--text-muted); }
+  .part-btn.active { background: var(--accent); border-color: var(--accent); }
+  .part-btn.active .p-label, .part-btn.active .p-count { color: #fff; }
+  .qnav { display: flex; gap: 3px; flex-wrap: nowrap; flex-shrink: 0; }
+  .qbtn { width: 24px; height: 24px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 10.5px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 3px; font-family: inherit; flex-shrink: 0; }
+  .qbtn:hover { background: var(--bg-alt); }
+  .qbtn.current { border: 2px solid var(--text); font-weight: 700; }
+  .qbtn.answered { background: var(--select-bg); }
+  .qbtn.correct { background: var(--correct); color: #fff; border-color: var(--correct); }
+  .qbtn.incorrect { background: var(--wrong); color: #fff; border-color: var(--wrong); }
+  .nav-arrows { display: flex; gap: 4px; margin-left: auto; flex-shrink: 0; }
+  .arrow-btn { width: 30px; height: 30px; background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .arrow-btn.dark { background: var(--arrow-bg); color: var(--arrow-fg); border-color: var(--arrow-bg); }
+  .check-btn { padding: 0 16px; height: 32px; background: var(--accent); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 12.5px; font-weight: 700; flex-shrink: 0; }
+
+  .user-highlight { background: #f4ff55; padding: 1px 0; }
+  body.dark .user-highlight { background: #8a9100; color: #fff; }
+  .transcript-answer { background: var(--select-bg); padding: 1px 6px; border-radius: 8px; font-weight: 700; }
+
+  .highlight-popup { position: absolute; display: none; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.18); padding: 4px; z-index: 200; align-items: center; gap: 2px; font-size: 13.5px; user-select: none; }
+  .highlight-popup.visible { display: inline-flex; }
+  .highlight-popup button { background: transparent; border: none; padding: 8px 12px; cursor: pointer; color: var(--text); border-radius: 5px; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 13.5px; font-weight: 500; }
+  .highlight-popup button:hover { background: var(--bg-alt); }
+  .highlight-popup .hp-swatch { display: inline-block; width: 16px; height: 16px; background: #f4ff55; border-radius: 3px; flex-shrink: 0; }
+  .highlight-popup .hp-close { padding: 6px 10px; font-size: 18px; color: var(--text-muted); line-height: 1; }
+
+  .pane::-webkit-scrollbar { width: 10px; }
+  .pane::-webkit-scrollbar-track { background: var(--bg-alt); }
+  .pane::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-start; justify-content: center; z-index: 100; padding: 20px; overflow-y: auto; }
+  .overlay.visible { display: flex; }
+  .modal { background: var(--bg-panel); color: var(--text); border: 1px solid var(--border); border-radius: 8px; max-width: 640px; width: 100%; padding: 28px 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); margin: auto; }
+  .modal h2 { margin: 0 0 10px 0; color: var(--accent); font-size: 22px; text-align: center; }
+  .score-row { text-align: center; font-size: 28px; font-weight: 800; margin: 6px 0 4px; }
+  .score-row span { font-size: 16px; font-weight: 400; color: var(--text-muted); }
+  .band-row { text-align: center; font-size: 18px; font-weight: 700; margin-bottom: 18px; color: var(--accent); }
+  .results-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 18px; }
+  .results-table th { background: var(--bg-alt); padding: 5px 8px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border); }
+  .results-table td { padding: 4px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .results-table tr:last-child td { border-bottom: none; }
+  .mark-ok  { color: var(--correct); font-weight: 700; font-size: 14px; }
+  .mark-bad { color: var(--wrong);   font-weight: 700; font-size: 14px; }
+  .modal .actions { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+  .modal button.secondary { background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); padding: 9px 22px; font-size: 14px; font-weight: 600; border-radius: 4px; cursor: pointer; }
+  .modal button:hover { opacity: 0.9; }
+
+  #transcriptText p { margin: 0 0 10px 0; font-size: 13px; line-height: 1.6; }
+  #transcriptText strong { color: var(--accent); }
+  .transcript-part-tabs { display: flex; gap: 4px; margin-bottom: 12px; flex-wrap: wrap; }
+  .transcript-part-tabs button { border: 1px solid var(--border); background: var(--bg); color: var(--text); padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; font-family: inherit; }
+  .transcript-part-tabs button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  @media (max-width: 800px) {
+    .audio-bar { order: 3; max-width: none; width: 100%; }
+    .pane.left.split { width: 100%; }
+    .pane.right { display: none !important; }
+  }
+
+  .hidden-part { display: none; }
+</style>
+<link rel="stylesheet" href="max-bridge.css?v=1"><script src="max-bridge.js?v=1" defer></script>
+</head>
+<body data-hasheader="1">
+
+<div class="topbar">
+  <div class="logo">IELTS</div>
+  <div class="test-taker">VIVID IELTS &middot; Full Listening Test 1</div>
+  <div class="audio-bar">
+    <button class="audio-play-btn" id="playPauseBtn" title="Play/Pause">&#9654;</button>
+    <div class="audio-progress-wrap">
+      <input type="range" id="audioProgress" class="audio-progress" value="0" min="0" step="0.1">
+      <div class="audio-times"><span id="curTime">0:00</span><span id="durTime">--:--</span></div>
+    </div>
+    <div class="audio-vol-wrap">
+      <button id="muteBtn" title="Mute">&#128266;</button>
+      <input type="range" id="volSlider" min="0" max="1" step="0.02" value="0.9">
+    </div>
+  </div>
+  <div class="top-controls">
+    <button id="btn-light" class="icon-btn" title="Light mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+        <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
+        <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+        <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
+      </svg>
+    </button>
+    <button id="btn-dark" class="icon-btn" title="Dark mode">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="divider"></div>
+    <button id="btn-font-down" class="text-btn" title="Decrease font size">A-</button>
+    <button id="btn-font-up" class="text-btn" title="Increase font size">A+</button>
+  </div>
+</div>
+
+<audio id="audioPlayer" preload="metadata" src="https://ia600600.us.archive.org/12/items/mix-25m-08s-audio-joiner.com_202608/mix_25m08s%20%28audio-joiner.com%29.mp3"></audio>
+
+<div class="part-header">
+  <h2 id="partTitle">Part 1 &ndash; Questions 1&ndash;10</h2>
+  <p id="partDesc">Listen and answer questions 1&ndash;10.</p>
+</div>
+
+<div class="main">
+  <div class="panes">
+    <div class="pane left" id="questionsPane">
+
+<div id="part-1" class="question-part">
+  <div class="qblock">
+    <h3>Questions 1&ndash;10</h3>
+    <div class="instructions">Complete the form below.<br>Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.</div>
+    <div class="notes-box">
+      <p class="centered-title" style="margin-top:0;">Car Servicing</p>
+      <p class="plain">Customer name: <strong>Ian Croft</strong></p>
+      <p class="group-head">Car details</p>
+      <ul>
+        <li>Registration number: <span class="qnum">1</span><input type="text" id="q1" class="gap-input" autocomplete="off"></li>
+        <li>Make and model: Vida (4-door saloon)</li>
+        <li>Date of manufacture: 2001</li>
+        <li>Number of miles <span class="qnum">2</span><input type="text" id="q2" class="gap-input" autocomplete="off"></li>
+      </ul>
+      <p class="group-head">Problems</p>
+      <ul>
+        <li>needs two new <span class="qnum">3</span><input type="text" id="q3" class="gap-input" autocomplete="off"></li>
+        <li>the inside <span class="qnum">4</span><input type="text" id="q4" class="gap-input" autocomplete="off"> needs fixing</li>
+        <li>one passenger seat <span class="qnum">5</span><input type="text" id="q5" class="gap-input" autocomplete="off"> is stuck</li>
+        <li>the <span class="qnum">6</span><input type="text" id="q6" class="gap-input" autocomplete="off"> needs replacing</li>
+        <li>the <span class="qnum">7</span><input type="text" id="q7" class="gap-input" autocomplete="off"> brakes of the car need attention</li>
+        <li>needs a spare <span class="qnum">8</span><input type="text" id="q8" class="gap-input" autocomplete="off"></li>
+      </ul>
+      <p class="group-head">Service arrangements</p>
+      <ul>
+        <li>Date/Time: Tuesday 5 October, 8.00 a.m.</li>
+        <li>Courtesy car? <span class="qnum">9</span><input type="text" id="q9" class="gap-input" autocomplete="off"> &ndash; Yes, preferably</li>
+      </ul>
+      <p class="group-head">Customer details</p>
+      <ul>
+        <li>Address: 361 College Road, Norwich</li>
+        <li>Phone: <span class="qnum">10</span><input type="text" id="q10" class="gap-input" autocomplete="off"></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="part-2" class="question-part hidden-part">
+  <div class="qblock">
+    <h3>Questions 11&ndash;15</h3>
+    <div class="instructions">Choose the correct letter, <strong>A</strong>, <strong>B</strong> or <strong>C</strong>.</div>
+
+    <div class="mc-item">
+      <p class="q-stem"><span class="qnum">11</span>Why is David Laws leading the meeting instead of Penny Williams today?</p>
+      <label class="mc-option"><input type="radio" name="q11" value="A"> A&nbsp; Penny Williams is not well recently</label>
+      <label class="mc-option"><input type="radio" name="q11" value="B"> B&nbsp; David Laws is the director now</label>
+      <label class="mc-option"><input type="radio" name="q11" value="C"> C&nbsp; The meeting will be postponed</label>
+    </div>
+    <div class="mc-item">
+      <p class="q-stem"><span class="qnum">12</span>What does David say has been a problem with guest speaker talks?</p>
+      <label class="mc-option"><input type="radio" name="q12" value="A"> A&nbsp; expensive tickets</label>
+      <label class="mc-option"><input type="radio" name="q12" value="B"> B&nbsp; lack of publicity</label>
+      <label class="mc-option"><input type="radio" name="q12" value="C"> C&nbsp; inconvenient time</label>
+    </div>
+    <div class="mc-item">
+      <p class="q-stem"><span class="qnum">13</span>What did the man say about the break-in at the library?</p>
+      <label class="mc-option"><input type="radio" name="q13" value="A"> A&nbsp; the building suffered some damage</label>
+      <label class="mc-option"><input type="radio" name="q13" value="B"> B&nbsp; some valuable items were stolen</label>
+      <label class="mc-option"><input type="radio" name="q13" value="C"> C&nbsp; the thieves had planned it well</label>
+    </div>
+    <div class="mc-item">
+      <p class="q-stem"><span class="qnum">14</span>Why do they want to make an extension to the library?</p>
+      <label class="mc-option"><input type="radio" name="q14" value="A"> A&nbsp; it has had no renovation since it was founded</label>
+      <label class="mc-option"><input type="radio" name="q14" value="B"> B&nbsp; it needs to double the number of computers</label>
+      <label class="mc-option"><input type="radio" name="q14" value="C"> C&nbsp; increased number of visitors</label>
+    </div>
+    <div class="mc-item">
+      <p class="q-stem"><span class="qnum">15</span>The investment from the city council will be used for</p>
+      <label class="mc-option"><input type="radio" name="q15" value="A"> A&nbsp; extra staff recruitment</label>
+      <label class="mc-option"><input type="radio" name="q15" value="B"> B&nbsp; buying more computers</label>
+      <label class="mc-option"><input type="radio" name="q15" value="C"> C&nbsp; improving the lighting</label>
+    </div>
+  </div>
+
+  <div class="qblock">
+    <h3>Questions 16&ndash;20</h3>
+    <div class="instructions">Label the map below.<br>Choose <strong>FIVE</strong> correct letters, <strong>A&ndash;H</strong>, next to questions 16&ndash;20.</div>
+    <p class="centered-title">Rosedale Library</p>
+    <div class="map-wrap">
+      <img src="https://ieltsmaterials.uz/assets/TEST%2045%20map.png" alt="Rosedale Library map">
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="map-table">
+        <thead><tr><th style="text-align:left;">&nbsp;</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th></tr></thead>
+        <tbody>
+          <tr><td><span class="qnum">16</span>Children's room</td>
+            <td><input type="radio" name="q16" value="A"></td><td><input type="radio" name="q16" value="B"></td><td><input type="radio" name="q16" value="C"></td><td><input type="radio" name="q16" value="D"></td><td><input type="radio" name="q16" value="E"></td><td><input type="radio" name="q16" value="F"></td><td><input type="radio" name="q16" value="G"></td><td><input type="radio" name="q16" value="H"></td></tr>
+          <tr><td><span class="qnum">17</span>Community room</td>
+            <td><input type="radio" name="q17" value="A"></td><td><input type="radio" name="q17" value="B"></td><td><input type="radio" name="q17" value="C"></td><td><input type="radio" name="q17" value="D"></td><td><input type="radio" name="q17" value="E"></td><td><input type="radio" name="q17" value="F"></td><td><input type="radio" name="q17" value="G"></td><td><input type="radio" name="q17" value="H"></td></tr>
+          <tr><td><span class="qnum">18</span>Caf&eacute;</td>
+            <td><input type="radio" name="q18" value="A"></td><td><input type="radio" name="q18" value="B"></td><td><input type="radio" name="q18" value="C"></td><td><input type="radio" name="q18" value="D"></td><td><input type="radio" name="q18" value="E"></td><td><input type="radio" name="q18" value="F"></td><td><input type="radio" name="q18" value="G"></td><td><input type="radio" name="q18" value="H"></td></tr>
+          <tr><td><span class="qnum">19</span>Academic study room</td>
+            <td><input type="radio" name="q19" value="A"></td><td><input type="radio" name="q19" value="B"></td><td><input type="radio" name="q19" value="C"></td><td><input type="radio" name="q19" value="D"></td><td><input type="radio" name="q19" value="E"></td><td><input type="radio" name="q19" value="F"></td><td><input type="radio" name="q19" value="G"></td><td><input type="radio" name="q19" value="H"></td></tr>
+          <tr><td><span class="qnum">20</span>Multimedia room</td>
+            <td><input type="radio" name="q20" value="A"></td><td><input type="radio" name="q20" value="B"></td><td><input type="radio" name="q20" value="C"></td><td><input type="radio" name="q20" value="D"></td><td><input type="radio" name="q20" value="E"></td><td><input type="radio" name="q20" value="F"></td><td><input type="radio" name="q20" value="G"></td><td><input type="radio" name="q20" value="H"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="part-3" class="question-part hidden-part">
+  <div class="qblock">
+    <h3>Questions 21&ndash;25</h3>
+    <div class="instructions">Choose the correct letter, <strong>A</strong>, <strong>B</strong> or <strong>C</strong>.</div>
+    <p class="centered-title">The artist Samuel Prout</p>
+
+    <div class="mc-item">
+      <p class="q-stem"><span class="qnum">21</span>According to Jack, why did Samuel Prout never become very famous?</p>
+      <label class="mc-option"><input type="radio" name="q21" value="A"> A&nbsp; His output was very limited.</label>
+      <label class="mc-option"><input type="radio" name="q21" value="B"> B&nbsp; He was seen as out-of-fashion.</label>
+      <label class="mc-option"><input type="radio" name="q21" value="C"> C&nbsp; His work never had a major exhibition.</label>
+    </div>
+    <div class="mc-item">
+      <p class="q-stem"><span class="qnum">22</span>Dr Rubin and Jack agree that many of Prout's problems were caused by</p>
+      <label class="mc-option"><input type="radio" name="q22" value="A"> A&nbsp; poor health.</label>
+      <label class="mc-option"><input type="radio" name="q22" value="B"> B&nbsp; jealous colleagues.</label>
+      <label class="mc-option"><input type="radio" name="q22" value="C"> C&nbsp; an unhappy marriage.</label>
+    </div>
+    <div class="mc-item">
+      <p class="q-stem"><span class="qnum">23</span>How did Prout learn painting?</p>
+      <label class="mc-option"><input type="radio" name="q23" value="A"> A&nbsp; His father taught him.</label>
+      <label class="mc-option"><input type="radio" name="q23" value="B"> B&nbsp; He went to art galleries.</label>
+      <label class="mc-option"><input type="radio" name="q23" value="C"> C&nbsp; He copied other painters' pictures.</label>
+    </div>
+    <div class="mc-item">
+      <p class="q-stem"><span class="qnum">24</span>What point does Jack make about Prout's style?</p>
+      <label class="mc-option"><input type="radio" name="q24" value="A"> A&nbsp; Prout used different styles simultaneously.</label>
+      <label class="mc-option"><input type="radio" name="q24" value="B"> B&nbsp; Many other artists had a similar style.</label>
+      <label class="mc-option"><input type="radio" name="q24" value="C"> C&nbsp; Prout's style developed throughout his career.</label>
+    </div>
+    <div class="mc-item">
+      <p class="q-stem"><span class="qnum">25</span>What did John Ruskin admire about Prout's paintings?</p>
+      <label class="mc-option"><input type="radio" name="q25" value="A"> A&nbsp; their realism</label>
+      <label class="mc-option"><input type="radio" name="q25" value="B"> B&nbsp; their presentation of buildings</label>
+      <label class="mc-option"><input type="radio" name="q25" value="C"> C&nbsp; their wide range of subject matter</label>
+    </div>
+  </div>
+
+  <div class="qblock">
+    <h3>Questions 26&ndash;30</h3>
+    <div class="instructions"><em>What information do the speakers give about each of the following pictures?</em><br>Choose <strong>FIVE</strong> correct answers, <strong>A&ndash;G</strong>, next to questions 26&ndash;30.</div>
+    <div class="match-key">
+      <div class="key-title">Information</div>
+      <div class="key-row"><span class="key-letter">A</span>one of several paintings of the same view</div>
+      <div class="key-row"><span class="key-letter">B</span>probably an inaccurate title</div>
+      <div class="key-row"><span class="key-letter">C</span>may not be genuine</div>
+      <div class="key-row"><span class="key-letter">D</span>was never finished</div>
+      <div class="key-row"><span class="key-letter">E</span>typical subject matter for Prout</div>
+      <div class="key-row"><span class="key-letter">F</span>skilful painting of light and dark</div>
+      <div class="key-row"><span class="key-letter">G</span>shows an event that never took place</div>
+    </div>
+    <p style="font-weight:600; margin-bottom:6px;">Pictures</p>
+    <ul class="match-list">
+      <li><span class="qnum">26</span><span class="m-text">A view in Germany: at W&uuml;rzburg</span>
+        <select id="q26" class="match-select"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select></li>
+      <li><span class="qnum">27</span><span class="m-text">Bridge on the Ouse, near York</span>
+        <select id="q27" class="match-select"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select></li>
+      <li><span class="qnum">28</span><span class="m-text">Woodland Scene</span>
+        <select id="q28" class="match-select"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select></li>
+      <li><span class="qnum">29</span><span class="m-text">Venice</span>
+        <select id="q29" class="match-select"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select></li>
+      <li><span class="qnum">30</span><span class="m-text">Entrance to a Harbour</span>
+        <select id="q30" class="match-select"><option value=""></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select></li>
+    </ul>
+  </div>
+</div>
+
+<div id="part-4" class="question-part hidden-part">
+  <div class="qblock">
+    <h3>Questions 31&ndash;40</h3>
+    <div class="instructions">Complete the notes below.<br>Write <strong>ONE WORD ONLY</strong> for each answer.</div>
+    <p class="centered-title">Case Study: Chocozine's difficult decision</p>
+    <div class="notes-box">
+      <p class="group-head" style="margin-top:0;">Background</p>
+      <ul>
+        <li>Smith and his colleagues noticed the spread of mass-customisation in many US <span class="qnum">31</span><input type="text" id="q31" class="gap-input" autocomplete="off"></li>
+      </ul>
+      <p class="plain">They decided to apply the idea to chocolate, and allow clients to decide which ingredients they wanted. They called their company 'Chocozine'.</p>
+
+      <p class="group-head">The email order</p>
+      <ul>
+        <li>A European retailer wanted 15,000 chocolate bars to use as a <span class="qnum">32</span><input type="text" id="q32" class="gap-input" autocomplete="off"> for customers.</li>
+        <li>The deal could improve their sales and provide <span class="qnum">33</span><input type="text" id="q33" class="gap-input" autocomplete="off">.</li>
+      </ul>
+
+      <p class="group-head">But there were risks</p>
+      <ul>
+        <li>They might not have sufficient time for the job.</li>
+        <li>If they failed, it could affect their finances and their <span class="qnum">34</span><input type="text" id="q34" class="gap-input" autocomplete="off">.</li>
+        <li>They only had three <span class="qnum">35</span><input type="text" id="q35" class="gap-input" autocomplete="off">, which was not enough.</li>
+      </ul>
+
+      <p class="group-head">They attempted to subcontract</p>
+      <ul>
+        <li>At first they couldn't find a subcontractor with the right <span class="qnum">36</span><input type="text" id="q36" class="gap-input" autocomplete="off">.</li>
+        <li>A Harvard professor invited Smith to speak to students.</li>
+        <li>Many students said it would be a <span class="qnum">37</span><input type="text" id="q37" class="gap-input" autocomplete="off"> to do the deal.</li>
+        <li>One student had a <span class="qnum">38</span><input type="text" id="q38" class="gap-input" autocomplete="off"> in the chocolate industry.</li>
+        <li>But this subcontractor had trouble with the unusual <span class="qnum">39</span><input type="text" id="q39" class="gap-input" autocomplete="off"> of the chocolate bar.</li>
+        <li>Chocozine finally declined the order, but their sales improved anyway.</li>
+      </ul>
+
+      <p class="group-head">Comment</p>
+      <p class="plain">Accepting <span class="qnum">40</span><input type="text" id="q40" class="gap-input" autocomplete="off"> orders has created severe problems for many new businesses.</p>
+    </div>
+  </div>
+</div>
+
+    </div>
+    <div class="pane right" id="transcriptPane">
+      <div class="transcript-part-tabs" id="transcriptTabs"></div>
+      <div id="transcriptText"></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="part-select" id="partSelect"></div>
+  <div class="qnav" id="qnav"></div>
+  <div class="nav-arrows">
+    <button class="arrow-btn" id="prevBtn">&#8592;</button>
+    <button class="arrow-btn dark" id="nextBtn">&#8594;</button>
+  </div>
+  <button class="check-btn" id="finishBtn">Check Answers</button>
+</div>
+
+<div class="highlight-popup" id="highlightPopup">
+  <button id="hpHighlight"><span class="hp-swatch"></span>Highlight</button>
+  <button id="hpRemove">Remove highlight</button>
+  <button class="hp-close" id="hpClose">&times;</button>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<div id="transcriptData" style="display:none;">
+
+<div data-part="1">
+  <p><strong>Assistant:</strong> Good morning, servicing department.</p>
+  <p><strong>Customer:</strong> Good morning, I'd like to book my car in for a service, please.</p>
+  <p><strong>Assistant:</strong> Certainly sir. Could I just take your name?</p>
+  <p><strong>Customer:</strong> Ian Croft.</p>
+  <p><strong>Assistant:</strong> And could I have a registration number, please?</p>
+  <p><strong>Customer:</strong> <span class="transcript-answer">BD51STR</span>.</p>
+  <p><strong>Assistant:</strong> And the make of the car? Is that the estate?</p>
+  <p><strong>Customer:</strong> No, the four-door saloon &ndash; it's a Vida.</p>
+  <p><strong>Assistant:</strong> Can you tell me what the mileage is?</p>
+  <p><strong>Customer:</strong> Yes, it's <span class="transcript-answer">180,000 miles</span>.</p>
+  <p><strong>Assistant:</strong> Are there any particular problems you'd like us to check?</p>
+  <p><strong>Customer:</strong> I think a couple of the <span class="transcript-answer">tyres</span> probably need replacing. Also, when you open the car door, the <span class="transcript-answer">light</span> ought to come on automatically, but it seems to have stopped working. On one of the passenger seats at the back, you can't fasten the <span class="transcript-answer">belt</span> &ndash; it seems to have stuck. One thing that's going to need replacing is the <span class="transcript-answer">radio</span>. Can you have a particular look at the <span class="transcript-answer">front</span> brakes &ndash; I think they might be worn. And I only have one <span class="transcript-answer">key</span> for the car and I really need a spare.</p>
+  <p><strong>Assistant:</strong> Would you like a courtesy car during the service?</p>
+  <p><strong>Customer:</strong> Yes, can I have an <span class="transcript-answer">automatic</span> if possible, please?</p>
+  <p><strong>Assistant:</strong> And your phone number?</p>
+  <p><strong>Customer:</strong> <span class="transcript-answer">07847 355780</span>.</p>
+</div>
+<div data-part="2">
+  <p><strong>David Laws:</strong> Good morning, everyone. Welcome to Rosedale Library Open Day. My name is David Laws, the new personal assistant to Penny Williams, the library director. <span class="transcript-answer">Penny was supposed to be leading this meeting, but due to unexpected illness, I will be taking her place this morning.</span></p>
+  <p>The guest speaker talks this year have been popular. <span class="transcript-answer">It has, however, come to our attention that some people have missed events because they didn't know they were on.</span> We also had a break-in last month; <span class="transcript-answer">they smashed a number of windows and kicked down a door trying to get in.</span></p>
+  <p>Rosedale Library has not been extended since 1969, and <span class="transcript-answer">visitor numbers have increased 20% in the last 10 years, so there is a clear need for an extension.</span> We're also aware that <span class="transcript-answer">the lighting is quite poor, but the City Council have authorised the spending in this area.</span></p>
+  <p><span class="transcript-answer">This new room is designed to be light and airy, and could be the ideal location for a new children's room looking out onto the park.</span> <span class="transcript-answer">Behind this is proposed a new community room for public lectures.</span> <span class="transcript-answer">To the right of the adult fiction room, with views of the sea, a cafe could provide light refreshments.</span> <span class="transcript-answer">The room looking out onto both Queen's Parade and Roberts Avenue would be the academic study room.</span> <span class="transcript-answer">Also facing Roberts Avenue but not Queen's Parade would be the multimedia room.</span></p>
+</div>
+<div data-part="3">
+  <p>You will hear an art history student called Jack talking to a lecturer, Dr Rubin, about Samuel Prout.</p>
+  <p><strong>Jack:</strong> <span class="transcript-answer">He was really prolific in his day but there's never really been a high-profile showing of his paintings.</span></p>
+  <p><strong>Dr Rubin:</strong> <span class="transcript-answer">Apparently, he was prone to chronic chest infections throughout his life.</span></p>
+  <p><strong>Jack:</strong> <span class="transcript-answer">He painstakingly reproduced other painters' works, essentially schooling himself.</span></p>
+  <p><strong>Dr Rubin:</strong> <span class="transcript-answer">He seemed to have several styles on the go all at the same time.</span></p>
+  <p><strong>Dr Rubin:</strong> <span class="transcript-answer">For me, his detailing of architecture was too predictable but for Ruskin that was where Prout's genius lay.</span></p>
+  <p><strong>Dr Rubin:</strong> A view in Germany at W&uuml;rzburg &ndash; <span class="transcript-answer">basically what Prout had made his name doing so well.</span></p>
+  <p><strong>Jack:</strong> Bridge on the Ouse near York &ndash; <span class="transcript-answer">except that experts now think this isn't York at all but somewhere in the south of England.</span></p>
+  <p><strong>Dr Rubin:</strong> Woodland Scene &ndash; <span class="transcript-answer">it's probably a forgery.</span></p>
+  <p><strong>Dr Rubin:</strong> Venice &ndash; <span class="transcript-answer">the buildings are bathed in sunlight with a picturesque shadow cast by the buildings opposite, shown brilliantly.</span></p>
+  <p><strong>Dr Rubin:</strong> Entrance to a Harbour &ndash; <span class="transcript-answer">this same location also appears in other pictures showing a range of weather conditions.</span></p>
+</div>
+<div data-part="4">
+  <p>The professor discusses a case study about a company called Chocozine.</p>
+  <p>Eric Smith and colleagues were struck by <span class="transcript-answer">the mass customisation movement that was spreading through a large number of industries in the US.</span></p>
+  <p>A European retailer wanted to <span class="transcript-answer">give chocolate bars as a gift in their high-end stores</span>. Smith knew it could also be very good <span class="transcript-answer">publicity</span>.</p>
+  <p>If they failed, there could be damage to their financial situation and their <span class="transcript-answer">reputation</span>. They only had three <span class="transcript-answer">machines</span>, which wasn't enough.</p>
+  <p>Smith couldn't find a subcontractor with experience of the type of melted <span class="transcript-answer">toppings</span> Chocozine used. Many MBA students thought doing the deal would be a <span class="transcript-answer">mistake</span>. One student had a <span class="transcript-answer">contact</span> in the chocolate business, but the new subcontractor had trouble reproducing the distinctive <span class="transcript-answer">shape</span> of the bars.</p>
+  <p>Smith declined the order, but sales improved anyway. Taking on too <span class="transcript-answer">big</span> an order has destroyed many small businesses.</p>
+</div>
+
+</div>
+
+<script>
+const TOTAL = 40;
+const PART_TITLES = {"1": "Part 1 &ndash; Questions 1&ndash;10", "2": "Part 2 &ndash; Questions 11&ndash;20", "3": "Part 3 &ndash; Questions 21&ndash;30", "4": "Part 4 &ndash; Questions 31&ndash;40"};
+const PART_DESC = {"1": "Listen and answer questions 1&ndash;10.", "2": "Listen and answer questions 11&ndash;20.", "3": "Listen and answer questions 21&ndash;30.", "4": "Listen and answer questions 31&ndash;40."};
+
+const KEY = {"1": ["BD51STR"], "2": ["180,000", "180000"], "3": ["tyres", "tires"], "4": ["light"], "5": ["belt"], "6": ["radio"], "7": ["front"], "8": ["key"], "9": ["automatic"], "10": ["07847355780", "07847 355780"], "11": "A", "12": "B", "13": "A", "14": "C", "15": "C", "16": "C", "17": "A", "18": "B", "19": "H", "20": "G", "21": "C", "22": "A", "23": "C", "24": "A", "25": "B", "26": "E", "27": "B", "28": "C", "29": "F", "30": "A", "31": ["industries"], "32": ["gift"], "33": ["publicity"], "34": ["reputation"], "35": ["machines"], "36": ["toppings"], "37": ["mistake"], "38": ["contact"], "39": ["shape"], "40": ["big"]};
+
+const TYPES = {"1": "text", "2": "text", "3": "text", "4": "text", "5": "text", "6": "text", "7": "text", "8": "text", "9": "text", "10": "text", "11": "mcq", "12": "mcq", "13": "mcq", "14": "mcq", "15": "mcq", "16": "radiogrid", "17": "radiogrid", "18": "radiogrid", "19": "radiogrid", "20": "radiogrid", "21": "mcq", "22": "mcq", "23": "mcq", "24": "mcq", "25": "mcq", "26": "select", "27": "select", "28": "select", "29": "select", "30": "select", "31": "text", "32": "text", "33": "text", "34": "text", "35": "text", "36": "text", "37": "text", "38": "text", "39": "text", "40": "text"};
+
+const answers = {};
+let currentPart = 1;
+let resultsMode = false;
+
+function normalize(v) { return (v || '').toString().trim().toUpperCase().replace(/\s+/g, ' '); }
+
+function isCorrect(n, val) {
+  const accepted = Array.isArray(KEY[n]) ? KEY[n] : [KEY[n]];
+  const normVal = normalize(val);
+  return accepted.some(k => normalize(k) === normVal);
+}
+
+function correctDisplay(n) {
+  const accepted = Array.isArray(KEY[n]) ? KEY[n] : [KEY[n]];
+  return accepted.join(' / ');
+}
+
+function getAnswer(n) {
+  const type = TYPES[n];
+  if (type === 'text') {
+    const el = document.getElementById('q' + n);
+    return el ? el.value.trim() : '';
+  } else if (type === 'mcq') {
+    const checked = document.querySelector('input[name="q' + n + '"]:checked');
+    return checked ? checked.value : '';
+  } else if (type === 'select') {
+    const el = document.getElementById('q' + n);
+    return el ? el.value : '';
+  } else if (type === 'radiogrid') {
+    const checked = document.querySelector('input[name="q' + n + '"]:checked');
+    return checked ? checked.value : '';
+  }
+  return '';
+}
+
+function partOf(n) { return Math.ceil(n / 10); }
+
+function buildPartSelect() {
+  const wrap = document.getElementById('partSelect');
+  wrap.innerHTML = '';
+  for (let p = 1; p <= 4; p++) {
+    const btn = document.createElement('button');
+    btn.className = 'part-btn';
+    btn.dataset.p = p;
+    btn.innerHTML = '<span class="p-label">Part ' + p + '</span><span class="p-count" id="pcount-' + p + '">0/10</span>';
+    btn.addEventListener('click', () => switchPart(p));
+    wrap.appendChild(btn);
+  }
+}
+
+function buildQnav() {
+  const wrap = document.getElementById('qnav');
+  wrap.innerHTML = '';
+  const start = (currentPart - 1) * 10 + 1;
+  const end = currentPart * 10;
+  for (let n = start; n <= end; n++) {
+    const btn = document.createElement('button');
+    btn.className = 'qbtn';
+    btn.textContent = n;
+    btn.dataset.n = n;
+    btn.addEventListener('click', () => goToQuestion(n));
+    wrap.appendChild(btn);
+  }
+}
+
+function switchPart(p, focusFirst) {
+  currentPart = p;
+  document.querySelectorAll('.question-part').forEach(el => el.classList.add('hidden-part'));
+  const active = document.getElementById('part-' + p);
+  if (active) active.classList.remove('hidden-part');
+  document.getElementById('partTitle').textContent = PART_TITLES[p];
+  document.getElementById('partDesc').textContent = PART_DESC[p];
+  document.querySelectorAll('.part-btn').forEach(b => b.classList.toggle('active', +b.dataset.p === p));
+  buildQnav();
+  updateAllCounts();
+  if (resultsMode) showTranscript(p);
+  if (focusFirst) goToQuestion((p - 1) * 10 + 1);
+}
+
+function goToQuestion(n) {
+  const p = partOf(n);
+  if (p !== currentPart) switchPart(p);
+  document.querySelectorAll('.qbtn').forEach(b => b.classList.toggle('current', +b.dataset.n === n));
+  const el = document.getElementById('q' + n) || document.querySelector('input[name="q' + n + '"]') || document.querySelector('[data-qanchor="' + n + '"]');
+  if (el) {
+    const container = el.closest('.mc-item') || el.closest('li') || el.closest('tr') || el;
+    container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (el.focus) el.focus({ preventScroll: true });
+  }
+  document.getElementById('prevBtn').disabled = n === 1;
+  document.getElementById('nextBtn').disabled = n === TOTAL;
+  window.currentQuestion = n;
+}
+
+function updateAllCounts() {
+  for (let p = 1; p <= 4; p++) {
+    const start = (p - 1) * 10 + 1;
+    let count = 0;
+    for (let n = start; n < start + 10; n++) {
+      if (getAnswer(n)) count++;
+    }
+    const el = document.getElementById('pcount-' + p);
+    if (el) el.textContent = count + '/10';
+  }
+  document.querySelectorAll('.qbtn').forEach(btn => {
+    const n = +btn.dataset.n;
+    if (btn.classList.contains('correct') || btn.classList.contains('incorrect')) return;
+    btn.classList.toggle('answered', !!getAnswer(n));
+  });
+}
+
+document.addEventListener('input', (e) => {
+  if (e.target.matches('.gap-input, .match-select')) updateAllCounts();
+});
+document.addEventListener('change', (e) => {
+  if (e.target.matches('input[type="radio"], .match-select')) updateAllCounts();
+});
+
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (window.currentQuestion > 1) goToQuestion(window.currentQuestion - 1);
+});
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (window.currentQuestion < TOTAL) goToQuestion(window.currentQuestion + 1);
+});
+
+function getBand(score) {
+  if (score >= 39) return 9;
+  if (score >= 37) return 8.5;
+  if (score >= 35) return 8;
+  if (score >= 32) return 7.5;
+  if (score >= 30) return 7;
+  if (score >= 26) return 6.5;
+  if (score >= 23) return 6;
+  if (score >= 18) return 5.5;
+  if (score >= 16) return 5;
+  if (score >= 13) return 4.5;
+  if (score >= 10) return 4;
+  if (score >= 8) return 3.5;
+  if (score >= 6) return 3;
+  if (score >= 4) return 2.5;
+  if (score >= 2) return 2;
+  if (score === 1) return 1.5;
+  return 0;
+}
+
+function showTranscript(p) {
+  const src = document.querySelector('#transcriptData [data-part="' + p + '"]');
+  const target = document.getElementById('transcriptText');
+  if (src && target) target.innerHTML = src.innerHTML;
+  document.querySelectorAll('.transcript-part-tabs button').forEach(b => b.classList.toggle('active', +b.dataset.p === p));
+}
+
+function buildTranscriptTabs() {
+  const wrap = document.getElementById('transcriptTabs');
+  wrap.innerHTML = '';
+  for (let p = 1; p <= 4; p++) {
+    const btn = document.createElement('button');
+    btn.textContent = 'Part ' + p;
+    btn.dataset.p = p;
+    btn.addEventListener('click', () => showTranscript(p));
+    wrap.appendChild(btn);
+  }
+}
+
+function checkAnswers() {
+  if (resultsMode) {
+    document.getElementById('overlay').classList.add('visible');
+    return;
+  }
+  let score = 0;
+  const rows = [];
+
+  for (let n = 1; n <= TOTAL; n++) {
+    const type = TYPES[n];
+    const userVal = getAnswer(n);
+    const ok = isCorrect(n, userVal);
+    if (ok) score++;
+
+    if (type === 'text') {
+      const el = document.getElementById('q' + n);
+      if (el) {
+        el.classList.add(ok ? 'correct' : 'incorrect');
+        el.disabled = true;
+        if (!ok) {
+          const span = document.createElement('span');
+          span.className = 'correct-inline';
+          span.textContent = correctDisplay(n);
+          el.insertAdjacentElement('afterend', span);
+        }
+      }
+    } else if (type === 'mcq') {
+      document.querySelectorAll('input[name="q' + n + '"]').forEach(r => {
+        const wrap = r.closest('.mc-option');
+        r.disabled = true;
+        if (wrap) {
+          if (normalize(r.value) === normalize(Array.isArray(KEY[n]) ? KEY[n][0] : KEY[n])) wrap.classList.add('correct-opt');
+          else if (r.checked) wrap.classList.add('incorrect-opt');
+        }
+      });
+    } else if (type === 'radiogrid') {
+      document.querySelectorAll('input[name="q' + n + '"]').forEach(r => {
+        const cell = r.closest('td');
+        r.disabled = true;
+        if (cell) {
+          if (normalize(r.value) === normalize(Array.isArray(KEY[n]) ? KEY[n][0] : KEY[n])) cell.classList.add('correct-cell');
+          else if (r.checked) cell.classList.add('incorrect-cell');
+        }
+      });
+    } else if (type === 'select') {
+      const el = document.getElementById('q' + n);
+      if (el) {
+        el.classList.add(ok ? 'correct' : 'incorrect');
+        el.disabled = true;
+      }
+    }
+
+    const navBtn = document.querySelector('.qbtn[data-n="' + n + '"]');
+    if (navBtn) {
+      navBtn.classList.remove('answered');
+      navBtn.classList.add(ok ? 'correct' : 'incorrect');
+    }
+    rows.push({ n, given: userVal || '\u2014', correct: correctDisplay(n), ok });
+  }
+
+  resultsMode = true;
+  document.getElementById('questionsPane').classList.add('split');
+  document.getElementById('transcriptPane').classList.add('visible');
+  buildTranscriptTabs();
+  showTranscript(currentPart);
+  document.getElementById('finishBtn').textContent = 'My Results';
+
+  const pct = Math.round(score / TOTAL * 100);
+  const band = getBand(score);
+  const color = pct >= 70 ? 'var(--correct)' : pct >= 50 ? '#d4800a' : 'var(--wrong)';
+
+  let html = '<h2>Your Results</h2>' +
+    '<div class="score-row" style="color:' + color + '">' + score + ' / ' + TOTAL + ' <span>(' + pct + '%)</span></div>' +
+    '<div class="band-row">Estimated Band: ' + band + '</div>' +
+    '<table class="results-table"><thead><tr><th>Q</th><th>Your Answer</th><th>Correct</th><th></th></tr></thead><tbody>';
+  rows.forEach(r => {
+    html += '<tr><td><strong>' + r.n + '</strong></td><td>' + r.given + '</td><td>' + r.correct + '</td>' +
+      '<td class="' + (r.ok ? 'mark-ok' : 'mark-bad') + '">' + (r.ok ? '\u2713' : '\u2717') + '</td></tr>';
+  });
+  html += '</tbody></table><div class="actions"><button class="secondary" onclick="document.getElementById(\'overlay\').classList.remove(\'visible\')">Review</button></div>';
+
+  document.getElementById('modal').innerHTML = html;
+  document.getElementById('overlay').classList.add('visible');
+}
+
+document.getElementById('finishBtn').addEventListener('click', checkAnswers);
+document.getElementById('overlay').addEventListener('click', (e) => {
+  if (e.target.id === 'overlay') document.getElementById('overlay').classList.remove('visible');
+});
+
+document.getElementById('btn-dark').addEventListener('click', () => document.body.classList.add('dark'));
+document.getElementById('btn-light').addEventListener('click', () => document.body.classList.remove('dark'));
+
+let fontScale = 1;
+document.getElementById('btn-font-up').addEventListener('click', () => {
+  fontScale = Math.min(1.4, fontScale + 0.08);
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+});
+document.getElementById('btn-font-down').addEventListener('click', () => {
+  fontScale = Math.max(0.7, fontScale - 0.08);
+  document.documentElement.style.setProperty('--font-scale', fontScale);
+});
+
+/* ---- Audio player ---- */
+const audio = document.getElementById('audioPlayer');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const progress = document.getElementById('audioProgress');
+const curTimeEl = document.getElementById('curTime');
+const durTimeEl = document.getElementById('durTime');
+const volSlider = document.getElementById('volSlider');
+const muteBtn = document.getElementById('muteBtn');
+
+function formatTime(s) {
+  if (!Number.isFinite(s)) return '--:--';
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+playPauseBtn.addEventListener('click', async () => {
+  try {
+    if (audio.paused) await audio.play(); else audio.pause();
+  } catch (e) { alert('Audio could not be played. Please check your connection.'); }
+});
+audio.addEventListener('play', () => { playPauseBtn.innerHTML = '&#10074;&#10074;'; });
+audio.addEventListener('pause', () => { playPauseBtn.innerHTML = '&#9654;'; });
+audio.addEventListener('ended', () => { playPauseBtn.innerHTML = '&#9654;'; });
+audio.addEventListener('loadedmetadata', () => {
+  progress.max = Number.isFinite(audio.duration) ? audio.duration : 0;
+  durTimeEl.textContent = formatTime(audio.duration);
+});
+audio.addEventListener('timeupdate', () => {
+  progress.value = audio.currentTime;
+  curTimeEl.textContent = formatTime(audio.currentTime);
+});
+progress.addEventListener('input', () => {
+  if (Number.isFinite(audio.duration)) audio.currentTime = Number(progress.value);
+});
+volSlider.addEventListener('input', () => {
+  audio.volume = Number(volSlider.value);
+  audio.muted = false;
+  muteBtn.innerHTML = audio.volume === 0 ? '&#128263;' : '&#128266;';
+});
+muteBtn.addEventListener('click', () => {
+  audio.muted = !audio.muted;
+  muteBtn.innerHTML = audio.muted ? '&#128263;' : '&#128266;';
+});
+
+document.getElementById('transcriptText').addEventListener('click', (e) => {
+  const hl = e.target.closest('[data-time]');
+  if (!hl) return;
+  const t = parseFloat(hl.getAttribute('data-time'));
+  if (!isNaN(t)) { audio.currentTime = Math.max(0, t - 1); audio.play(); }
+});
+
+/* ---- Selection highlight ---- */
+const popup = document.getElementById('highlightPopup');
+let lastRange = null;
+
+function isInsideForm(node) {
+  while (node && node !== document.body) {
+    if (node.nodeType === 1 && /^(INPUT|SELECT|TEXTAREA|OPTION|BUTTON)$/.test(node.tagName)) return true;
+    node = node.parentNode;
+  }
+  return false;
+}
+
+function handleSelection() {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || sel.toString().trim() === '') { popup.classList.remove('visible'); return; }
+  const range = sel.getRangeAt(0);
+  if (isInsideForm(range.commonAncestorContainer)) { popup.classList.remove('visible'); return; }
+  const pane = range.commonAncestorContainer.parentElement ? range.commonAncestorContainer.parentElement.closest('#questionsPane, #transcriptPane') : null;
+  if (!pane) { popup.classList.remove('visible'); return; }
+  lastRange = range.cloneRange();
+  const rect = range.getBoundingClientRect();
+  popup.style.left = (rect.left + rect.width / 2 - popup.offsetWidth / 2 + window.scrollX) + 'px';
+  popup.style.top = (rect.top - 48 + window.scrollY) + 'px';
+  popup.classList.add('visible');
+}
+
+document.getElementById('questionsPane').addEventListener('mouseup', handleSelection);
+document.getElementById('transcriptPane').addEventListener('mouseup', handleSelection);
+
+document.getElementById('hpHighlight').addEventListener('click', () => {
+  if (!lastRange) return;
+  const mark = document.createElement('mark');
+  mark.className = 'user-highlight';
+  try { lastRange.surroundContents(mark); }
+  catch (e) { try { mark.appendChild(lastRange.extractContents()); lastRange.insertNode(mark); } catch (e2) {} }
+  window.getSelection().removeAllRanges();
+  popup.classList.remove('visible');
+});
+document.getElementById('hpRemove').addEventListener('click', () => {
+  document.querySelectorAll('.user-highlight').forEach(m => {
+    const parent = m.parentNode;
+    while (m.firstChild) parent.insertBefore(m.firstChild, m);
+    parent.removeChild(m);
+    parent.normalize();
+  });
+  popup.classList.remove('visible');
+});
+document.getElementById('hpClose').addEventListener('click', () => popup.classList.remove('visible'));
+
+/* ---- init ---- */
+buildPartSelect();
+switchPart(1);
+goToQuestion(1);
+</script>
+<script src="highlight-auto-dismiss.js"></script>
+<script src="activity-bridge-v15.js"></script>
+</body>
+</html>
