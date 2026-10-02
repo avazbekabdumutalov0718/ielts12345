@@ -1,0 +1,248 @@
+/* VIVID IELTS — Autumn Study Season v1 */
+:root{
+  --autumn-cream:#FFF9F2;
+  --autumn-beige:#F7EFE5;
+  --autumn-ink:#21182d;
+  --autumn-purple:#24135F;
+  --autumn-plum:#6B2D5C;
+  --autumn-orange:#C85A32;
+  --autumn-amber:#E99B45;
+  --autumn-gold:#F2BC64;
+  --autumn-shadow:0 18px 44px rgba(133,76,32,.12);
+}
+
+/* 1) Autumn background + automatic mood */
+body.autumn-theme{
+  --bg:var(--autumn-cream);
+  --line:#eadfd2;
+  --surface:#fffdf9;
+  background:
+    radial-gradient(circle at 18% 4%,rgba(255,225,186,.38),transparent 30%),
+    radial-gradient(circle at 90% 12%,rgba(199,90,50,.09),transparent 28%),
+    linear-gradient(145deg,var(--autumn-cream),var(--autumn-beige));
+  color:var(--autumn-ink);
+  transition:background .55s ease,color .55s ease;
+}
+body.autumn-theme .main-area{
+  min-height:100vh;
+  background:linear-gradient(150deg,rgba(255,249,242,.78),rgba(247,239,229,.72));
+  transition:background .55s ease;
+}
+body.autumn-theme.autumn-morning .main-area{
+  background:
+    radial-gradient(circle at 84% 4%,rgba(244,177,91,.13),transparent 32%),
+    linear-gradient(150deg,#fffaf4 0%,#f8efe4 100%);
+}
+body.autumn-theme.autumn-evening{
+  --bg:#171329;
+  --line:#3b3150;
+  --surface:#fffaf4;
+  background:
+    radial-gradient(circle at 84% 9%,rgba(225,145,60,.16),transparent 26%),
+    linear-gradient(145deg,#120f25 0%,#21163b 52%,#382034 100%);
+}
+body.autumn-theme.autumn-evening .main-area{
+  background:
+    radial-gradient(circle at 84% 5%,rgba(231,156,72,.16),transparent 30%),
+    linear-gradient(150deg,#171329 0%,#24183d 64%,#342039 100%);
+}
+body.autumn-theme.autumn-evening .content-wrap{color:#f7efe8}
+body.autumn-theme.autumn-evening .page-heading p,
+body.autumn-theme.autumn-evening .overline{color:#edc790}
+body.autumn-theme.autumn-evening .page-heading h1{color:#fffaf5}
+body.autumn-theme.autumn-evening .panel,
+body.autumn-theme.autumn-evening .stat-card,
+body.autumn-theme.autumn-evening .game-stage,
+body.autumn-theme.autumn-evening .result-box,
+body.autumn-theme.autumn-evening .wb-shell,
+body.autumn-theme.autumn-evening .lb-panel,
+body.autumn-theme.autumn-evening .rb-shell{color:var(--ink)}
+
+/* 3) Deep purple -> burnt orange header */
+body.autumn-theme .topbar{
+  color:#fff;
+  border-bottom-color:rgba(255,255,255,.14);
+  background:linear-gradient(100deg,var(--autumn-purple) 0%,var(--autumn-plum) 58%,var(--autumn-orange) 100%);
+  box-shadow:0 9px 30px rgba(58,24,74,.18);
+}
+body.autumn-theme .topbar .eyebrow{color:#fff3e2}
+body.autumn-theme .topbar .top-dot{background:#ffd28d}
+body.autumn-theme .topbar .search-box{
+  background:rgba(255,255,255,.14);
+  border-color:rgba(255,255,255,.28);
+  color:#fff3e2;
+  backdrop-filter:blur(10px);
+}
+body.autumn-theme .topbar .search-box input{color:#fff}
+body.autumn-theme .topbar .search-box input::placeholder{color:rgba(255,255,255,.72)}
+body.autumn-theme .topbar .cloud-status{color:#fff4df}
+body.autumn-theme .topbar .cloud-logout,
+body.autumn-theme .topbar .pwa-install{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.12);color:#fff}
+body.autumn-theme #tzClock{
+  background:linear-gradient(90deg,#1b1248 0%,#42205c 48%,#8f3d38 82%,#b85732 100%);
+  box-shadow:0 4px 18px rgba(38,18,60,.36);
+}
+body.autumn-theme #tzClock .tz-label,
+body.autumn-theme #tzClock .tz-date{color:#ffe4bd}
+body.autumn-theme #tzClock .tz-label small{color:#efbb83}
+
+/* Sidebar stays bright in morning; becomes deep study-night panel in evening. */
+body.autumn-theme .sidebar{
+  background:rgba(255,253,249,.96);
+  border-right-color:#eadfd2;
+  backdrop-filter:blur(12px);
+}
+body.autumn-theme.autumn-evening .sidebar{
+  background:rgba(23,18,42,.97);
+  border-right-color:#382d4d;
+  color:#fff3e5;
+}
+body.autumn-theme.autumn-evening .sidebar .brand small,
+body.autumn-theme.autumn-evening .sidebar .sidebar-label{color:#b9a9c7}
+body.autumn-theme.autumn-evening .sidebar .brand>span:last-child strong{
+  background:linear-gradient(90deg,#fff7e8,#f3bd74 55%,#ff875c);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+body.autumn-theme.autumn-evening .nav-item{color:#ddd2e7}
+body.autumn-theme.autumn-evening .nav-item:hover:not(.active){background:rgba(255,255,255,.07)}
+body.autumn-theme.autumn-evening .nav-item.active{background:rgba(218,133,74,.18);color:#ffd39b}
+body.autumn-theme.autumn-evening .sidebar-bottom{background:linear-gradient(145deg,rgba(255,190,108,.13),rgba(120,78,167,.16));color:#fff1dd}
+body.autumn-theme.autumn-evening .sidebar-bottom p{color:#c7b8d0}
+
+/* 4) Subtle orange/gold glow on study cards */
+body.autumn-theme :is(
+  .panel,.stat-card,.deck,.game-stage,.result-box,
+  .wb-colloc-card,.wb-drill-card,.wb-liz-card,.wb-sample-card,.wb-model-panel,
+  .lb-exercise-card,.lb-hero-card,.lb-lesson-card,.lb-panel,.lb-stats-card,
+  .rb-path-card,.rb-word-card,.speaking-mini-card,.grammar-mistake-card
+){transition:transform .18s ease,box-shadow .22s ease,border-color .22s ease}
+body.autumn-theme :is(
+  .panel,.stat-card,.deck,.game-stage,.result-box,
+  .wb-colloc-card,.wb-drill-card,.wb-liz-card,.wb-sample-card,.wb-model-panel,
+  .lb-exercise-card,.lb-hero-card,.lb-lesson-card,.lb-panel,.lb-stats-card,
+  .rb-path-card,.rb-word-card,.speaking-mini-card,.grammar-mistake-card
+):hover{
+  border-color:rgba(211,128,54,.32)!important;
+  box-shadow:0 16px 36px rgba(176,103,40,.13),0 0 0 1px rgba(242,188,100,.08)!important;
+}
+
+/* 5) October mini leaf badge on selected sidebar icons */
+body.autumn-theme .nav-item.autumn-leaf-badge>span:first-child{position:relative;overflow:visible}
+body.autumn-theme .nav-item.autumn-leaf-badge>span:first-child::after{
+  content:"🍂";
+  position:absolute;
+  top:-7px;
+  right:-7px;
+  width:14px;height:14px;
+  display:grid;place-items:center;
+  font-size:10px;line-height:1;
+  transform:rotate(15deg);
+  filter:drop-shadow(0 2px 3px rgba(105,55,24,.2));
+}
+
+/* 2 + rain) weather layers */
+#autumnWeather{position:fixed;inset:0;z-index:14;pointer-events:none;overflow:hidden;contain:strict}
+.autumn-leaf{
+  position:absolute;top:-12vh;
+  width:30px;height:30px;
+  display:grid;place-items:center;
+  font-size:clamp(17px,1.6vw,25px);
+  opacity:.6;
+  filter:drop-shadow(0 4px 5px rgba(102,58,25,.18));
+  animation:autumnLeafFall var(--leaf-duration,16s) linear infinite;
+  animation-delay:var(--leaf-delay,0s);
+  will-change:transform;
+}
+@keyframes autumnLeafFall{
+  0%{transform:translate3d(0,-15vh,0) rotate(0deg)}
+  30%{transform:translate3d(var(--leaf-drift,50px),28vh,0) rotate(120deg)}
+  65%{transform:translate3d(calc(var(--leaf-drift,50px) * -.55),67vh,0) rotate(260deg)}
+  100%{transform:translate3d(var(--leaf-drift2,-20px),115vh,0) rotate(420deg)}
+}
+.autumn-rain-drop{
+  position:absolute;top:-12vh;
+  width:1px;height:var(--rain-length,38px);
+  border-radius:99px;
+  background:linear-gradient(to bottom,transparent,rgba(136,174,204,.42));
+  opacity:0;
+  transform:rotate(7deg);
+  animation:autumnRain var(--rain-duration,1.35s) linear infinite;
+  animation-delay:var(--rain-delay,0s);
+  will-change:transform,opacity;
+}
+body.autumn-rain-on .autumn-rain-drop{opacity:.54}
+@keyframes autumnRain{
+  from{transform:translate3d(0,-15vh,0) rotate(7deg)}
+  to{transform:translate3d(-45px,120vh,0) rotate(7deg)}
+}
+body.autumn-focus #autumnWeather .autumn-leaf{display:none}
+body.autumn-focus #autumnWeather{opacity:.28}
+
+/* 6) Focus controls and focus mode */
+#autumnControls{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:2147482500;
+  display:flex;
+  gap:8px;
+  padding:7px;
+  border:1px solid rgba(104,65,45,.12);
+  border-radius:16px;
+  background:rgba(255,250,242,.88);
+  box-shadow:0 14px 34px rgba(48,26,42,.18);
+  backdrop-filter:blur(14px);
+}
+#autumnControls button{
+  border:1px solid #ead8c3;
+  border-radius:11px;
+  background:#fffaf3;
+  color:#5e3a34;
+  min-height:38px;
+  padding:7px 11px;
+  font-size:12px;
+  font-weight:850;
+  box-shadow:0 3px 9px rgba(103,58,30,.06);
+}
+#autumnControls button:hover{border-color:#d89b55;background:#fff1df;transform:translateY(-1px)}
+#autumnControls button[aria-pressed="true"]{background:linear-gradient(135deg,#5b295b,#b94f35);color:#fff;border-color:transparent}
+body.autumn-evening #autumnControls{background:rgba(28,20,47,.86);border-color:rgba(255,205,143,.18)}
+body.autumn-evening #autumnControls button{background:rgba(255,255,255,.08);border-color:rgba(255,205,143,.25);color:#ffe4bf}
+body.autumn-evening #autumnControls button[aria-pressed="true"]{background:linear-gradient(135deg,#8d3b5a,#c76535);color:#fff}
+body.cloud-locked #autumnControls{display:none}
+body.autumn-focus .app-shell{display:block!important}
+body.autumn-focus .sidebar,
+body.autumn-focus .topbar{display:none!important}
+body.autumn-focus .main-area{min-height:calc(100dvh - var(--tz-h,0px));background:transparent}
+body.autumn-focus .content-wrap{max-width:1120px;padding:34px clamp(16px,4vw,54px) 90px}
+body.autumn-focus #mainContent{max-width:1060px;margin-inline:auto}
+body.autumn-focus #tzClock{box-shadow:0 3px 16px rgba(30,16,48,.22)}
+body.autumn-focus .toast{z-index:2147482600}
+
+/* Warm amber progress accents */
+body.autumn-theme .progress-fill,
+body.autumn-theme .game-progress span{background:linear-gradient(90deg,#5b46e8 0%,#9f4770 55%,#dc793e 100%)}
+
+@media(max-width:820px){
+  #autumnControls{right:10px;bottom:10px}
+  #autumnControls button{padding:6px 9px;min-height:35px;font-size:11px}
+  body.autumn-focus .content-wrap{padding:20px 12px 80px}
+}
+@media(max-width:520px){
+  #autumnControls{left:10px;right:auto}
+  #autumnControls .autumn-control-text{display:none}
+  #autumnControls button{min-width:38px;padding:6px 9px;font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){
+  .autumn-leaf,.autumn-rain-drop{animation:none!important;display:none!important}
+  body.autumn-theme *{scroll-behavior:auto!important}
+}
+
+/* V11 weather visibility + leaf control */
+body.cloud-locked #autumnWeather{display:none!important}
+body.autumn-leaves-off .autumn-leaf{display:none!important}
+body.autumn-leaves-off .nav-item.autumn-leaf-badge>span:first-child::after{display:none!important}
+.autumn-rain-drop{width:1.5px!important;background:linear-gradient(to bottom,transparent 0%,rgba(95,143,185,.35) 28%,rgba(74,128,176,.78) 100%)!important;box-shadow:0 0 2px rgba(86,139,181,.36)}
+body.autumn-rain-on .autumn-rain-drop{opacity:.76!important}
+body.autumn-rain-on #autumnWeather{background:linear-gradient(112deg,rgba(122,160,188,.018),rgba(77,122,165,.045));}
+body.autumn-evening.autumn-rain-on .autumn-rain-drop{background:linear-gradient(to bottom,transparent,rgba(155,197,226,.86))!important;box-shadow:0 0 3px rgba(162,205,235,.34)}

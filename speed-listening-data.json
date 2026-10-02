@@ -1,0 +1,467 @@
+{
+  "version": "1.0",
+  "title": "Speed Listening 30",
+  "days": 30,
+  "counts": {
+    "gap": 15,
+    "dictation": 15
+  },
+  "speeds": [
+    1,
+    1.2,
+    1.5
+  ],
+  "notes": "Audio-only training. Gap and dictation are segment-based self-check tasks; no third-party transcript text is bundled.",
+  "lessons": [
+    {
+      "id": "ted-speed-01",
+      "day": 1,
+      "channel": "TED",
+      "speaker": "Jim VandeHei",
+      "title": "5 Practical Ways to Take Control of Your Life",
+      "youtubeUrl": "https://www.youtube.com/watch?v=a4sq1CKPl0E",
+      "level": "B2",
+      "focus": [
+        "self-control",
+        "habits",
+        "priorities",
+        "career"
+      ]
+    },
+    {
+      "id": "kurz-speed-01",
+      "day": 2,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "Can Humanity Stop A Planet-Killing Asteroid?",
+      "youtubeUrl": "https://www.youtube.com/watch?v=dKm7T13X7n4",
+      "level": "B2",
+      "focus": [
+        "asteroids",
+        "planetary defense",
+        "space",
+        "technology"
+      ]
+    },
+    {
+      "id": "ted-speed-02",
+      "day": 3,
+      "channel": "TED",
+      "speaker": "Ethan Kross",
+      "title": "Do You Talk to Yourself? Here’s How to Harness Your Inner Voice",
+      "youtubeUrl": "https://www.youtube.com/watch?v=xb0nLpdWttA",
+      "level": "B2",
+      "focus": [
+        "inner voice",
+        "focus",
+        "chatter",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "kurz-speed-02",
+      "day": 4,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "The Dumbest Animal Alive",
+      "youtubeUrl": "https://www.youtube.com/watch?v=gtDKKJq9u30",
+      "level": "B2",
+      "focus": [
+        "animals",
+        "evolution",
+        "intelligence",
+        "survival"
+      ]
+    },
+    {
+      "id": "ted-speed-03",
+      "day": 5,
+      "channel": "TED",
+      "speaker": "Judson Brewer",
+      "title": "A Simple Way to Break a Bad Habit",
+      "youtubeUrl": "https://www.youtube.com/watch?v=-moW9jvvMr4",
+      "level": "B2",
+      "focus": [
+        "habits",
+        "curiosity",
+        "mindfulness",
+        "behavior"
+      ]
+    },
+    {
+      "id": "kurz-speed-03",
+      "day": 6,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "When Your Body Attacks Itself – Autoimmune",
+      "youtubeUrl": "https://www.youtube.com/watch?v=efOW5NUTYB8",
+      "level": "B2",
+      "focus": [
+        "immune system",
+        "autoimmune disease",
+        "cells",
+        "defense"
+      ]
+    },
+    {
+      "id": "ted-speed-04",
+      "day": 7,
+      "channel": "TED",
+      "speaker": "Julian Treasure",
+      "title": "How to Speak So That People Want to Listen",
+      "youtubeUrl": "https://www.youtube.com/watch?v=eIho2S0ZahI",
+      "level": "B2",
+      "focus": [
+        "speaking",
+        "voice",
+        "listening",
+        "communication"
+      ]
+    },
+    {
+      "id": "kurz-speed-04",
+      "day": 8,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "What Actual Aliens Might Look Like",
+      "youtubeUrl": "https://www.youtube.com/watch?v=dCiMUWw1BBc",
+      "level": "B2",
+      "focus": [
+        "aliens",
+        "evolution",
+        "biology",
+        "planets"
+      ]
+    },
+    {
+      "id": "ted-speed-05",
+      "day": 9,
+      "channel": "TED",
+      "speaker": "Tim Urban",
+      "title": "Inside the Mind of a Master Procrastinator",
+      "youtubeUrl": "https://www.youtube.com/watch?v=arj7oStGLkU",
+      "level": "B2",
+      "focus": [
+        "procrastination",
+        "deadlines",
+        "attention",
+        "action"
+      ]
+    },
+    {
+      "id": "kurz-speed-05",
+      "day": 10,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "Humanity's Greatest Journey",
+      "youtubeUrl": "https://www.youtube.com/watch?v=bXERzEafjIU",
+      "level": "B2",
+      "focus": [
+        "humanity",
+        "migration",
+        "history",
+        "exploration"
+      ]
+    },
+    {
+      "id": "ted-speed-06",
+      "day": 11,
+      "channel": "TED",
+      "speaker": "Angela Lee Duckworth",
+      "title": "Grit: The Power of Passion and Perseverance",
+      "youtubeUrl": "https://www.youtube.com/watch?v=H14bBuluwB8",
+      "level": "C1",
+      "focus": [
+        "grit",
+        "perseverance",
+        "learning",
+        "success"
+      ]
+    },
+    {
+      "id": "kurz-speed-06",
+      "day": 12,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "Is Our World Broken?",
+      "youtubeUrl": "https://www.youtube.com/watch?v=c1nYtX-NUsc",
+      "level": "C1",
+      "focus": [
+        "society",
+        "progress",
+        "problems",
+        "perspective"
+      ]
+    },
+    {
+      "id": "ted-speed-07",
+      "day": 13,
+      "channel": "TED",
+      "speaker": "Shawn Achor",
+      "title": "The Happy Secret to Better Work",
+      "youtubeUrl": "https://www.youtube.com/watch?v=fLJsdqxnZb0",
+      "level": "C1",
+      "focus": [
+        "happiness",
+        "productivity",
+        "mindset",
+        "work"
+      ]
+    },
+    {
+      "id": "kurz-speed-07",
+      "day": 14,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "There Is Something Hiding Inside Earth",
+      "youtubeUrl": "https://www.youtube.com/watch?v=VD6xJq8NguY",
+      "level": "C1",
+      "focus": [
+        "earth",
+        "geology",
+        "interior",
+        "science"
+      ]
+    },
+    {
+      "id": "ted-speed-08",
+      "day": 15,
+      "channel": "TED",
+      "speaker": "Dan Pink",
+      "title": "The Puzzle of Motivation",
+      "youtubeUrl": "https://www.youtube.com/watch?v=rrkrvAUbU9Y",
+      "level": "C1",
+      "focus": [
+        "motivation",
+        "rewards",
+        "autonomy",
+        "performance"
+      ]
+    },
+    {
+      "id": "kurz-speed-08",
+      "day": 16,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "A.I. – Humanity's Final Invention?",
+      "youtubeUrl": "https://www.youtube.com/watch?v=fa8k8IQ1_X0",
+      "level": "C1",
+      "focus": [
+        "artificial intelligence",
+        "future",
+        "technology",
+        "risk"
+      ]
+    },
+    {
+      "id": "ted-speed-09",
+      "day": 17,
+      "channel": "TED",
+      "speaker": "Simon Sinek",
+      "title": "How Great Leaders Inspire Action",
+      "youtubeUrl": "https://www.youtube.com/watch?v=qp0HIF3SfI4",
+      "level": "C1",
+      "focus": [
+        "leadership",
+        "purpose",
+        "why",
+        "communication"
+      ]
+    },
+    {
+      "id": "kurz-speed-09",
+      "day": 18,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "Are You an NPC?",
+      "youtubeUrl": "https://www.youtube.com/watch?v=UebSfjmQNvs",
+      "level": "C1",
+      "focus": [
+        "consciousness",
+        "perception",
+        "mind",
+        "reality"
+      ]
+    },
+    {
+      "id": "ted-speed-10",
+      "day": 19,
+      "channel": "TED",
+      "speaker": "Celeste Headlee",
+      "title": "10 Ways to Have a Better Conversation",
+      "youtubeUrl": "https://www.youtube.com/watch?v=R1vskiVDwl4",
+      "level": "C1",
+      "focus": [
+        "conversation",
+        "listening",
+        "clarity",
+        "questions"
+      ]
+    },
+    {
+      "id": "kurz-speed-10",
+      "day": 20,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "Your Hidden Superpower",
+      "youtubeUrl": "https://www.youtube.com/watch?v=itBBsQRv0EU",
+      "level": "C1",
+      "focus": [
+        "human ability",
+        "brain",
+        "behavior",
+        "adaptation"
+      ]
+    },
+    {
+      "id": "ted-speed-11",
+      "day": 21,
+      "channel": "TED",
+      "speaker": "Kelly McGonigal",
+      "title": "How to Make Stress Your Friend",
+      "youtubeUrl": "https://www.youtube.com/watch?v=RcGyVTAoXEU",
+      "level": "C2",
+      "focus": [
+        "stress",
+        "mindset",
+        "resilience",
+        "connection"
+      ]
+    },
+    {
+      "id": "kurz-speed-11",
+      "day": 22,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "This Black Hole Could be Bigger Than The Universe",
+      "youtubeUrl": "https://www.youtube.com/watch?v=71eUes30gwc",
+      "level": "C2",
+      "focus": [
+        "black holes",
+        "universe",
+        "scale",
+        "cosmology"
+      ]
+    },
+    {
+      "id": "ted-speed-12",
+      "day": 23,
+      "channel": "TED",
+      "speaker": "Matt Walker",
+      "title": "Sleep Is Your Superpower",
+      "youtubeUrl": "https://www.youtube.com/watch?v=5MuIMqhT8DM",
+      "level": "C2",
+      "focus": [
+        "sleep",
+        "memory",
+        "learning",
+        "health"
+      ]
+    },
+    {
+      "id": "kurz-speed-12",
+      "day": 24,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "The Real Killer Of The Dinosaurs",
+      "youtubeUrl": "https://www.youtube.com/watch?v=pjoQdz0nxf4",
+      "level": "C2",
+      "focus": [
+        "dinosaurs",
+        "asteroid",
+        "extinction",
+        "earth"
+      ]
+    },
+    {
+      "id": "ted-speed-13",
+      "day": 25,
+      "channel": "TED",
+      "speaker": "Brené Brown",
+      "title": "The Power of Vulnerability",
+      "youtubeUrl": "https://www.youtube.com/watch?v=iCvmsMzlF7o",
+      "level": "C2",
+      "focus": [
+        "vulnerability",
+        "connection",
+        "courage",
+        "empathy"
+      ]
+    },
+    {
+      "id": "kurz-speed-13",
+      "day": 26,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "The Paradox of an Infinite Universe",
+      "youtubeUrl": "https://www.youtube.com/watch?v=isdLel273rQ",
+      "level": "C2",
+      "focus": [
+        "infinity",
+        "universe",
+        "cosmology",
+        "paradox"
+      ]
+    },
+    {
+      "id": "ted-speed-14",
+      "day": 27,
+      "channel": "TED",
+      "speaker": "Amy Cuddy",
+      "title": "Your Body Language May Shape Who You Are",
+      "youtubeUrl": "https://www.youtube.com/watch?v=Ks-_Mh1QhMc",
+      "level": "C2",
+      "focus": [
+        "body language",
+        "confidence",
+        "behavior",
+        "presence"
+      ]
+    },
+    {
+      "id": "kurz-speed-14",
+      "day": 28,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "What Happens AFTER Nuclear War?",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LrIRuqr_Ozg",
+      "level": "C2",
+      "focus": [
+        "nuclear war",
+        "climate",
+        "survival",
+        "consequences"
+      ]
+    },
+    {
+      "id": "ted-speed-15",
+      "day": 29,
+      "channel": "TED",
+      "speaker": "Chimamanda Ngozi Adichie",
+      "title": "The Danger of a Single Story",
+      "youtubeUrl": "https://www.youtube.com/watch?v=D9Ihs241zeg",
+      "level": "C2",
+      "focus": [
+        "stories",
+        "perspective",
+        "culture",
+        "assumptions"
+      ]
+    },
+    {
+      "id": "kurz-speed-15",
+      "day": 30,
+      "channel": "Kurzgesagt – In a Nutshell",
+      "speaker": "Steve Taylor (narration)",
+      "title": "3 Ways to Destroy the Universe",
+      "youtubeUrl": "https://www.youtube.com/watch?v=HR2C_7G_yRQ",
+      "level": "C2",
+      "focus": [
+        "universe",
+        "physics",
+        "vacuum",
+        "cosmology"
+      ]
+    }
+  ]
+}

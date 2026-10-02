@@ -1,0 +1,1511 @@
+{
+  "version": "4.0",
+  "days": 30,
+  "lessons": [
+    {
+      "id": "ted01",
+      "day": 1,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "How to practice effectively...for just about anything",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=f2O6mQkFiiw",
+      "level": "B2",
+      "starterMcq": [
+        {
+          "id": "m1",
+          "prompt": "What role does myelin play in improving physical performance according to the video?",
+          "answer": "It insulates axons and helps electrical signals travel more efficiently along neural pathways.",
+          "options": [
+            "It stores memories directly inside the muscles.",
+            "It insulates axons and helps electrical signals travel more efficiently along neural pathways.",
+            "It increases the size of grey matter after every practice session.",
+            "It prevents the brain from sending signals to the muscles."
+          ],
+          "time": 74,
+          "level": "B2"
+        },
+        {
+          "id": "m2",
+          "prompt": "Why does the video suggest that the phrase ‘muscle memory’ can be misleading?",
+          "answer": "The muscles themselves do not store memory; improved performance may come from more efficient neural pathways.",
+          "options": [
+            "Muscles forget movements unless they are practised every day.",
+            "The muscles themselves do not store memory; improved performance may come from more efficient neural pathways.",
+            "Only professional athletes are capable of developing muscle memory.",
+            "Muscle memory is caused mainly by stronger bones and joints."
+          ],
+          "time": 106,
+          "level": "B2"
+        },
+        {
+          "id": "m3",
+          "prompt": "Besides the amount of time spent practising, what does the speaker say is important for mastery?",
+          "answer": "The quality and effectiveness of the practice.",
+          "options": [
+            "The quality and effectiveness of the practice.",
+            "Practising for one fixed number of hours every day.",
+            "Avoiding difficult tasks until basic skills are perfect.",
+            "Using as many different activities as possible in one session."
+          ],
+          "time": 133,
+          "level": "B2"
+        },
+        {
+          "id": "m4",
+          "prompt": "What did the study of 260 students show about their ability to stay focused?",
+          "answer": "On average, they stayed on task for only about six minutes at a time.",
+          "options": [
+            "Most students stayed fully focused for about an hour.",
+            "On average, they stayed on task for only about six minutes at a time.",
+            "Students using laptops were more focused than students without devices.",
+            "The students became less distracted as the study continued."
+          ],
+          "time": 169,
+          "level": "B2"
+        },
+        {
+          "id": "m5",
+          "prompt": "What did the basketball experiment suggest about mental practice?",
+          "answer": "For intermediate and experienced players, mental practice produced improvements close to those from physical practice.",
+          "options": [
+            "Mental practice helped only beginners and had no effect on experienced players.",
+            "Physical practice was unnecessary for every group of players.",
+            "For intermediate and experienced players, mental practice produced improvements close to those from physical practice.",
+            "Mental practice worked only when players watched another person perform the movement."
+          ],
+          "time": 234,
+          "level": "B2"
+        }
+      ],
+      "starterContent": {
+        "engineVersion": "4.0",
+        "createdAt": "2026-09-30T16:58:20.916Z",
+        "sourceSentenceCount": 38,
+        "level": "B2",
+        "mcq": [
+          {
+            "id": "m1",
+            "prompt": "What role does myelin play in improving physical performance according to the video?",
+            "answer": "It insulates axons and helps electrical signals travel more efficiently along neural pathways.",
+            "options": [
+              "It stores memories directly inside the muscles.",
+              "It insulates axons and helps electrical signals travel more efficiently along neural pathways.",
+              "It increases the size of grey matter after every practice session.",
+              "It prevents the brain from sending signals to the muscles."
+            ],
+            "time": 74,
+            "level": "B2"
+          },
+          {
+            "id": "m2",
+            "prompt": "Why does the video suggest that the phrase ‘muscle memory’ can be misleading?",
+            "answer": "The muscles themselves do not store memory; improved performance may come from more efficient neural pathways.",
+            "options": [
+              "Muscles forget movements unless they are practised every day.",
+              "The muscles themselves do not store memory; improved performance may come from more efficient neural pathways.",
+              "Only professional athletes are capable of developing muscle memory.",
+              "Muscle memory is caused mainly by stronger bones and joints."
+            ],
+            "time": 106,
+            "level": "B2"
+          },
+          {
+            "id": "m3",
+            "prompt": "Besides the amount of time spent practising, what does the speaker say is important for mastery?",
+            "answer": "The quality and effectiveness of the practice.",
+            "options": [
+              "The quality and effectiveness of the practice.",
+              "Practising for one fixed number of hours every day.",
+              "Avoiding difficult tasks until basic skills are perfect.",
+              "Using as many different activities as possible in one session."
+            ],
+            "time": 133,
+            "level": "B2"
+          },
+          {
+            "id": "m4",
+            "prompt": "What did the study of 260 students show about their ability to stay focused?",
+            "answer": "On average, they stayed on task for only about six minutes at a time.",
+            "options": [
+              "Most students stayed fully focused for about an hour.",
+              "On average, they stayed on task for only about six minutes at a time.",
+              "Students using laptops were more focused than students without devices.",
+              "The students became less distracted as the study continued."
+            ],
+            "time": 169,
+            "level": "B2"
+          },
+          {
+            "id": "m5",
+            "prompt": "What did the basketball experiment suggest about mental practice?",
+            "answer": "For intermediate and experienced players, mental practice produced improvements close to those from physical practice.",
+            "options": [
+              "Mental practice helped only beginners and had no effect on experienced players.",
+              "Physical practice was unnecessary for every group of players.",
+              "For intermediate and experienced players, mental practice produced improvements close to those from physical practice.",
+              "Mental practice worked only when players watched another person perform the movement."
+            ],
+            "time": 234,
+            "level": "B2"
+          }
+        ],
+        "gap": [
+          {
+            "id": "g1",
+            "prompt": "Myelin is similar to _____ _____ electrical cables.",
+            "answer": "insulation on",
+            "time": 74,
+            "level": "B2"
+          },
+          {
+            "id": "g2",
+            "prompt": "And the more layers, the greater the insulation around the axon chains, forming a sort of superhighway for _____ _____ your brain to your muscles.",
+            "answer": "information connecting",
+            "time": 96,
+            "level": "B2"
+          },
+          {
+            "id": "g3",
+            "prompt": "There are many theories that attempt to quantify the _____ _____ _____, days, and even years of practice that it takes to master a skill.",
+            "answer": "number of hours",
+            "time": 124,
+            "level": "B2"
+          },
+          {
+            "id": "g4",
+            "prompt": "Effective practice is consistent, intensely focused, and targets content or weaknesses that lie at the edge of _____ _____ abilities.",
+            "answer": "one's current",
+            "time": 144,
+            "level": "B2"
+          },
+          {
+            "id": "g5",
+            "prompt": "On average, those students were able to stay on task for only _____ _____ at a time.",
+            "answer": "six minutes",
+            "time": 174,
+            "level": "B2"
+          },
+          {
+            "id": "g6",
+            "prompt": "Studies have shown that many top athletes, musicians, and dancers _____ _____ _____ per week on activities related to their craft.",
+            "answer": "spend 50-60 hours",
+            "time": 206,
+            "level": "B2"
+          },
+          {
+            "id": "g7",
+            "prompt": "It's a bit surprising, but a number of studies suggest that once a _____ _____ has been established, it can be reinforced just by imagining it.",
+            "answer": "physical motion",
+            "time": 225,
+            "level": "B2"
+          },
+          {
+            "id": "g8",
+            "prompt": "When they were tested at the end of the two _____ _____, the intermediate and experienced players in both groups had improved by nearly the same amount.",
+            "answer": "week experiment",
+            "time": 246,
+            "level": "B2"
+          },
+          {
+            "id": "g9",
+            "prompt": "It insulates axons and helps _____ _____ _____ more efficiently along neural pathways.",
+            "answer": "electrical signals travel",
+            "time": 74,
+            "level": "B2"
+          },
+          {
+            "id": "g10",
+            "prompt": "The muscles themselves do not _____ _____; improved performance may come from more efficient neural pathways.",
+            "answer": "store memory",
+            "time": 106,
+            "level": "B2"
+          },
+          {
+            "id": "g11",
+            "prompt": "The quality and _____ _____ the practice.",
+            "answer": "effectiveness of",
+            "time": 133,
+            "level": "B2"
+          },
+          {
+            "id": "g12",
+            "prompt": "On average, they _____ _____ _____ for only about six minutes at a time.",
+            "answer": "stayed on task",
+            "time": 169,
+            "level": "B2"
+          },
+          {
+            "id": "g13",
+            "prompt": "For intermediate and experienced players, mental practice produced _____ _____ to those from physical practice.",
+            "answer": "improvements close",
+            "time": 234,
+            "level": "B2"
+          },
+          {
+            "id": "g14",
+            "prompt": "Myelin is similar to _____ _____ electrical cables.",
+            "answer": "insulation on",
+            "time": 74,
+            "level": "B2"
+          },
+          {
+            "id": "g15",
+            "prompt": "And the more layers, the greater the insulation around the axon chains, forming a sort of superhighway for information connecting your brain to your muscles.",
+            "answer": "axon chains forming",
+            "time": 96,
+            "level": "B2"
+          },
+          {
+            "id": "g16",
+            "prompt": "There are many theories that attempt to quantify the number of hours, days, and even years of practice that it takes to master a skill.",
+            "answer": "hours days",
+            "time": 124,
+            "level": "B2"
+          },
+          {
+            "id": "g17",
+            "prompt": "Effective practice is consistent, intensely focused, and _____ _____ or weaknesses that lie at the edge of one's current abilities.",
+            "answer": "targets content",
+            "time": 144,
+            "level": "B2"
+          },
+          {
+            "id": "g18",
+            "prompt": "On average, those students were _____ _____ _____ on task for only six minutes at a time.",
+            "answer": "able to stay",
+            "time": 174,
+            "level": "B2"
+          },
+          {
+            "id": "g19",
+            "prompt": "Studies have shown that many top athletes, musicians, and dancers spend 50-60 hours per week on activities related to their craft.",
+            "answer": "athletes musicians",
+            "time": 206,
+            "level": "B2"
+          },
+          {
+            "id": "g20",
+            "prompt": "It's a bit surprising, but a number of _____ _____ that once a physical motion has been established, it can be reinforced just by imagining it.",
+            "answer": "studies suggest",
+            "time": 225,
+            "level": "B2"
+          }
+        ],
+        "tfng": [
+          {
+            "id": "t1",
+            "statement": "Our brains have two kinds of neural tissue: grey matter and white matter.",
+            "answer": "TRUE",
+            "time": 29,
+            "level": "B2"
+          },
+          {
+            "id": "t2",
+            "statement": "The speaker rejects the claim that and it's this myelin covering, or sheath, that seems to change with practice.",
+            "answer": "FALSE",
+            "time": 69,
+            "level": "B2"
+          },
+          {
+            "id": "t3",
+            "statement": "The speaker gives an exact percentage to quantify theories attempt.",
+            "answer": "NOT GIVEN",
+            "time": 124,
+            "level": "B2"
+          },
+          {
+            "id": "t4",
+            "statement": "Next, frequent repetitions with allotted breaks are widespread practice habits of elite performers.",
+            "answer": "TRUE",
+            "time": 198,
+            "level": "B2"
+          },
+          {
+            "id": "t5",
+            "statement": "The speaker rejects the claim that group A physically practiced one-handed free throws while Group B only mentally practiced them.",
+            "answer": "FALSE",
+            "time": 239,
+            "level": "B2"
+          }
+        ],
+        "paraphrase": [
+          {
+            "id": "p1",
+            "prompt": "Audio contextida “increases” ga eng yaqin paraphraseni tanlang.",
+            "answer": "rises",
+            "options": [
+              "rises",
+              "start",
+              "groups",
+              "workings"
+            ],
+            "level": "B2"
+          },
+          {
+            "id": "p2",
+            "prompt": "Audio contextida “students” ga eng yaqin paraphraseni tanlang.",
+            "answer": "learners",
+            "options": [
+              "finance",
+              "mode",
+              "efficient",
+              "learners"
+            ],
+            "level": "B2"
+          },
+          {
+            "id": "p3",
+            "prompt": "Audio contextida “understanding” ga eng yaqin paraphraseni tanlang.",
+            "answer": "comprehension",
+            "options": [
+              "comprehension",
+              "builds",
+              "people",
+              "produced"
+            ],
+            "level": "B2"
+          },
+          {
+            "id": "p4",
+            "prompt": "Audio contextida “used” ga eng yaqin paraphraseni tanlang.",
+            "answer": "utilized",
+            "options": [
+              "study",
+              "pressure",
+              "successes",
+              "utilized"
+            ],
+            "level": "B2"
+          },
+          {
+            "id": "p5",
+            "prompt": "Audio contextida “make” ga eng yaqin paraphraseni tanlang.",
+            "answer": "create",
+            "options": [
+              "down",
+              "cables",
+              "goal",
+              "create"
+            ],
+            "level": "B2"
+          }
+        ],
+        "dictation": [
+          {
+            "id": "d1",
+            "answer": "Practice is the repetition of an action with the goal of improvement, and it helps us perform with more ease, speed, and confidence.",
+            "time": 16,
+            "endTime": 24,
+            "prompt": "0:16 dan boshlab eshiting va gapni aynan yozing.",
+            "level": "B2"
+          },
+          {
+            "id": "d2",
+            "answer": "In order for our bodies to move, information needs to travel from the brain's grey matter, down the spinal cord, through a chain of nerve fibers called axons to our muscles.",
+            "time": 46,
+            "endTime": 58,
+            "prompt": "0:46 dan boshlab eshiting va gapni aynan yozing.",
+            "level": "B2"
+          },
+          {
+            "id": "d3",
+            "answer": "Myelin is similar to insulation on electrical cables.",
+            "time": 74,
+            "endTime": 79,
+            "prompt": "1:14 dan boshlab eshiting va gapni aynan yozing.",
+            "level": "B2"
+          },
+          {
+            "id": "d4",
+            "answer": "And the more layers, the greater the insulation around the axon chains, forming a sort of superhighway for information connecting your brain to your muscles.",
+            "time": 96,
+            "endTime": 106,
+            "prompt": "1:36 dan boshlab eshiting va gapni aynan yozing.",
+            "level": "B2"
+          },
+          {
+            "id": "d5",
+            "answer": "There are many theories that attempt to quantify the number of hours, days, and even years of practice that it takes to master a skill.",
+            "time": 124,
+            "endTime": 133,
+            "prompt": "2:04 dan boshlab eshiting va gapni aynan yozing.",
+            "level": "B2"
+          },
+          {
+            "id": "d6",
+            "answer": "Effective practice is consistent, intensely focused, and targets content or weaknesses that lie at the edge of one's current abilities.",
+            "time": 144,
+            "endTime": 154,
+            "prompt": "2:24 dan boshlab eshiting va gapni aynan yozing.",
+            "level": "B2"
+          },
+          {
+            "id": "d7",
+            "answer": "On average, those students were able to stay on task for only six minutes at a time.",
+            "time": 174,
+            "endTime": 183,
+            "prompt": "2:54 dan boshlab eshiting va gapni aynan yozing.",
+            "level": "B2"
+          },
+          {
+            "id": "d8",
+            "answer": "Studies have shown that many top athletes, musicians, and dancers spend 50-60 hours per week on activities related to their craft.",
+            "time": 206,
+            "endTime": 214,
+            "prompt": "3:26 dan boshlab eshiting va gapni aynan yozing.",
+            "level": "B2"
+          },
+          {
+            "id": "d9",
+            "answer": "It's a bit surprising, but a number of studies suggest that once a physical motion has been established, it can be reinforced just by imagining it.",
+            "time": 225,
+            "endTime": 234,
+            "prompt": "3:45 dan boshlab eshiting va gapni aynan yozing.",
+            "level": "B2"
+          },
+          {
+            "id": "d10",
+            "answer": "When they were tested at the end of the two week experiment, the intermediate and experienced players in both groups had improved by nearly the same amount.",
+            "time": 246,
+            "endTime": 256,
+            "prompt": "4:06 dan boshlab eshiting va gapni aynan yozing.",
+            "level": "B2"
+          }
+        ],
+        "seededFromUserTranscript": true
+      }
+    },
+    {
+      "id": "long01",
+      "day": 1,
+      "kind": "long",
+      "channel": "The Diary Of A CEO",
+      "title": "James Clear — habits, systems and Atomic Habits",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=rtufWBLOXgw",
+      "level": "B2"
+    },
+    {
+      "id": "ted02",
+      "day": 2,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "Why you procrastinate even when it feels bad",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=FWTNMzK9vG4",
+      "level": "B2"
+    },
+    {
+      "id": "long02",
+      "day": 2,
+      "kind": "long",
+      "channel": "Ali Abdaal",
+      "title": "Cal Newport — slow productivity, focus and meaningful work",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=oyI-HO7moKc",
+      "level": "B2"
+    },
+    {
+      "id": "ted03",
+      "day": 3,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "The benefits of a bilingual brain",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=MMmOLN5zBLY",
+      "level": "B2"
+    },
+    {
+      "id": "long03",
+      "day": 3,
+      "kind": "long",
+      "channel": "Jay Shetty Podcast",
+      "title": "Mel Robbins — procrastination, motivation and taking action",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=FzxocWoxb14",
+      "level": "B2"
+    },
+    {
+      "id": "ted04",
+      "day": 4,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "How does caffeine keep us awake?",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=foLf5Bi9qXs",
+      "level": "B2"
+    },
+    {
+      "id": "long04",
+      "day": 4,
+      "kind": "long",
+      "channel": "Alex Hormozi",
+      "title": "Discipline, consistency and doing hard things",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=WOZGZK7K-Jo",
+      "level": "B2"
+    },
+    {
+      "id": "ted05",
+      "day": 5,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "How stress affects your body",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=v-t1Z5-oPtU",
+      "level": "B2"
+    },
+    {
+      "id": "long05",
+      "day": 5,
+      "kind": "long",
+      "channel": "The Diary Of A CEO",
+      "title": "Johann Hari — focus, attention and distraction",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=kNOX7a7-kwQ",
+      "level": "B2"
+    },
+    {
+      "id": "ted06",
+      "day": 6,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "The surprising link between stress and memory",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=hyg7lcU4g8E",
+      "level": "B2"
+    },
+    {
+      "id": "long06",
+      "day": 6,
+      "kind": "long",
+      "channel": "Ali Abdaal",
+      "title": "Dr Julie Smith — stress, anxiety and practical psychology",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=iALnyoUqL6k",
+      "level": "B2"
+    },
+    {
+      "id": "ted07",
+      "day": 7,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "How playing an instrument benefits your brain",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=R0JKCYZ8hng",
+      "level": "B2"
+    },
+    {
+      "id": "long07",
+      "day": 7,
+      "kind": "long",
+      "channel": "Jay Shetty Podcast",
+      "title": "Tony Robbins — mindset, patterns and personal change",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=BwjnG45zO5U",
+      "level": "B2"
+    },
+    {
+      "id": "ted08",
+      "day": 8,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "How sugar affects the brain",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=lEXBxijQREo",
+      "level": "B2"
+    },
+    {
+      "id": "long08",
+      "day": 8,
+      "kind": "long",
+      "channel": "Alex Hormozi",
+      "title": "Focus, standards and the habits of high performers",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=A5pnhJZfJWM",
+      "level": "B2"
+    },
+    {
+      "id": "ted09",
+      "day": 9,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "Why do we dream?",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=2W85Dwxx218",
+      "level": "B2"
+    },
+    {
+      "id": "long09",
+      "day": 9,
+      "kind": "long",
+      "channel": "The Diary Of A CEO",
+      "title": "Mo Gawdat — happiness, thinking and emotional resilience",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=csA9YhzYvmk",
+      "level": "B2"
+    },
+    {
+      "id": "ted10",
+      "day": 10,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "What causes headaches?",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=KpHP8VmxnBo",
+      "level": "B2"
+    },
+    {
+      "id": "long10",
+      "day": 10,
+      "kind": "long",
+      "channel": "Ali Abdaal",
+      "title": "Ryan Holiday — discipline, stoicism and consistent action",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=lf8SKIJA1qE",
+      "level": "B2"
+    },
+    {
+      "id": "ted11",
+      "day": 11,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "The science of stage fright",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=K93fMnFKwfI",
+      "level": "C1"
+    },
+    {
+      "id": "long11",
+      "day": 11,
+      "kind": "long",
+      "channel": "Jay Shetty Podcast",
+      "title": "Breaking bad habits — triggers, environment and identity",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=Tp_RQtHjYNo",
+      "level": "C1"
+    },
+    {
+      "id": "ted12",
+      "day": 12,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "The benefits of a good night’s sleep",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=gedoSfZvBgE",
+      "level": "C1"
+    },
+    {
+      "id": "long12",
+      "day": 12,
+      "kind": "long",
+      "channel": "Alex Hormozi",
+      "title": "Learning faster, skill acquisition and repetition",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=Xxd6TjkEFaA",
+      "level": "C1"
+    },
+    {
+      "id": "ted13",
+      "day": 13,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "How to spot a misleading graph",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=E91bGT9BjYk",
+      "level": "C1"
+    },
+    {
+      "id": "long13",
+      "day": 13,
+      "kind": "long",
+      "channel": "The Diary Of A CEO",
+      "title": "Matthew Walker — sleep, memory and performance",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=qxxnRMT9C-8",
+      "level": "C1"
+    },
+    {
+      "id": "ted14",
+      "day": 14,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "What is a calorie?",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=VEQaH4LruUo",
+      "level": "C1"
+    },
+    {
+      "id": "long14",
+      "day": 14,
+      "kind": "long",
+      "channel": "Ali Abdaal",
+      "title": "Steven Bartlett — business, productivity and career lessons",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=iRjxd2VHavY",
+      "level": "C1"
+    },
+    {
+      "id": "ted15",
+      "day": 15,
+      "kind": "short",
+      "channel": "TED-Ed",
+      "title": "How do carbohydrates impact your health?",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=wxzc_2c6GMg",
+      "level": "C1"
+    },
+    {
+      "id": "long15",
+      "day": 15,
+      "kind": "long",
+      "channel": "Jay Shetty Podcast",
+      "title": "Communication — how to speak so people actually listen",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=XfVcnrNcBz4",
+      "level": "C1"
+    },
+    {
+      "id": "kurz01",
+      "day": 16,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "Loneliness",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=n3Xv_g3g-mA",
+      "level": "C1"
+    },
+    {
+      "id": "long16",
+      "day": 16,
+      "kind": "long",
+      "channel": "Alex Hormozi",
+      "title": "Entrepreneurship fundamentals and building useful skills",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=PbdRNHjl8WU",
+      "level": "C1"
+    },
+    {
+      "id": "kurz02",
+      "day": 17,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "Optimistic Nihilism",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=MBRqu0YOH14",
+      "level": "C1"
+    },
+    {
+      "id": "long17",
+      "day": 17,
+      "kind": "long",
+      "channel": "The Diary Of A CEO",
+      "title": "Habit science — making good habits easier to repeat",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=v9VtjcRaRWc",
+      "level": "C1"
+    },
+    {
+      "id": "kurz03",
+      "day": 18,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "The Egg – A Short Story",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=h6fcK_fRYaI",
+      "level": "C1"
+    },
+    {
+      "id": "long18",
+      "day": 18,
+      "kind": "long",
+      "channel": "Ali Abdaal",
+      "title": "Noah Kagan — starting a business and overcoming hesitation",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=W0KdKhTeVKM",
+      "level": "C1"
+    },
+    {
+      "id": "kurz04",
+      "day": 19,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "A Selfish Argument for Making the World a Better Place",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=rvskMHn0sqQ",
+      "level": "C1"
+    },
+    {
+      "id": "long19",
+      "day": 19,
+      "kind": "long",
+      "channel": "Jay Shetty Podcast",
+      "title": "7 mindset shifts — action, environment and personal growth",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=eju_BSTiRRQ",
+      "level": "C1"
+    },
+    {
+      "id": "kurz05",
+      "day": 20,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "Change Your Life – One Tiny Step at a Time",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=75d_29QWELk",
+      "level": "C1"
+    },
+    {
+      "id": "long20",
+      "day": 20,
+      "kind": "long",
+      "channel": "Alex Hormozi",
+      "title": "Ambition, patience and long-term career growth",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=ub1D6RQocRU",
+      "level": "C1"
+    },
+    {
+      "id": "kurz06",
+      "day": 21,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "Black Holes Explained – From Birth to Death",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=e-P5IFTqB98",
+      "level": "C2"
+    },
+    {
+      "id": "long21",
+      "day": 21,
+      "kind": "long",
+      "channel": "The Diary Of A CEO",
+      "title": "Tara Swart — neuroscience, habits and the brain",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=hCW2NHbWNwA",
+      "level": "C2"
+    },
+    {
+      "id": "kurz07",
+      "day": 22,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "What if There Was a Black Hole in Your Pocket?",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=8nHBGFKLHZQ",
+      "level": "C2"
+    },
+    {
+      "id": "long22",
+      "day": 22,
+      "kind": "long",
+      "channel": "Ali Abdaal",
+      "title": "UnJaded Jade — reshaping life, study and career",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=lapAN1eO9VA",
+      "level": "C2"
+    },
+    {
+      "id": "kurz08",
+      "day": 23,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "The Fermi Paradox — Where Are All the Aliens?",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=sNhhvQGsMEc",
+      "level": "C2"
+    },
+    {
+      "id": "long23",
+      "day": 23,
+      "kind": "long",
+      "channel": "Jay Shetty Podcast",
+      "title": "Morning routines, attention and intentional habits",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=azSNsEjrodE",
+      "level": "C2"
+    },
+    {
+      "id": "kurz09",
+      "day": 24,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "The Fermi Paradox II — Solutions and Ideas",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=1fQkVqno-uI",
+      "level": "C2"
+    },
+    {
+      "id": "long24",
+      "day": 24,
+      "kind": "long",
+      "channel": "Alex Hormozi",
+      "title": "Sales communication — how top performers think and explain value",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=zzleYxkf39k",
+      "level": "C2"
+    },
+    {
+      "id": "kurz10",
+      "day": 25,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "The Immune System Explained I — Bacteria Infection",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=zQGOcOUBi6s",
+      "level": "C2"
+    },
+    {
+      "id": "long25",
+      "day": 25,
+      "kind": "long",
+      "channel": "The Diary Of A CEO",
+      "title": "Simon Sinek — leadership, purpose and young people",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=NcaQUH2K-wo",
+      "level": "C2"
+    },
+    {
+      "id": "kurz11",
+      "day": 26,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "The Most Complex Language in the World",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=TYPFenJQciw",
+      "level": "C2"
+    },
+    {
+      "id": "long26",
+      "day": 26,
+      "kind": "long",
+      "channel": "Ali Abdaal",
+      "title": "Tiago Forte — productivity, knowledge and second-brain systems",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=ggLHkAq6JLY",
+      "level": "C2"
+    },
+    {
+      "id": "kurz12",
+      "day": 27,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "Can YOU Fix Climate Change?",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=yiw6_JakZFc",
+      "level": "C2"
+    },
+    {
+      "id": "long27",
+      "day": 27,
+      "kind": "long",
+      "channel": "Jay Shetty Podcast",
+      "title": "Feeling stuck — methods for moving forward",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=r0x972BaT20",
+      "level": "C2"
+    },
+    {
+      "id": "kurz13",
+      "day": 28,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "The Last Human – A Glimpse Into The Far Future",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=LEENEFaVUzU",
+      "level": "C2"
+    },
+    {
+      "id": "long28",
+      "day": 28,
+      "kind": "long",
+      "channel": "Alex Hormozi",
+      "title": "Pricing, value and service-business fundamentals",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=Wp2XWW_IJRM",
+      "level": "C2"
+    },
+    {
+      "id": "kurz14",
+      "day": 29,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "What Are You?",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=JQVmkDUkZT4",
+      "level": "C2"
+    },
+    {
+      "id": "long29",
+      "day": 29,
+      "kind": "long",
+      "channel": "The Diary Of A CEO",
+      "title": "Mo Gawdat — AI, technology and the future",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=RwlgFC6S-OE",
+      "level": "C2"
+    },
+    {
+      "id": "kurz15",
+      "day": 30,
+      "kind": "short",
+      "channel": "Kurzgesagt – In a Nutshell",
+      "title": "The Most Efficient Way to Destroy the Universe – False Vacuum",
+      "counts": {
+        "mcq": 5,
+        "gap": 20,
+        "tfng": 5,
+        "paraphrase": 5,
+        "dictation": 10
+      },
+      "total": 45,
+      "youtubeUrl": "https://www.youtube.com/watch?v=ijFm6DxNVyI",
+      "level": "C2"
+    },
+    {
+      "id": "long30",
+      "day": 30,
+      "kind": "long",
+      "channel": "Ali Abdaal",
+      "title": "TJ Power — dopamine, habits and productivity",
+      "counts": {
+        "mcq": 10,
+        "gap": 40,
+        "tfng": 10,
+        "paraphrase": 10,
+        "dictation": 25
+      },
+      "total": 95,
+      "youtubeUrl": "https://www.youtube.com/watch?v=l6BoSORXCUg",
+      "level": "C2"
+    }
+  ],
+  "shortCounts": {
+    "mcq": 5,
+    "gap": 20,
+    "tfng": 5,
+    "paraphrase": 5,
+    "dictation": 10
+  },
+  "longCounts": {
+    "mcq": 10,
+    "gap": 40,
+    "tfng": 10,
+    "paraphrase": 10,
+    "dictation": 25
+  },
+  "videoMode": "embedded-default",
+  "difficultyPlan": {
+    "days1to10": "B2",
+    "days11to20": "C1",
+    "days21to30": "C2"
+  },
+  "engineVersion": "4.0"
+}

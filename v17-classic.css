@@ -1,0 +1,195 @@
+/* V17 classic readability restore */
+body.cloud-locked #tzClock,
+body.prep-active #tzClock{display:none!important}
+body.cloud-locked,
+body.prep-active{padding-top:0!important}
+body.cloud-locked #cloudGate{top:0!important}
+
+/* Keep the original bright VIVID IELTS workspace at every hour. */
+body.autumn-theme,
+body.autumn-theme.autumn-evening{background:#fff9f2!important;color:#20233a!important}
+body.autumn-theme .main-area,
+body.autumn-theme.autumn-evening .main-area{background:linear-gradient(135deg,#fff9f2 0%,#fbf5ee 52%,#f5f2ff 100%)!important;color:#20233a!important}
+body.autumn-theme .content-wrap,
+body.autumn-theme.autumn-evening .content-wrap{color:#20233a!important}
+body.autumn-theme .page-heading h1,
+body.autumn-theme.autumn-evening .page-heading h1{color:#171a31!important}
+body.autumn-theme .page-heading p,
+body.autumn-theme.autumn-evening .page-heading p{color:#737a90!important}
+body.autumn-theme .overline,
+body.autumn-theme.autumn-evening .overline{color:#5b46e8!important}
+
+body.autumn-theme .sidebar,
+body.autumn-theme.autumn-evening .sidebar{
+  background:rgba(255,255,255,.96)!important;
+  color:#4f5870!important;
+  border-right:1px solid #ece8f3!important;
+  box-shadow:8px 0 28px rgba(47,36,83,.06)!important;
+}
+body.autumn-theme .sidebar .brand small,
+body.autumn-theme.autumn-evening .sidebar .brand small,
+body.autumn-theme .sidebar .sidebar-label,
+body.autumn-theme.autumn-evening .sidebar .sidebar-label{color:#98a0b3!important}
+body.autumn-theme .sidebar .brand>span:last-child strong,
+body.autumn-theme.autumn-evening .sidebar .brand>span:last-child strong{color:#32275d!important}
+body.autumn-theme .nav-item,
+body.autumn-theme.autumn-evening .nav-item{color:#536078!important}
+body.autumn-theme .nav-item:hover:not(.active),
+body.autumn-theme.autumn-evening .nav-item:hover:not(.active){background:#f5f2ff!important;color:#4636ba!important}
+body.autumn-theme .nav-item.active,
+body.autumn-theme.autumn-evening .nav-item.active{background:#eeeaff!important;color:#4d39d2!important}
+body.autumn-theme .sidebar-bottom,
+body.autumn-theme.autumn-evening .sidebar-bottom{background:linear-gradient(145deg,#f7f4ff,#fff5e9)!important;color:#463a69!important}
+body.autumn-theme .sidebar-bottom p,
+body.autumn-theme.autumn-evening .sidebar-bottom p{color:#817990!important}
+
+/* Cards and study panels stay white/readable. */
+body.autumn-theme :is(.panel,.stat-card,.game-stage,.result-box,.wb-shell,.lb-panel,.rb-shell,.grammar-shell,.grammar-detail,.grammar-list,.mock-panel,.upgrade-shell,.imported-library-shell){
+  color:#20233a!important;
+}
+body.autumn-theme :is(.panel,.stat-card,.game-stage,.result-box,.wb-shell,.lb-panel,.grammar-detail,.grammar-list,.mock-panel,.upgrade-shell){
+  background:rgba(255,255,255,.94)!important;
+}
+
+/* Entry/auth are their own clean pages. The global clock never overlays them. */
+body.vivid-entry-active #cloudGate,
+body.vivid-auth-active #cloudGate{inset:0!important;top:0!important;min-height:100dvh!important}
+.vivid-entry-shell{min-height:100dvh!important}
+.vivid-entry-header{position:relative!important;top:0!important}
+.vivid-auth-wrap{min-height:100dvh!important}
+
+/* Classic entry page from the earlier VIVID design. */
+.vivid-entry-main{padding-top:clamp(32px,5vw,70px)!important}
+.vivid-entry-copy h1{color:#211d30!important}
+.vivid-entry-copy>p{color:#696477!important}
+.vivid-entry-features article{background:rgba(255,255,255,.78)!important}
+
+/* Avoid the autumn controls covering forms or entry/auth. */
+body.cloud-locked #autumnControls,
+body.prep-active #autumnControls{display:none!important}
+
+
+/* V18 readability + auth transition hardening */
+/* Login fields must stay readable even with browser autofill and autumn/theme rules. */
+body.vivid-auth-active .vivid-auth-form input,
+body.vivid-auth-active .vivid-auth-form input:focus,
+body.vivid-auth-active .vivid-auth-form input:active{
+  color:#171a31!important;
+  -webkit-text-fill-color:#171a31!important;
+  caret-color:#4f3ed1!important;
+  opacity:1!important;
+}
+body.vivid-auth-active .vivid-auth-form input::placeholder{
+  color:#7d879b!important;
+  -webkit-text-fill-color:#7d879b!important;
+  opacity:1!important;
+}
+body.vivid-auth-active .vivid-auth-form input:-webkit-autofill,
+body.vivid-auth-active .vivid-auth-form input:-webkit-autofill:hover,
+body.vivid-auth-active .vivid-auth-form input:-webkit-autofill:focus{
+  -webkit-text-fill-color:#171a31!important;
+  caret-color:#171a31!important;
+  -webkit-box-shadow:0 0 0 1000px #eef4ff inset!important;
+  box-shadow:0 0 0 1000px #eef4ff inset!important;
+  transition:background-color 9999s ease-out 0s!important;
+}
+#cloudGate.cloud-auth-dark .vivid-auth-form input,
+#cloudGate.cloud-auth-dark .vivid-auth-form input:focus{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  caret-color:#fff!important;
+}
+#cloudGate.cloud-auth-dark .vivid-auth-form input::placeholder{
+  color:#aeb7b2!important;
+  -webkit-text-fill-color:#aeb7b2!important;
+}
+#cloudGate.cloud-auth-dark .vivid-auth-form input:-webkit-autofill,
+#cloudGate.cloud-auth-dark .vivid-auth-form input:-webkit-autofill:hover,
+#cloudGate.cloud-auth-dark .vivid-auth-form input:-webkit-autofill:focus{
+  -webkit-text-fill-color:#fff!important;
+  caret-color:#fff!important;
+  -webkit-box-shadow:0 0 0 1000px #222a28 inset!important;
+  box-shadow:0 0 0 1000px #222a28 inset!important;
+}
+
+/* Writing Booster: force the classic dark text on every light control. */
+body.autumn-theme .wb-tabs button:not(.active),
+body.autumn-theme .wb-game-tabs button:not(.active),
+body.autumn-theme .wb-segment button:not(.active),
+body.autumn-theme .wb-pager button,
+body.autumn-theme .wb-back,
+body.autumn-theme .wb-filters input,
+body.autumn-theme .wb-filters select,
+body.autumn-theme .wb-maxwrite-toolbar select,
+body.autumn-theme .wb-expression-game input,
+body.autumn-theme .wb-expression-game select,
+body.autumn-theme .wb-grammar-layout input,
+body.autumn-theme .wb-grammar-layout select,
+body.autumn-theme .wb-grammar-layout textarea,
+body.autumn-theme .wb-mock textarea,
+body.autumn-theme .wb-short-answer{
+  color:#25233a!important;
+  -webkit-text-fill-color:#25233a!important;
+}
+body.autumn-theme .wb-filters input::placeholder,
+body.autumn-theme .wb-expression-game input::placeholder,
+body.autumn-theme .wb-grammar-layout textarea::placeholder,
+body.autumn-theme .wb-mock textarea::placeholder,
+body.autumn-theme .wb-short-answer::placeholder{
+  color:#7b8194!important;
+  -webkit-text-fill-color:#7b8194!important;
+  opacity:1!important;
+}
+body.autumn-theme .wb-tabs button:not(.active),
+body.autumn-theme .wb-game-tabs button:not(.active),
+body.autumn-theme .wb-segment button:not(.active){
+  background:#fff!important;
+  border-color:#dfe3f1!important;
+}
+body.autumn-theme .wb-tabs button.active,
+body.autumn-theme .wb-game-tabs button.active,
+body.autumn-theme .wb-segment button.active{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+body.autumn-theme .wb-filters select option,
+body.autumn-theme .wb-maxwrite-toolbar select option{
+  color:#25233a!important;
+  background:#fff!important;
+}
+
+/* Keep Writing body text readable regardless of the clock/mood class. */
+body.autumn-theme .wb-body,
+body.autumn-theme .wb-body :where(h1,h2,h3,h4,strong,b,label,summary){color:#20233a}
+body.autumn-theme .wb-body :where(p,small,span){text-shadow:none}
+body.autumn-theme .wb-hero,
+body.autumn-theme .wb-hero :where(h1,h2,h3,p,span,strong,b),
+body.autumn-theme .wb-colloc-title,
+body.autumn-theme .wb-colloc-title :where(h1,h2,h3,p,span,strong,b){color:#fff}
+body.autumn-theme .wb-creator-badge,
+body.autumn-theme .wb-creator-badge strong{color:#1d174e!important}
+body.autumn-theme .wb-creator-badge b{color:#e93c5f!important}
+
+/* V18: readable form controls across the light study workspace. */
+body.autumn-theme .main-area input:not([type="radio"]):not([type="checkbox"]):not([type="range"]),
+body.autumn-theme .main-area select,
+body.autumn-theme .main-area textarea{
+  color:#20233a!important;
+  -webkit-text-fill-color:#20233a!important;
+  caret-color:#4f3ed1;
+}
+body.autumn-theme .main-area input::placeholder,
+body.autumn-theme .main-area textarea::placeholder{
+  color:#7c8497!important;
+  -webkit-text-fill-color:#7c8497!important;
+  opacity:1!important;
+}
+/* The top search lives on a dark gradient, so keep its white search text. */
+body.autumn-theme .topbar .search-box input{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+body.autumn-theme .topbar .search-box input::placeholder{
+  color:rgba(255,255,255,.72)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.72)!important;
+}

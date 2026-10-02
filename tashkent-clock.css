@@ -1,0 +1,16 @@
+/* Toshkent vaqti paneli — barcha bo‘limlar tepasida (Reading Real Exam to‘liq ekranida ham) */
+:root{--tz-h:42px}
+#tzClock{position:fixed;top:0;left:0;right:0;height:var(--tz-h);z-index:2147483000;display:flex;align-items:center;justify-content:center;gap:clamp(10px,2.4vw,26px);padding:0 14px;background:linear-gradient(90deg,#1c1650,#2f2585 50%,#1c1650);color:#fff;box-shadow:0 2px 12px #10133f55;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;user-select:none;white-space:nowrap}
+#tzClock .tz-label{font-size:13px;font-weight:700;color:#cfc8ff;letter-spacing:.02em}
+#tzClock .tz-label small{font-size:11px;font-weight:700;color:#a99fff;margin-left:3px}
+#tzClock .tz-time{font-size:24px;line-height:1;font-weight:800;letter-spacing:.06em;font-variant-numeric:tabular-nums;font-feature-settings:"tnum";color:#fff;min-width:9ch;text-align:center}
+#tzClock .tz-date{font-size:13px;font-weight:600;color:#cfc8ff}
+body.has-tz-clock{padding-top:var(--tz-h)}
+/* Yopishqoq yon menyu panelning ostidan boshlansin */
+body.has-tz-clock .sidebar{top:var(--tz-h);height:calc(100vh - var(--tz-h));height:calc(100dvh - var(--tz-h))}
+/* Reading Real Exam: to‘liq ekran, panel ostida qolgan butun joyni egallaydi */
+body.has-tz-clock.rb-exam-mode .app-shell{min-height:calc(100dvh - var(--tz-h))}
+body.has-tz-clock.rb-exam-mode .content-wrap{height:calc(100dvh - var(--tz-h))}
+@media(max-width:900px){body.has-tz-clock.rb-exam-mode .content-wrap{height:auto;min-height:calc(100dvh - var(--tz-h))}body.has-tz-clock .sidebar{top:var(--tz-h)}}
+@media(max-width:700px){:root{--tz-h:38px}#tzClock .tz-label small,#tzClock .tz-date{display:none}#tzClock .tz-time{font-size:21px}}
+@media(max-width:380px){#tzClock .tz-label{display:none}}
